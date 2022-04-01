@@ -190,7 +190,7 @@ a {
 }
 
 #hero{
-    box-shadow: #483455 0 0 1rem;
+    box-shadow: #483455 0 0 0.5rem;
     background-image: url(./img/hero-background.png);
     background-size: cover;
     background-position: top center;
@@ -276,7 +276,7 @@ to {
     flex-direction: column;
 }
 #about .col-left {
-    width: 60%;
+    width: 75%;
 }
 #about .col-right {
 	width: 90%;
@@ -303,7 +303,7 @@ to {
     width: 100%;
     object-fit: contain;
     border-radius: 5%;
-    box-shadow: #483455 0 0 1em;
+    box-shadow: #483455 0 0 0.5em;
 }
 
 
