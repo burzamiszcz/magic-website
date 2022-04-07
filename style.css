@@ -21,6 +21,14 @@ a {
 	justify-content: center;
 }
 
+hr.rounded {
+    border-top: 1px solid #6A0ED6;
+    border-radius: 5px;
+    min-width: 50px;
+    max-width: 50px;
+    margin-bottom: 20px;
+  }
+
  #header{
      position: fixed;
      z-index: 1000;
@@ -289,7 +297,7 @@ to {
     /* font-size: 3.8vw; */
     position: relative;
     color: #483455;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 #about .col-right p{
     font-family: 'Lato', sans-serif;
