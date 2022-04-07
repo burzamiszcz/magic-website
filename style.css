@@ -347,8 +347,10 @@ to {
     box-shadow: 0px 0px 20px #1020AF1A;
     margin: 20px 10px;
     padding: 15px;
-    max-width: 500px;
+    max-width: 380px;
 }
+
+
 
 #services .all-services .service-item img{
     margin: 20px 0px 10px 0px;
@@ -428,15 +430,28 @@ to {
     }
 
     #services .all-services .service-item h1{
-        font-size: 2vw;
+        font-size: 3rem;
     }
     
     #services .all-services .service-item p{
-        font-size: 1vw;
+        font-size: 1.5rem;
         ;
     }
     #services .all-services{
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    #services .all-services .service-item{
+        box-shadow: 0px 0px 10px #1020AF1A;
+        margin: 15px;
+    }
+    
+
+    #services .all-services .service-item:hover{
+        box-shadow: 0px 0px 40px #1020AF1A;
+        transition: .3s box-shadow;
     }
     
 }
