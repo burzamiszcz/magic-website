@@ -286,7 +286,10 @@ to {
     width: 75%;
 }
 #about .col-right {
+    display: flex;
+    flex-direction: column;
 	width: 90%;
+    align-items: center;
 }
 #about .col-right h1{
     font-family: 'Poppins', sans-serif;
@@ -376,10 +379,67 @@ to {
     font-family: 'Lato', sans-serif;
     line-height: 1.7;
     font-size: calc(11px + .5vw);
-    margin: 10px
-    ;
+    margin: 10px;
 }
 
+
+#photos .photos{
+    height: 25%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#photos .photos img{
+    height: 50vh;
+    width: 100%;
+    object-fit: cover;
+}
+
+#photos .recommendation h1{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bolder;
+    display: block;
+    width: fit-content;
+    font-size: 5vw;
+    position: relative;
+    color: #483455;
+    margin-top: 30px;
+}
+
+#photos .recommendation{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#photos .recommendation .items{
+    display: flex;
+    flex-direction: row;
+    max-width: 1200px;
+}
+
+#photos .recommendation .items .recommendation-item{
+    margin: 30px;
+}
+
+#photos .recommendation .items .recommendation-item h2{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bolder;
+    width: fit-content;
+    font-size: calc(20px + .5vw);
+    color: #483455;
+    margin: 0px 30px;
+}
+
+#photos .recommendation .items .recommendation-item p{
+    font-family: 'Lato', sans-serif;
+    line-height: 1.7;
+    font-size: calc(9px + .7vw);
+    margin: 0px 30px;
+}
 
 
 @media only screen and (min-width: 1200px){
@@ -419,6 +479,7 @@ to {
     }
     #about .col-right {
         width: 40%;
+        align-items: flex-start;
     }
 
     #about .about {
@@ -461,5 +522,6 @@ to {
         box-shadow: 0px 0px 40px #1020AF1A;
         transition: .3s box-shadow;
     }
-    
+
+
 }
