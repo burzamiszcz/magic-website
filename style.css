@@ -209,7 +209,7 @@ hr.rounded {
 #hero::after{
     content: '';
     background: rgb(0,0,0);
-background: linear-gradient(90deg, rgba(0,0,0,1) 2%, rgba(0,212,255,0) 100%);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 2%, rgba(0,212,255,0) 100%);
     background-size:cover;
     background-repeat: no-repeat;
     position: absolute;
@@ -382,14 +382,33 @@ to {
     margin: 10px;
 }
 
-
 #photos .photos{
+    flex-direction: column;
+}
+
+#photos .photos .all-photos{
+    width: 100%;
+}
+
+#photos .photo-elem{
     height: 25%;
     width: 100%;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    animation: photoChange 6s ease;
+}
+
+@keyframes photoChange {
+    0%{opacity: 0}
+    20%{opacity: 1}
+    80%{opacity: 1}
+    100%{opacity: 0}
+}
+
+#photos .photo-elem.active{
+    display: flex
 }
 
 #photos .photos img{
@@ -418,11 +437,27 @@ to {
 #photos .recommendation .items{
     display: flex;
     flex-direction: row;
-    max-width: 1200px;
+    max-width: 900px;
+    justify-content: space-around;
+    align-items: center;
+
 }
 
 #photos .recommendation .items .recommendation-item{
-    margin: 30px;
+    display: none;
+    width: 75%;
+    animation: zoom 1s ease;
+
+}
+
+@keyframes zoom {
+    0%{transform: scale(1.2); opacity: 0}
+    100%{transform: scale(1); opacity: 1}
+}
+
+#photos .recommendation .items .recommendation-item.active{
+    display: flex;
+    flex-direction: column;
 }
 
 #photos .recommendation .items .recommendation-item h2{
@@ -441,6 +476,25 @@ to {
     margin: 0px 30px;
 }
 
+#photos .recommendation .items .left-slide, .right-slide{
+    font-size: 14px;
+    background-color: #4834553d;
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    transition: .3s ease background-color;
+}
+#photos .recommendation .items .left-slide:hover, .right-slide:hover{
+    background-color: #483455;
+    cursor: pointer;
+    
+
+}
 
 @media only screen and (min-width: 1200px){
     #header .hamburger{
@@ -521,6 +575,9 @@ to {
     #services .all-services .service-item:hover{
         box-shadow: 0px 0px 40px #1020AF1A;
         transition: .3s box-shadow;
+    }
+    #photos .recommendation h1{
+        font-size: 5rem;
     }
 
 
