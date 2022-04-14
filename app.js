@@ -63,24 +63,24 @@ function next(direction) {
 }
 
 
-var photos = document.querySelector('.photos .all-photos').children;
-var allPhotos = photos.length;
-var dispPhoto = 0
+// var photos = document.querySelector('.photos .all-photos').children;
+// var allPhotos = photos.length;
+// var dispPhoto = 0
 
 
-function change(){
-    dispPhoto ++;
-    if (dispPhoto == allPhotos){
-        dispPhoto = 0;
-    }
-    for (i=0; i < allPhotos; i++){
-        photos[i].classList.remove("active")
-    }
+// function change(){
+//     dispPhoto ++;
+//     if (dispPhoto == allPhotos){
+//         dispPhoto = 0;
+//     }
+//     for (i=0; i < allPhotos; i++){
+//         photos[i].classList.remove("active")
+//     }
 
-    photos[dispPhoto].classList.add("active")
+//     photos[dispPhoto].classList.add("active")
 
-}
+// }
 
-window.onload = function(){
-    setInterval(change, 6000)
-}
+// window.onload = function(){
+//     setInterval(change, 6000)
+// }

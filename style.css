@@ -384,10 +384,12 @@ to {
 
 #photos .photos{
     flex-direction: column;
+    justify-content: flex-start;
 }
 
 #photos .photos .all-photos{
     width: 100%;
+    display: flex;
 }
 
 #photos .photo-elem{
@@ -397,7 +399,7 @@ to {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    animation: photoChange 6s ease;
+    /* animation: photoChange 6s ease; */
 }
 
 @keyframes photoChange {
@@ -408,13 +410,34 @@ to {
 }
 
 #photos .photo-elem.active{
-    display: flex
+    display: flex;
+    background-image: url("./img/photo1.jpg");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+
+    animation-name: animate;
+    animation-direction: alternate-reverse;
+    animation-duration: 10s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes animate {
+    0%{
+        background-image: url("./img/photo1.jpg");
+    }
+    100%{
+        background-image: url("./img/photo2.jpg");
+    }
 }
 
 #photos .photos img{
     height: 50vh;
     width: 100%;
     object-fit: cover;
+    opacity: 0;
 }
 
 #photos .recommendation h1{
