@@ -515,9 +515,104 @@ to {
 #photos .recommendation .items .left-slide:hover, .right-slide:hover{
     background-color: #483455;
     cursor: pointer;
-    
-
 }
+
+#contact .contact{
+    display: flex;
+    flex-direction: column;
+}
+
+#contact .title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#contact .title h1{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bolder;
+    display: block;
+    width: fit-content;
+    font-size: 5vw;
+    position: relative;
+    color: #483455;
+    margin-top: 30px;
+}
+#contact .title h2{
+    font-size: 3vw;
+    font-family: 'Poppins', sans-serif;
+    font-weight: normal;
+    color: #483455;
+}
+#contact .elements{
+    margin-bottom: 35px;
+}
+#contact .contact-elem{
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    margin: 10px 25px;
+} 
+
+#contact .contact-elem .logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#contact .contact-elem .info {
+    margin: 10px;
+}
+
+#contact .contact-elem .info h1{
+    font-size: 4vw;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    color: #483455;
+}
+
+#contact .contact-elem .info h2{
+    font-size: 3vw;
+    font-family: 'Poppins', sans-serif;
+    font-weight: normal;
+    color: #483455;
+}
+
+#contact .email{
+    display: flex;
+    flex-direction: column;;
+}
+
+#contact .email label{
+    font-size: 2.5vw;
+    font-family: 'Poppins', sans-serif;
+    font-weight: normal;
+    color: #483455;
+}
+
+#contact input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+#contact input:focus, select:focus, textarea:focus{
+    outline: none;
+    box-shadow: 0px 0px 2px #483455;
+}
+
+#contact .email .columns{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#contact .email .columns .col-left{
+    margin-right: 10px;
+}
+
 
 @media only screen and (min-width: 1200px){
     #header .hamburger{
@@ -603,5 +698,28 @@ to {
         font-size: 5rem;
     }
 
+    
 
+    #contact .contact .elements{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    #contact .contact .elements h1{
+        font-size: 2rem;
+    }
+
+    #contact .contact .elements h2{
+        font-size: 1.5rem;
+    }
+
+    #contact .title h1{
+        font-size: 5rem;
+    }
+    #contact .title h2{
+        font-size: 2rem;
+
+    }
 }
