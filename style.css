@@ -597,6 +597,7 @@ to {
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    -webkit-appearance: none;
 }
 
 #contact input:focus, select:focus, textarea:focus{
