@@ -217,31 +217,36 @@
                 </div>
             </div>
             <div class="email">
-                <label for="lname">Imie nazwisko:</label>
+                <label for="name">Imie nazwisko:</label>
                 <input type="text" id="name" name="name">
-                <label for="lname">Numer telefonu:</label>
-                <input type="text" id="lname" name="lname">
-                <label for="lname">Miejscowość:</label>
-                <input type="text" id="lname" name="lname">
+                <label for="phone">Numer telefonu:</label>
+                <input type="text" id="phone" name="phone">
+                <label for="date">Data:</label>
+                <input type="date" id="date" name="date">
+                <label for="city">Miejscowość:</label>
+                <input type="text" id="city" name="city">
                 
                 <div class="columns">
                     <div class="col-left">
-                        <label for="lname">Dla kogo:</label>
-                        <select id="country" name="country">
-                            <option value="australia">Dzieci</option>
-                            <option value="canada">Dorośli</option>
-                            <option value="usa">Dzieci i dorośli</option>
+                        <label for="category">Dla kogo:</label>
+                        <select id="category" name="category">
+                            <option value="kids">Dzieci</option>
+                            <option value="adults">Dorośli</option>
+                            <option value="mix">Dzieci i dorośli</option>
                         </select>
                     </div>
                     <div class="col-right">
-                        <label for="lname">Ile osób:</label>
-                        <input type="text" id="lname" name="lname">
+                        <label for="homMany">Ile osób:</label>
+                        <input type="text" id="homMany" name="homMany">
                      </div>
                 </div>
-                <label for="lname">Krótki opis wydarzenia</label>
-                <textarea id="subject" name="subject" placeholder="Napisz krótko, co to za wydarzenie, z jakiej okazji.." style="height:200px"></textarea>
-
-        </div>
+                <label for="description">Krótki opis wydarzenia</label>
+                <textarea id="description" name="description" placeholder="Napisz krótko, co to za wydarzenie, z jakiej okazji.." style="height:200px"></textarea>
+                <div class="button">Wyślij wiadomość</div>
+            </div>
+            <div class="end-rabbit">
+                <img src="./img/end-rabbit.svg">
+            </div>
     </section>
 
     <!-- End contact section  -->

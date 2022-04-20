@@ -378,7 +378,7 @@ to {
 #services .all-services .service-item p{
     font-family: 'Lato', sans-serif;
     line-height: 1.7;
-    font-size: calc(11px + .5vw);
+    font-size: 1.5rem;
     margin: 10px;
 }
 
@@ -416,12 +416,12 @@ to {
     background-position: center;
     position: relative;
 
-    animation-name: animate;
+    /* animation-name: animate;
     animation-direction: alternate-reverse;
     animation-duration: 10s;
     animation-fill-mode: forwards;
     animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out; */
 }
 
 @keyframes animate {
@@ -495,8 +495,9 @@ to {
 #photos .recommendation .items .recommendation-item p{
     font-family: 'Lato', sans-serif;
     line-height: 1.7;
-    font-size: calc(9px + .7vw);
+    font-size: 1.5rem;
     margin: 0px 30px;
+    text-align: justify;
 }
 
 #photos .recommendation .items .left-slide, .right-slide{
@@ -565,14 +566,14 @@ to {
 }
 
 #contact .contact-elem .info h1{
-    font-size: 4vw;
+    font-size: 2rem;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     color: #483455;
 }
 
 #contact .contact-elem .info h2{
-    font-size: 3vw;
+    font-size: 1.5rem;
     font-family: 'Poppins', sans-serif;
     font-weight: normal;
     color: #483455;
@@ -581,21 +582,21 @@ to {
 #contact .email{
     display: flex;
     flex-direction: column;;
+    margin: 20px 20px;
 }
 
 #contact .email label{
-    font-size: 2.5vw;
+    font-size: 1.5rem;
     font-family: 'Poppins', sans-serif;
     font-weight: normal;
     color: #483455;
 }
 
-#contact input[type=text], select, textarea {
+#contact input[type=text], select, textarea, input[type=date] {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    resize: vertical;
 }
 
 #contact input:focus, select:focus, textarea:focus{
@@ -613,6 +614,30 @@ to {
     margin-right: 10px;
 }
 
+#contact .email .button{
+    display: flex;
+    margin: 20px 50px;
+    padding: 20px;
+    background-color:#6A0ED6;
+    border-radius: 40px;
+    color: #FFFFFF;
+    font-size: 1.8rem;
+    align-items: center;
+    justify-content: center;
+    transition: .2s ease background-color, box-shadow;
+}
+
+#contact .email .button:hover{
+    background-color: white;
+    color: #6A0ED6;
+    box-shadow: 0px 0px 5px#6A0ED6;
+}
+
+#concact .end-rabbit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 @media only screen and (min-width: 1200px){
     #header .hamburger{
@@ -624,6 +649,7 @@ to {
         height: auto;
         width: fit-content;
         background-color: transparent;
+
         
     }
     #header .nav-list ul li{
