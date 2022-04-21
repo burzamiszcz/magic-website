@@ -235,6 +235,7 @@ hr.rounded {
 #hero h2{
     font-family: 'Poppins', sans-serif;
     font-weight: bolder;
+    animation: glow 1s ease-in-out infinite alternate;
 }
 
 
@@ -253,12 +254,12 @@ hr.rounded {
   
 @-webkit-keyframes glow {
 from {
-	text-shadow: 0 0 5px #fff, 0 0 20px #fff, 0 0 20px #7d09ca46, 0 0 40px #1700e646, 0 0 40px #8a00e646, 0 0 40px #0400e646, 0 0 80px #000fe646;
+	text-shadow: 0 0 20px #7d09ca, 0 0 0px white
 }
 
 to {
-    text-shadow: 0 0 20px #fff, 0 0 50px #fff, 0 0 60px #7d09ca, 0 0 80px #1700e6, 0 0 100px #8a00e6, 0 0 80px #0400e6, 0 0 1200px #000fe6;
-}
+    text-shadow: 0 0 50px #7d09ca, 0 0 7px white
+} 
 }
 
 @keyframes hamburger_puls{
@@ -416,20 +417,29 @@ to {
     background-position: center;
     position: relative;
 
-    /* animation-name: animate;
+    animation-name: animate;
     animation-direction: alternate-reverse;
-    animation-duration: 10s;
+    animation-duration: 20s;
     animation-fill-mode: forwards;
     animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out; */
+    animation-timing-function: ease-in-out;
 }
 
 @keyframes animate {
     0%{
         background-image: url("./img/photo1.jpg");
     }
-    100%{
+    25%{
         background-image: url("./img/photo2.jpg");
+    }
+    50%{
+        background-image: url("./img/photo3.jpg");
+    }
+    75%{
+        background-image: url("./img/photo4.jpg");
+    }
+    100%{
+        background-image: url("./img/photo5.jpg");
     }
 }
 
@@ -628,6 +638,7 @@ to {
     align-items: center;
     justify-content: center;
     transition: .2s ease background-color, box-shadow;
+    min-width: 265px;
 }
 
 #contact .email .button:hover{
@@ -677,6 +688,8 @@ to {
         position: relative;
         color: whitesmoke;
     }
+
+    
     #header .phone{
         display: flex;
     }
@@ -755,5 +768,8 @@ to {
     #contact .title h2{
         font-size: 2rem;
 
+    }
+    #photos .photo-elem.active{
+        background-attachment: fixed;
     }
 }
