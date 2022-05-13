@@ -36,6 +36,7 @@ hr.rounded {
      top: 0;
      width: 100vw;
      height: auto;
+     backdrop-filter: blur(3px);
  }
 
  #header span{
@@ -131,7 +132,7 @@ hr.rounded {
 
 
 #header .nav-list ul li:hover a{
-    color:#7d09ca;
+    color:#a15dee;
     transition: .5s ease color;
 }
 
@@ -225,19 +226,50 @@ hr.rounded {
     display: block;
     font-weight: lighter;
     width: fit-content;
-    font-size: 5rem;
-    /* font-size: 3.8vw; */
+    font-size: 3rem;
     position: relative;
-    color: whitesmoke;
+    color: #a15dee;
     
 }
 
 #hero h2{
     font-family: 'Poppins', sans-serif;
     font-weight: bolder;
+    color: #FFFFFF;
     animation: glow 1s ease-in-out infinite alternate;
+    margin-bottom: 16px;
+    
 }
 
+#hero p{
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    width: 0;
+    min-width: 100%;
+    text-align: justify;
+    line-height: 1.5;
+}
+#hero .contact{
+    color: #FFFFFF;
+    padding: 10px 20px;
+    background-color: #a15dee;
+    block-size: fit-content;
+    box-sizing: border-box;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    box-shadow: 0px 0px 10px 1px #a15dee;
+    margin-top: 70px;
+    font-size: 1.5rem;
+    transition: 0.3s ease box-shadow, 1s ease background-color, 1s ease color;
+}
+#hero .contact:hover{
+    box-shadow: 0px 0px 50px 10px #a15dee;
+    background-color: white;
+    color: #a15dee;
+    cursor: pointer;
+}
 
 #hero .hero{
     max-width: 1200px;
@@ -254,11 +286,11 @@ hr.rounded {
   
 @-webkit-keyframes glow {
 from {
-	text-shadow: 0 0 20px #7d09ca, 0 0 0px white
+	text-shadow: 0 0 20px #a15dee, 0 0 0px white
 }
 
 to {
-    text-shadow: 0 0 50px #7d09ca, 0 0 7px white
+    text-shadow: 0 0 50px #a15dee, 0 0 5px white
 } 
 }
 
@@ -558,8 +590,15 @@ to {
     font-weight: normal;
     color: #483455;
 }
-#contact .elements{
-    margin: 50px;
+#contact .contact-columns{
+    display: flex;
+    flex-direction: column;
+}
+
+#contact .contact-columns .elements{
+    margin: 20px 20px;
+    border: solid 1px rgb(202, 200, 200);
+    border-radius: 10px;
 }
 #contact .contact-elem{
     display: flex;
@@ -591,13 +630,13 @@ to {
     color: #483455;
 }
 
-#contact .email{
+#contact .contact-columns .email{
     display: flex;
     flex-direction: column;;
-    margin: 20px 20px;
+    margin: 0px 20px;
 }
 
-#contact .email label{
+#contact .contact-columns .email label{
     font-size: 1.5rem;
     font-family: 'Poppins', sans-serif;
     font-weight: normal;
@@ -682,11 +721,11 @@ to {
         display: none;
     }
     #hero .hero h1, h2{
-        display: block;
-        width: fit-content;
-        font-size: 3.8vw;
-        position: relative;
-        color: whitesmoke;
+        font-size: 4vw;
+    }
+
+    #hero .hero h1{
+        font-size: 1.8vw;
     }
 
     
@@ -746,13 +785,25 @@ to {
         font-size: 5rem;
     }
 
-    
-
-    #contact .contact .elements{
-        width: 100%;
+    #contact .contact-columns{
+        width: 50%;
         display: flex;
-        flex-direction: row;
+        flex-direction: row-reverse;
+        margin: 20px;
+    }
+    
+    #contact .contact-columns .elements{
+        width: 50%;
+        display: flex;
+        flex-direction: column;
         justify-content: center;
+        margin: 20px 20px 100px 20px;
+    }
+
+    #contact .contact-columns .email{
+        width: 50%;
+    }
+
     }
     #contact .contact .elements h1{
         font-size: 2rem;
