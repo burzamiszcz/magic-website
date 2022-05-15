@@ -347,7 +347,10 @@ to {
     object-fit: contain;
     border-radius: 5%;
     box-shadow: #483455 0 0 0.5em;
+    z-index: -1;
+    
 }
+
 
 
 #services .services {
@@ -583,6 +586,7 @@ to {
     position: relative;
     color: #483455;
     margin-top: 30px;
+    text-align: center;
 }
 #contact .title h2{
     font-size: 3vw;
@@ -599,31 +603,52 @@ to {
     margin: 20px 20px;
     border: solid 1px rgb(202, 200, 200);
     border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
-#contact .contact-elem{
+
+#contact .contact-columns .elements h1{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bolder;
+    color: #483455;
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+#contact .contact-columns .elements .contact-elem{
     display: flex;
     flex-direction: row;
     justify-content:flex-start;
     margin: 10px 25px;
+    width: 80%;
 } 
 
-#contact .contact-elem .logo{
+#contact .contact-columns .elements hr.rounded{
+    margin-top: 20px;
+}
+
+#contact .contact-columns .elements .contact-elem .logo{
     display: flex;
     align-items: center;
     justify-content: center;
 }
-#contact .contact-elem .info {
+#contact .contact-columns .elements .contact-elem .info {
     margin: 10px;
 }
 
-#contact .contact-elem .info h1{
+#contact .contact-columns .elements .contact-elem .info h1{
     font-size: 2rem;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     color: #483455;
+    text-align: left;
+    margin-top: 0px;
 }
 
-#contact .contact-elem .info h2{
+#contact .contact-columns .elements .contact-elem .info h2{
     font-size: 1.5rem;
     font-family: 'Poppins', sans-serif;
     font-weight: normal;
@@ -683,7 +708,7 @@ to {
 #contact .email .button:hover{
     background-color: white;
     color: #6A0ED6;
-    box-shadow: 0px 0px 5px#6A0ED6;
+    box-shadow: 0px 0px 5px #6A0ED6;
     cursor: pointer;
 }
 
@@ -797,6 +822,7 @@ to {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
         margin: 20px 20px 100px 20px;
     }
 
@@ -804,7 +830,6 @@ to {
         width: 50%;
     }
 
-    }
     #contact .contact .elements h1{
         font-size: 2rem;
     }
