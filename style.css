@@ -221,62 +221,77 @@ hr.rounded {
     opacity: .3;
     z-index: -1;
 }
+#hero .hero{
+    color: white;
+    align-items: flex-end;
+    font-family: 'Poppins', sans-serif;
 
+}
+#hero .hero-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px 30px 20px;
+}
 #hero h1, h2{
-    display: block;
-    font-weight: lighter;
-    width: fit-content;
     font-size: 3rem;
-    position: relative;
-    color: #a15dee;
-    
+    color: #C89DFB;
+    font-weight: lighter;
 }
 
 #hero h2{
-    font-family: 'Poppins', sans-serif;
+    color: white;
+    font-size: 10vw;
     font-weight: bolder;
-    color: #FFFFFF;
-    animation: glow 1s ease-in-out infinite alternate;
-    margin-bottom: 16px;
-    
+    display: inline-block;
 }
 
 #hero p{
-    color: #FFFFFF;
+    font-family: 'Lato', sans-serif;
     font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 40px;
     width: 0;
     min-width: 100%;
     text-align: justify;
-    line-height: 1.5;
+    
+
+}
+
+#hero .hero .buttons{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 #hero .contact{
-    color: #FFFFFF;
-    padding: 10px 20px;
-    background-color: #a15dee;
-    block-size: fit-content;
-    box-sizing: border-box;
-    display: inline-block;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50px;
-    box-shadow: 0px 0px 10px 1px #a15dee;
-    margin-top: 70px;
+    
+    background-color: #812AE9;
+    padding: 8px;
     font-size: 1.5rem;
-    transition: 0.3s ease box-shadow, 1s ease background-color, 1s ease color;
+    border-radius: 1000px;
+    width: 80%;
+    text-align: center;
+    margin: 10px 10px 10px 0px;
+    box-shadow: 0 0 40px #812AE9;
+    max-width: 350px;
+    font-weight: lighter;
 }
+#hero .offer{
+    background-color: transparent;
+    border: solid 1px #812AE9;
+    box-shadow: none;
+}
+
 #hero .contact:hover{
-    box-shadow: 0px 0px 50px 10px #a15dee;
+    box-shadow: 0px 0px 50px 10px #812AE9;
     background-color: white;
-    color: #a15dee;
+    color: #812AE9;
     cursor: pointer;
 }
 
-#hero .hero{
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    justify-content: flex-start;
-}
+
 
 .glow {
     font-weight: 50;
@@ -702,7 +717,7 @@ to {
     align-items: center;
     justify-content: center;
     transition: .2s ease background-color, box-shadow;
-    min-width: 265px;
+    min-width: 165px;
 }
 
 #contact .email .button:hover{
@@ -745,15 +760,27 @@ to {
     #header .nav-list ul a::after{
         display: none;
     }
-    #hero .hero h1, h2{
-        font-size: 4vw;
+    
+    #hero .hero{
+        align-items: center;
+        justify-content: flex-start;
+        padding-left: 200px;
+    }
+    #hero .hero .hero-div{
+        align-items: flex-start;
+    }
+    #hero .hero h2{
+        font-size: 6rem;
     }
 
     #hero .hero h1{
-        font-size: 1.8vw;
+        font-size: 3rem;
     }
 
     
+    #hero .hero .buttons{
+        flex-wrap: nowrap;
+    }
     #header .phone{
         display: flex;
     }
