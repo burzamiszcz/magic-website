@@ -22,7 +22,7 @@ a {
 }
 
 hr.rounded {
-    border-top: 1px solid #6A0ED6;
+    border: 1px solid #6A0ED6;
     border-radius: 5px;
     min-width: 50px;
     max-width: 50px;
@@ -252,11 +252,12 @@ hr.rounded {
     font-size: 1.5rem;
     text-align: center;
     margin-bottom: 40px;
+    margin-top: 20px;
     width: 0;
     min-width: 100%;
-    text-align: justify;
+    text-align: center;
+    line-height: 2;
     
-
 }
 
 #hero .hero .buttons{
@@ -277,6 +278,8 @@ hr.rounded {
     box-shadow: 0 0 40px #812AE9;
     max-width: 350px;
     font-weight: lighter;
+    transition: .5s ease background-color, .2s ease box-shadow;
+
 }
 #hero .offer{
     background-color: transparent;
@@ -285,7 +288,14 @@ hr.rounded {
 }
 
 #hero .contact:hover{
-    box-shadow: 0px 0px 50px 10px #812AE9;
+    box-shadow: 0px 0px 50px 7px #812AE9;
+    background-color: white;
+    color: #812AE9;
+    cursor: pointer;
+}
+
+#hero .contact.offer:hover{
+    box-shadow: none;
     background-color: white;
     color: #812AE9;
     cursor: pointer;
@@ -320,54 +330,136 @@ to {
     }
 }
 
+#about{
+    box-shadow: #483455 0 0 0.5rem;
+    background-image: url(./img/aboutme-background.jpg);
+    background-size: cover;
+    background-position: top center;
+    position: relative;
+    z-index: 1;
+}
+
 #about .about {
 	text-align: center;
 	max-width: 1400px;
 	margin: 0 auto;
-	padding: 100px 20px;
+	padding: 100px 10px;
     align-items: center;
     justify-content: space-around;
-    background-color: white;
     flex-direction: column;
 }
 #about .col-left {
-    width: 75%;
+    width: 85%;
 }
 #about .col-right {
     display: flex;
     flex-direction: column;
 	width: 90%;
-    align-items: center;
+    align-items: flex-start;
 }
 #about .col-right h1{
     font-family: 'Poppins', sans-serif;
     font-weight: bolder;
     display: block;
-    font-size: 5vw;
-    margin-top: 20px;
+    font-size: 8vw;
     /* font-size: 3.8vw; */
     position: relative;
-    color: #483455;
-    margin-bottom: 10px;
+    color: white;
 }
 #about .col-right p{
     font-family: 'Lato', sans-serif;
     text-align: justify;
     font-size: 1.5rem;
     line-height: 3rem;
+    color: white;
 }
 #about .col-left .about-img img{
     height: 100%;
     width: 100%;
     object-fit: contain;
-    border-radius: 5%;
-    box-shadow: #483455 0 0 0.5em;
     z-index: -1;
-    
+    box-shadow: -15px -15px 1px #ffffff15;
 }
 
+#about .col-right .photos{
+    background-color: #812AE9;
+    color: white;
+    padding: 12px;
+    font-size: 1.5rem;
+    border-radius: 1000px;
+    width: 70%;
+    text-align: center;
+    box-shadow: 0 0 40px #812AE9;
+    max-width: 350px;
+    font-weight: lighter;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: .5s ease background-color, .2s ease box-shadow;
+}
 
+#about .col-right .photos:hover{
+    box-shadow: 0px 0px 50px 7px #812AE9;
+    background-color: white;
+    color: #812AE9;
+    cursor: pointer;
+}
 
+#movie{
+    box-shadow: #483455 0 0 0.5rem;
+    background-image: url(./img/movie-background.jpg);
+    background-size: cover;
+    background-position: top center;
+    position: relative;
+    z-index: 1;
+}
+
+#movie .movie {
+	text-align: center;
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 100px 10px;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+#movie .movie h1{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bolder;
+    display: block;
+    font-size: 8vw;
+    /* font-size: 3.8vw; */
+    position: relative;
+    color: white;
+    margin-bottom: 30px;
+}
+#movie .movie .iframe-container{
+    overflow: hidden;
+    position: relative;
+    width:80%;
+    box-shadow: 0 0 100px #802ae93b;
+
+}
+
+#movie .movie .iframe-container::after {
+    padding-top: 150.25%;
+    display: block;
+    content: '';
+}
+
+#movie .movie .iframe-container iframe{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+}
+#services {
+    background: linear-gradient(45deg, rgba(0, 255, 242, 0.247) 0%, rgb(255, 255, 255) 33%, rgb(255, 255, 255) 66%, rgba(189, 143, 245, 0.247) 100%);
+
+}
 #services .services {
 	text-align: center;
 	max-width: 1400px;
@@ -375,9 +467,9 @@ to {
 	padding: 100px 20px;
     align-items: center;
     justify-content: space-around;
-    background-color: white;
     flex-direction: column;
 }
+
 
 #services .title{
     justify-content: center;
@@ -797,8 +889,21 @@ to {
         flex-direction: row;
     }
 
+    #about .col-right .photos{
+        margin-left: 0;
+        margin-right: 0;
+    }
+
     #services .title h1{
         font-size: 3rem;
+    }
+
+    #movie .movie h1{
+        font-size: 5rem;
+    }
+
+    #movie .movie .iframe-container::after {
+        padding-top: 56.25%;
     }
     
     #services .title  h2{
