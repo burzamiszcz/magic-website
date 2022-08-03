@@ -406,7 +406,6 @@ to {
 }
 
 #movie{
-    box-shadow: #483455 0 0 0.5rem;
     background-image: url(./img/movie-background.jpg);
     background-size: cover;
     background-position: top center;
@@ -493,6 +492,12 @@ to {
     position: relative;
     color: #483455;
 
+}
+
+#services .all-services{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 #services .all-services .service-item{
@@ -878,8 +883,13 @@ to {
     }
 
     #about .col-left {
-        width: 40%;
+        width: 50%;
     }
+
+    #about .col-left .about-img img{
+        box-shadow: -30px -30px 1px #ffffff15;
+    }
+
     #about .col-right {
         width: 40%;
         align-items: flex-start;
