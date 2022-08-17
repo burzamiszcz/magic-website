@@ -3,6 +3,7 @@ const mobile_menu = document.querySelector('.header .nav-bar .nav-list ul');
 const menu_item = document.querySelectorAll('.header .nav-bar .nav-list ul li a');
 const header = document.querySelector('.header.container');
 
+
 hamburger.addEventListener('click', ()=>{
     hamburger.classList.toggle('active');
     mobile_menu.classList.toggle('active');
@@ -10,11 +11,13 @@ hamburger.addEventListener('click', ()=>{
 
 document.addEventListener('scroll',()=>{
     var scroll_position = window.scrollY;
+
     if(scroll_position > 50) {
         header.style.backgroundColor = "#11041a99";
     }else{
         header.style.backgroundColor = 'transparent'
     }
+
 });
 
 menu_item.forEach((item) => {
@@ -25,19 +28,19 @@ menu_item.forEach((item) => {
 });
 
 
-var slides = document.querySelector('.recommendation .items').children;
-var nextSlide = document.querySelector(".recommendation .items .right-slide");
-var prevSlide = document.querySelector(".recommendation .items .left-slide");
-var totalSlides = slides.length - 1;
-var index = 1
+// var slides = document.querySelector('.recommendation .items').children;
+// var nextSlide = document.querySelector(".recommendation .items .right-slide");
+// var prevSlide = document.querySelector(".recommendation .items .left-slide");
+// var totalSlides = slides.length - 1;
+// var index = 1
 
-nextSlide.onclick = function () {
-    next("next");
-}
+// nextSlide.onclick = function () {
+//     next("next");
+// }
 
-prevSlide.onclick = function () {
-    next("prev");
-}
+// prevSlide.onclick = function () {
+//     next("prev");
+// }
 
 function next(direction) {
 
@@ -62,25 +65,37 @@ function next(direction) {
     slides[index].classList.add("active");
 }
 
+const images = document.querySelectorAll(".roll-elem img");
+let imgSrc;
+// get images src onclick
+images.forEach((img) => {
+    img.addEventListener("click", (e) => {
+        if (window.screen.width > 1200) {
+            console.log(e.target.src)
+            imgSrc = e.target.src;
+            imgModal(imgSrc);
+        }
+    });
+});
 
-// var photos = document.querySelector('.photos .all-photos').children;
-// var allPhotos = photos.length;
-// var dispPhoto = 0
 
+const main = document.querySelector('*');
+const rollItem = document.querySelector('.roll-elem');
 
-// function change(){
-//     dispPhoto ++;
-//     if (dispPhoto == allPhotos){
-//         dispPhoto = 0;
-//     }
-//     for (i=0; i < allPhotos; i++){
-//         photos[i].classList.remove("active")
-//     }
+let imgModal = (src) => {
+    header.style.display = "none";
+    const modal = document.createElement("div");
+    modal.setAttribute("class", "modal");
+    //add the modal to the main section or the parent element
+    document.querySelector("#photos").append(modal);
+    //adding image to modal
+    const newImage = document.createElement("img");
+    newImage.setAttribute("src", src);
+    modal.append(newImage)
+    modal.onclick = () =>{
+        modal.remove();
+        main.style.overflow = "";
+        header.style.display = ""
+    }
+};
 
-//     photos[dispPhoto].classList.add("active")
-
-// }
-
-// window.onload = function(){
-//     setInterval(change, 6000)
-// }
