@@ -655,7 +655,7 @@ to {
 
 #photos .photos .roll .roll-elem img{
     max-width: 100%;
-    max-height: 300px;
+    max-height: 200px;
     animation-name: unzoom;
     animation-direction: alternate-reverse;
     animation-duration: .3s;
@@ -1060,6 +1060,11 @@ to {
         box-shadow: 0px 0px 20px #7c29e24d;
         transition: .3s box-shadow;
     }
+
+    #photos .gallery h1{
+        font-size: 5rem;
+    }
+
 
     #photos .gallery .items{
         display: flex;

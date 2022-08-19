@@ -99,3 +99,6 @@ let imgModal = (src) => {
     }
 };
 
+
+const rollItem1 = document.getElementById('roll1');
+console.log(rollItem.scrollHeight)
