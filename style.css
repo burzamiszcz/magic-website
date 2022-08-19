@@ -622,6 +622,7 @@ to {
     align-items: center;
     margin-top: 100px;
     max-width: 1400px;
+    margin-bottom: 50px;
 }
 
 #photos .gallery .items{
@@ -665,6 +666,7 @@ to {
 }
 
 #photos .photos .roll .roll-elem img:hover{
+    cursor: pointer;
     animation-name: zoom1;
     animation-direction: alternate-reverse;
     animation-duration: .3s;
@@ -705,13 +707,13 @@ to {
     100%{transform: scale(1); opacity: 1}
 }
 @keyframes zoom1 {
-    0%{transform: scale(1.05); opacity: 1}
+    0%{transform: scale(1); opacity: 0.6}
     100%{transform: scale(1); opacity: 1}
 }
 
 @keyframes unzoom {
     0%{transform: scale(1); opacity: 1}
-    100%{transform: scale(1.03); opacity: 1}
+    100%{transform: scale(1); opacity: 0.6}
 }
 
 #recommendation{
@@ -739,6 +741,17 @@ to {
     margin-bottom: 30px;
 }
 
+#recommendation .recommendation .columns{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#recommendation .recommendation .columns img{
+    width: 50%;
+}
+
 #recommendation .recommendation .items{
     display: flex;
     align-items: center;
@@ -747,6 +760,10 @@ to {
 #recommendation .recommendation .items .recommendation-item.active{
     display: flex;
     flex-direction: column;
+    border: 1px solid  #7C29E2;
+    box-shadow: 0 0 100px #7c29e234;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.05);
 }
 #recommendation .recommendation .items .recommendation-item{
     display: none;
@@ -1203,10 +1220,32 @@ to {
     #recommendation .recommendation h1{
         font-size: 5rem;
     }
-
-    #recommendation .recommendation .items .recommendation-item{
-        width: 30%;
+    #recommendation .recommendation .items{
+        width: 40%;
+        
+        /* box-shadow: 0 0 10px white; */
     }
+    #recommendation .recommendation .items .recommendation-item{
+        width: 100%;
+        margin: 30px;
+    }
+
+    #recommendation .recommendation .items .recommendation-item.active{
+
+    }
+
+    #recommendation .recommendation .columns{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
+    
+    #recommendation .recommendation .columns img{
+        width: 25%;
+        margin: 30px;
+    }
+    
 
 
     #contact .contact-columns{
