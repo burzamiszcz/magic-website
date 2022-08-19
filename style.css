@@ -830,6 +830,7 @@ to {
     font-size: 3rem;
     color: #C89DFB;
     font-weight: lighter;
+    text-align: center;
 }
 #contact .contact-columns{
     display: flex;
@@ -885,7 +886,7 @@ to {
 }
 
 #contact .contact-columns .elements .contact-elem .info h2{
-    font-size: 2rem;
+    font-size: 4vw;
     font-family: 'Poppins', sans-serif;
     font-weight: normal;
     color: white;
@@ -1243,5 +1244,9 @@ to {
     }
     #photos .photo-elem.active{
         background-attachment: fixed;
+    }
+
+    #contact .contact-columns .elements .contact-elem .info h2 {
+        font-size: 2rem;
     }
 }
