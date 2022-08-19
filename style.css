@@ -647,7 +647,7 @@ to {
 #photos .gallery .items .roll-elem{
     display: flex;
     justify-content: center;    
-    margin: 5px 5px;
+    margin: 3px 3px;
     position: relative;
 
 }
@@ -701,7 +701,7 @@ to {
 }
 
 @keyframes zoom {
-    0%{transform: scale(1.03); opacity: 1}
+    0%{transform: scale(1.1); opacity: 0}
     100%{transform: scale(1); opacity: 1}
 }
 
@@ -710,32 +710,69 @@ to {
     100%{transform: scale(1.03); opacity: 1}
 }
 
-#photos .recommendation .items .recommendation-item.active{
+#recommendation{
+    box-shadow: #483455 0 0 0.5rem;
+    background-image: url(./img/aboutme-background.jpg);
+    background-size: cover;
+    background-position: top center;
+    position: relative;
+    z-index: 1;
+}
+
+#recommendation .recommendation{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#recommendation .recommendation h1{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bolder;
+    display: block;
+    font-size: 8vw;
+    position: relative;
+    color: white;
+    margin-bottom: 30px;
+}
+
+#recommendation .recommendation .items{
+    display: flex;
+    align-items: center;
+}
+#recommendation .recommendation .items .recommendation-item.active{
     display: flex;
     flex-direction: column;
 }
+#recommendation .recommendation .items .recommendation-item{
+    display: none;
+    flex-direction: column;
+    animation: zoom 1s ease;
+}
 
-#photos .recommendation .items .recommendation-item h2{
+#recommendation .recommendation .items .recommendation-item h2{
     font-family: 'Poppins', sans-serif;
     font-weight: bolder;
     width: fit-content;
-    font-size: calc(20px + .5vw);
-    color: #483455;
-    margin: 0px 30px;
+    font-size: calc(30px + .5vw);
+    color:#C89DFB;
+    margin: 5px 10px;
 }
 
-#photos .recommendation .items .recommendation-item p{
+#recommendation .recommendation .items .recommendation-item p{
     font-family: 'Lato', sans-serif;
-    line-height: 1.7;
-    font-size: 1.5rem;
-    margin: 0px 30px;
     text-align: justify;
+    font-size: 1.5rem;
+    line-height: 3rem;
+    color: white;
+    margin: 10px;
 }
 
-#photos .recommendation .items .left-slide, .right-slide{
+#recommendation .recommendation .items .left-slide, .right-slide{
     font-size: 14px;
-    background-color: #4834553d;
+    background-color: #c79dfb60;
+    box-shadow: 0 0 10px #c79dfb60;
     border-radius: 50%;
+    padding: 15px;
     color: white;
     text-align: center;
     display: flex;
@@ -744,10 +781,21 @@ to {
     width: 20px;
     height: 20px;
     transition: .3s ease background-color;
+    position: relative;
+    z-index: 10;
+    margin: 10px
 }
-#photos .recommendation .items .left-slide:hover, .right-slide:hover{
+#recommendation .recommendation .items .left-slide:hover, .right-slide:hover{
     background-color: #483455;
     cursor: pointer;
+}
+
+#contact{
+    background-image: url(./img/movie-background.jpg);
+    background-size: cover;
+    background-position: top center;
+    position: relative;
+    z-index: 1;
 }
 
 #contact .contact{
@@ -767,18 +815,16 @@ to {
     font-family: 'Poppins', sans-serif;
     font-weight: bolder;
     display: block;
-    width: fit-content;
-    font-size: 5vw;
+    font-size: 8vw;
     position: relative;
-    color: #483455;
-    margin-top: 30px;
+    color: white;
+    margin-bottom: 30px;
     text-align: center;
 }
 #contact .title h2{
-    font-size: 3vw;
-    font-family: 'Poppins', sans-serif;
-    font-weight: normal;
-    color: #483455;
+    font-size: 3rem;
+    color: #C89DFB;
+    font-weight: lighter;
 }
 #contact .contact-columns{
     display: flex;
@@ -787,7 +833,6 @@ to {
 
 #contact .contact-columns .elements{
     margin: 20px 20px;
-    border: solid 1px rgb(202, 200, 200);
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -826,39 +871,41 @@ to {
 }
 
 #contact .contact-columns .elements .contact-elem .info h1{
-    font-size: 2rem;
+    font-size: 1.3rem;
     font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    color: #483455;
+    font-weight: lighter;
+    color:#C89DFB;
     text-align: left;
     margin-top: 0px;
 }
 
 #contact .contact-columns .elements .contact-elem .info h2{
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-family: 'Poppins', sans-serif;
     font-weight: normal;
-    color: #483455;
+    color: white;
+}
+#contact .contact-columns .email-background{
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 #contact .contact-columns .email{
     display: flex;
     flex-direction: column;;
-    margin: 0px 20px;
+    margin: 20px 40px;
+    margin-bottom: 0px;
 }
 
 #contact .contact-columns .email label{
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-family: 'Poppins', sans-serif;
     font-weight: normal;
-    color: #483455;
+    color: white;
 }
 
 #contact input[type=text], select, textarea, input[type=date] {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
     -webkit-appearance: none;
 }
 
@@ -879,17 +926,20 @@ to {
 
 #contact .email .button{
     display: flex;
-    margin: 20px 50px;
-    padding: 20px;
-    background-color:#6A0ED6;
+    margin: 30px 50px;
+    padding: 8px;
+    background-color: #812AE9;
+    box-shadow: 0 0 40px #812AE9;
     border-radius: 40px;
     color: #FFFFFF;
     font-size: 1.8rem;
     align-items: center;
     justify-content: center;
-    transition: .2s ease background-color, box-shadow;
+    transition: .5s ease background-color, .2s ease box-shadow;
     min-width: 165px;
+    font-size: 1.5rem;
 }
+
 
 #contact .email .button:hover{
     background-color: white;
@@ -1077,13 +1127,13 @@ to {
         display: flex;
         flex-direction: row;
         width: 100%;
-        margin: 10px 0px;
+        margin: 5px 0px;
     }
     
     #photos .gallery .items .roll-elem{
         display: flex;
         justify-content: center;    
-        margin: 0px 10px;
+        margin: 0px 5px;
     }
 
     #photos .gallery .items .roll-elem{
@@ -1143,6 +1193,15 @@ to {
     #photos .recommendation h1{
         font-size: 5rem;
     }
+
+    #recommendation .recommendation h1{
+        font-size: 5rem;
+    }
+
+    #recommendation .recommendation .items .recommendation-item{
+        width: 30%;
+    }
+
 
     #contact .contact-columns{
         width: 50%;

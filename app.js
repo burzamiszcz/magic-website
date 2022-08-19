@@ -28,19 +28,19 @@ menu_item.forEach((item) => {
 });
 
 
-// var slides = document.querySelector('.recommendation .items').children;
-// var nextSlide = document.querySelector(".recommendation .items .right-slide");
-// var prevSlide = document.querySelector(".recommendation .items .left-slide");
-// var totalSlides = slides.length - 1;
-// var index = 1
+var slides = document.querySelector('.recommendation .items').children;
+var nextSlide = document.querySelector(".recommendation .items .right-slide");
+var prevSlide = document.querySelector(".recommendation .items .left-slide");
+var totalSlides = slides.length - 1;
+var index = 1
 
-// nextSlide.onclick = function () {
-//     next("next");
-// }
+nextSlide.onclick = function () {
+    next("next");
+}
 
-// prevSlide.onclick = function () {
-//     next("prev");
-// }
+prevSlide.onclick = function () {
+    next("prev");
+}
 
 function next(direction) {
 
