@@ -626,7 +626,7 @@ to {
 
 #photos .gallery .items{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-around;
     align-items: center;
 
@@ -634,7 +634,7 @@ to {
 
 #photos .gallery .items .roll{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     margin: 5px 0px;
     overflow: auto;
@@ -647,8 +647,7 @@ to {
 #photos .gallery .items .roll-elem{
     display: flex;
     justify-content: center;    
-    margin: 0px 5px;
-    flex-shrink: 0;
+    margin: 5px 5px;
     position: relative;
 
 }
@@ -697,7 +696,7 @@ to {
     }
 }
 .modal img {
-    width: 50%;
+    width: 90%;
     object-fit: cover;
 }
 

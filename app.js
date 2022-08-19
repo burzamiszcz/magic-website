@@ -70,7 +70,7 @@ let imgSrc;
 // get images src onclick
 images.forEach((img) => {
     img.addEventListener("click", (e) => {
-        if (window.screen.width > 1200) {
+        if (window.screen.width > 0) {
             console.log(e.target.src)
             imgSrc = e.target.src;
             imgModal(imgSrc);
