@@ -72,7 +72,7 @@ images.forEach((img) => {
     img.addEventListener("click", (e) => {
         if (window.screen.width > 0) {
             console.log(e.target.outerHTML.slice(36, 62).replace(/'/g, " "))
-            imgSrc = e.target.outerHTML.slice(36, 62).replace(/'/g, " ");
+            imgSrc = e.target.outerHTML.slice(35, 62).replace(/'/g, " ");
             imgModal(imgSrc);
         }
     });
