@@ -631,6 +631,7 @@ to {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    width: 100%;
 
 }
 
@@ -651,7 +652,17 @@ to {
     justify-content: center;    
     margin: 3px 3px;
     position: relative;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
 
+}
+
+
+#photos .gallery .items .roll-elem:after{
+    content: "";
+    display: block;
+    padding-bottom: 100%;
 }
 
 #photos .photos .roll .roll-elem img{
@@ -930,6 +941,7 @@ to {
 #contact input[type=text], select, textarea, input[type=date] {
     width: 100%;
     padding: 12px;
+    margin-bottom: 20px;
     /* -webkit-appearance: none; */
 }
 
@@ -948,6 +960,7 @@ to {
     margin-right: 10px;
 }
 
+
 #contact .email .button{
     display: flex;
     margin: 30px 50px;
@@ -962,6 +975,7 @@ to {
     transition: .5s ease background-color, .2s ease box-shadow;
     min-width: 165px;
     font-size: 1.5rem;
+    border: none;
 }
 
 
@@ -1158,6 +1172,10 @@ to {
         display: flex;
         justify-content: center;    
         margin: 0px 5px;
+        height: 200px;
+        width: 200px;
+        background-size: cover;
+        background-position: center;
     }
 
     #photos .gallery .items .roll-elem{
@@ -1179,7 +1197,7 @@ to {
     
     }
     
-    #photos .photos .roll .roll-elem img:hover{
+    #photos .photos .roll .roll-elem:hover{
         animation-name: zoom1;
         animation-direction: alternate-reverse;
         animation-duration: .3s;

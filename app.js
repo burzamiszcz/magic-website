@@ -65,14 +65,14 @@ function next(direction) {
     slides[index].classList.add("active");
 }
 
-const images = document.querySelectorAll(".roll-elem img");
+const images = document.querySelectorAll(".roll-elem");
 let imgSrc;
 // get images src onclick
 images.forEach((img) => {
     img.addEventListener("click", (e) => {
         if (window.screen.width > 0) {
-            console.log(e.target.src)
-            imgSrc = e.target.src;
+            console.log(e.target.outerHTML.slice(36, 62).replace(/'/g, " "))
+            imgSrc = e.target.outerHTML.slice(36, 62).replace(/'/g, " ");
             imgModal(imgSrc);
         }
     });
