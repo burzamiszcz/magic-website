@@ -208,7 +208,7 @@ hr.rounded {
 
 #hero{
     box-shadow: #483455 0 0 0.5rem;
-    background-image: url(./img/hero-background.jpg);
+    background-image: url(./img/background-hero-mobile.png);
     background-size: cover;
     background-position: top center;
     position: relative;
@@ -1008,6 +1008,15 @@ to {
 
     * {
         overflow-x: visible
+    }
+
+    #hero{
+        box-shadow: #483455 0 0 0.5rem;
+        background-image: url(./img/hero-background.jpg);
+        background-size: cover;
+        background-position: top center;
+        position: relative;
+        z-index: 1;
     }
     
     #header .hamburger{
