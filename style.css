@@ -1050,7 +1050,10 @@ to {
         z-index: 1;
     }
     
-    #header .hamburger{
+    #header .hamburger, .hamburger2{
+        display: none;
+    }
+    #header .hamburger2{
         display: none;
     }
     #header .nav-list ul{
