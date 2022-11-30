@@ -999,7 +999,7 @@ to {
 
 #contact .email-send h1{
     font-family: 'Poppins', sans-serif;
-    font-weight: bolder;
+    font-weight: lighter;
     display: block;
     font-size: 6vw;
     position: relative;
@@ -1055,6 +1055,33 @@ to {
 
 #contact .end-rabbit img{
     object-position: 30px 60px;
+}
+
+#contact .back-to-main{
+    background-color: #812AE9;
+    color: white;
+    padding: 12px;
+    font-size: 1.5rem;
+    border-radius: 1000px;
+    width: 70%;
+    text-align: center;
+    box-shadow: 0 0 40px #812AE9;
+    max-width: 350px;
+    font-weight: lighter;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: .5s ease background-color, .2s ease box-shadow;
+}
+
+#contact .back-to-main:hover{
+
+    box-shadow: 0px 0px 50px 7px #812AE9;
+    background-color: white;
+    color: #812AE9;
+    cursor: pointer;
+
 }
 
 @media only screen and (min-width: 1200px){
