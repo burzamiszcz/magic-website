@@ -1223,6 +1223,8 @@ to {
 
 }
 
+
+
 @media only screen and (min-width: 1200px){
 
     * {
@@ -1266,7 +1268,6 @@ to {
     }
 
     #cookie-banner{
-        height: 15%;
         font-size: 14px;
       	transition: all 1s ease;
 
@@ -1290,7 +1291,7 @@ to {
         align-items: flex-start;
     }
     #hero .hero h2{
-        font-size: 8rem;
+        font-size: 7rem;
     }
 
     #hero .hero h1{
@@ -1529,6 +1530,7 @@ to {
         display: flex;
         flex-direction: row-reverse;
         margin: 20px;
+        width: 60%;
     }
     
     #contact .contact-columns .elements{
@@ -1537,7 +1539,7 @@ to {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin: 20px 20px 100px 20px;
+        margin: 20px 0px 100px 0px;
     }
 
     #contact .contact-columns .email{
@@ -1570,4 +1572,16 @@ to {
         font-size: 3rem;
     }
 
+    #contact .contact-columns .email-background{
+        background-color: rgba(255, 255, 255, 0.15);
+        width: 40%;
+        min-width: 400px;
+    }
+
+}
+
+@media only screen and (min-width: 1450px){
+    #hero .hero h2{
+        font-size: 8rem;
+    }
 }
