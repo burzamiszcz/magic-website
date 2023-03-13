@@ -5,13 +5,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="/path/to/flickity.css" media="screen">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-  <title>Iluzjonista Hubert Burzyński</title>
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+  <title>Iluzjonista Hubert Burzyński - magik na każdą okazje!</title>
+  
 </head>
 
+
 <body>
+       <div id="cookie-banner">
+        <p>Używamy plików cookie i podobnych technologii, które umożliwiają działanie usług i funkcjonalności w naszej witrynie oraz pomagają nam zrozumieć interakcje z naszymi usługami. Klikając przycisk Akceptuj, zgadzasz się na stosowanie przez nas tych technologii w celach marketingowych i analitycznych</p>
+       <a href="polityka-prywatnosci.html">Dowiedz się więcej</a>
+        <div class="buttons-cookie">
+            <div class="button-cookie" onclick="acceptCookies()">Akceptuj</div>
+            <div class="button-cookie-decline" onclick="declineCookies()">Odrzuć</div>
+      	</div>
+    </div>
+  <script>
+  window.onload = function () {
+    if (getCookie("cookies_accepted") == null) {
+    document.getElementById("cookie-banner").classList.add('active');
+    document.getElementById("cookies-youtube").classList.add('active');
+  }
+ </script>
      <!-- Header section-->
     <section id="header">
         <div class="header container">
@@ -84,12 +100,16 @@
             <div class="movie container">
                 <h1>Film promocyjny</h1>
                 <div class="iframe-container">
-                    <iframe width="1920" height="1080" src="https://www.youtube.com/embed/Fh7-FLVOv_g"
+                    <iframe width="1920" height="1080" src="" id="youtube"
                      title="YouTube video player" 
                      frameborder="0"
                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                     allowfullscreen></iframe>            
-                    </div>
+                     allowfullscreen></iframe>
+                  	<div class="cookies-youtube" id="cookies-youtube">
+                        <p>Wyraź zgodę na pliki cookies, aby zobaczyć materiał wideo.</p>
+                      <div class="button-cookie" onclick="acceptCookies()">Akceptuj</div>
+                    </div>  
+              	</div>
             </div>
         </section>
         <!-- End movie section-->
@@ -301,20 +321,22 @@
                     </div>
                 </div>
                 <div class="email-background">
-                    <form action="https://formsubmit.co/burzynskihubert@gmail.com" method="POST">
+                    <form action="sendmail.php" method="POST">
                     <div class="email">
-                        <input type="hidden" name="_url" value="http://iluzjonistahubertburzynski.pl/thanks-for-contact.html">
                         <label for="name">Imie nazwisko:</label>
-                        <input type="text" id="name" name="name">
+                        <input type="text" id="name" name="name" required>
                         <label for="phone">Numer telefonu:</label>
-                        <input type="text" id="phone" name="phone">
+                        <input type="text" id="phone" name="phone" required>
                         <label for="email">Adres email:</label>
-                        <input type="text" id="email" name="email">
+                        <input type="text" id="email" name="email" required>
                         <label for="description">Krótki opis wydarzenia</label>
-                        <textarea id="description" name="description" placeholder="Napisz krótko, co to za wydarzenie, z jakiej okazji.." style="height:100px"></textarea>
+                        <textarea id="description" name="message" placeholder="Napisz krótko, co to za wydarzenie, z jakiej okazji.." style="height:100px"></textarea>
+                        <label style="width: 0; min-width: 100%; font-size: 1rem; text-align: justify;" required>
+                            <input type="checkbox" name="agree" required>
+                            Przez wysłanie tego formularza wyrażam zgodę na przetwarzanie moich danych osobowych przez iluzjoniste Hubert Burzyńskiego w celu udzielenia odpowiedzi na moje zapytanie. Rozumiem, że moje dane będą przetwarzane zgodnie z <a style="color: white" href="polityka-prywatnosci.html"><u>Polityką Prywatności</u></a> oraz zgodnie z obowiązującymi przepisami o ochronie danych osobowych.
+                          </label>
                         <button type="submit" class="button">Wyślij wiadomość</button>
                         
-                        <input type="hidden" name="_captcha" value="false">
                     </div>
                     <!-- <div class="email-send">
                         <h1>Dziękuje za kontakt!<br><br>
@@ -332,5 +354,7 @@
     <!-- End contact section  -->
 
     <script src="./app.js"></script>
+      <script src="./cookies.js"></script>
+
 </body>
 </html>
