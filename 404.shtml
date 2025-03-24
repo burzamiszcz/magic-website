@@ -29,13 +29,11 @@
                 <div class="email-background">
 
                     <div class="email-send">
-                        <h1><b>Dziękuje za kontakt</b>!<br><br>
-                            Wiadomość została wysłana.
-                            
-                        </h1>
+                        <h1><b>Szukasz prawdziwego MAGIKA?</b><br><br>
+                            Świetnie trafiłeś!</h1>
                         <hr class="rounded">
                             <!-- <a href="index.html#"><h2 style="margin-bottom: 100px; cursor: pointer; text-shadow: 0 0 10px #812AE9;">Powróć na strone główną</h2><a> -->
-                                <div onclick="location.href='index.html#';" class="back-to-main">Wróć na stronę główną</div>
+                                <div onclick="location.href='index.html#';" class="back-to-main">PRZEJDŹ DO STRONY<br>Iluzjonista Hubert Burzyński</div>
 
                         
                     </div>

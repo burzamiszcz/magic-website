@@ -39,7 +39,14 @@ function acceptCookies() {
     document.getElementById("cookies-youtube").classList.remove('active');
 
     var youtube = document.getElementById("youtube");
-    youtube.src = "https://www.youtube.com/embed/Fh7-FLVOv_g"
+    var youtubeDzieci = document.getElementById("youtube-dzieci");
+
+    if (youtubeDzieci) {
+        youtubeDzieci.src = "https://www.youtube.com/embed/v75OTeV5Jy8?si=1k5ybYjbJoonA5xJ"
+    } else {
+        youtube.src = "https://www.youtube.com/embed/Fh7-FLVOv_g";
+    }
+
   	document.head.appendChild(scriptElement);
     document.head.appendChild(scriptElement2);
 }
@@ -56,7 +63,13 @@ window.onload = function () {
     }
     else{
         var youtube = document.getElementById("youtube");
-        youtube.src = "https://www.youtube.com/embed/Fh7-FLVOv_g"
+        var youtubeDzieci = document.getElementById("youtube-dzieci");
+
+        if (youtubeDzieci) {
+            youtubeDzieci.src = "https://www.youtube.com/embed/v75OTeV5Jy8?si=1k5ybYjbJoonA5xJ"
+        } else {
+            youtube.src = "https://www.youtube.com/embed/Fh7-FLVOv_g";
+        }
         document.head.appendChild(scriptElement);
         document.head.appendChild(scriptElement2);
 

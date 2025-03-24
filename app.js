@@ -2,6 +2,7 @@ const hamburger = document.querySelector('.header .nav-bar .nav-list .hamburger'
 const mobile_menu = document.querySelector('.header .nav-bar .nav-list ul');
 const menu_item = document.querySelectorAll('.header .nav-bar .nav-list ul li a');
 const header = document.querySelector('.header.container');
+const logo = document.querySelector('.header .logo');
 
 
 hamburger.addEventListener('click', ()=>{
@@ -14,8 +15,11 @@ document.addEventListener('scroll',()=>{
 
     if(scroll_position > 50) {
         header.style.backgroundColor = "#11041a99";
+        logo.style.opacity = "0"
     }else{
         header.style.backgroundColor = 'transparent'
+        logo.style.opacity = "0.8"
+
     }
 
 });
@@ -71,8 +75,10 @@ let imgSrc;
 images.forEach((img) => {
     img.addEventListener("click", (e) => {
         if (window.screen.width > 0) {
-            console.log(e.target.outerHTML.slice(36, 62).replace(/'/g, " "))
-            imgSrc = e.target.outerHTML.slice(35, 62).replace(/'/g, " ");
+            var style = window.getComputedStyle(e.target)
+            var backgroundImage = style.backgroundImage
+            var imgSrc = backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '');
+            console.log(imgSrc)
             imgModal(imgSrc);
         }
     });

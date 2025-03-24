@@ -18,6 +18,7 @@ html {
 }
 a {
 	text-decoration: none;
+    color: white;
 }
 
 #cookie-banner{
@@ -142,6 +143,8 @@ hr.rounded {
  #header span{
     color:white
 }
+ #header .logo{
+    display: none;}
 
  #header .header{
      min-height: 8vh;
@@ -204,7 +207,7 @@ hr.rounded {
     font-size: 2.5rem;
     font-family: 'Lato', sans-serif;
     font-weight: 500;
-    letter-spacing: .3rem;
+    letter-spacing: .1rem;
     text-decoration: none;
     color: whitesmoke;
     /* text-transform: uppercase; */
@@ -364,10 +367,22 @@ hr.rounded {
 }
 #hero .hero-div{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 }
+
+#hero .hero-div .hero-main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#hero .hero-div .social-media{
+    display: none;
+}
+
 #hero h1, h2{
     font-size: 3rem;
     color: #C89DFB;
@@ -557,6 +572,25 @@ to {
     flex-direction: column;
 }
 
+#movie .movie .social-media-phone{
+    position: absolute;
+    top: 0;
+    margin-top: 40px;
+}
+
+#movie .movie .social-media-phone ul{
+    display: flex;
+    font-size: 9vw;
+}
+#movie .movie .social-media-phone ul li{
+    display: flex;
+    margin: 0px 20px;
+}
+#movie .movie .social-media-phone ul li a, a:visited, a:focus{
+    color: #ffffffc7;
+    text-shadow: 0 0 35px #7C29E2
+}
+
 #movie .movie h1{
     font-family: 'Poppins', sans-serif;
     font-weight: bolder;
@@ -697,7 +731,7 @@ to {
     width: 50%;
 }
 
-#services .all-services .service-col .service-item h1{
+#services .all-services .service-col .service-item h3{
     margin-top: 10px;
     font-size: calc(12px + .5vw);
     font-family: 'Poppins', sans-serif;
@@ -1084,7 +1118,7 @@ to {
     margin: 10px;
 }
 
-#contact .contact-columns .elements .contact-elem .info h1{
+#contact .contact-columns .elements .contact-elem .info h3{
     font-size: 1.3rem;
     font-family: 'Poppins', sans-serif;
     font-weight: lighter;
@@ -1241,7 +1275,25 @@ to {
         position: relative;
         z-index: 1;
     }
-    
+    #header .logo{
+        display: inline;
+        position: absolute;
+        left: 0;
+        margin: 20px 40px;
+        top: 0;
+        transform-origin:top left;
+        transition: 0.3s ease transform, 0.3s ease opacity;
+        transform: scale(1.3);
+
+    }
+    #header h1 a{
+        margin-left: 100px;
+        transition: .3s ease;
+        color: white;
+    }
+    #header h1 a:hover{
+        color: #6A0ED6;
+    }
     #header .hamburger, .hamburger2{
         display: none;
     }
@@ -1261,7 +1313,7 @@ to {
         display: inline-block;
     }
     #header .nav-list ul li a{
-        font-size: 1.5rem;
+        font-size: 1.7rem;
     }
     #header .nav-list ul a::after{
         display: none;
@@ -1287,9 +1339,11 @@ to {
         justify-content: flex-start;
         padding-left: 150px;
     }
-    #hero .hero .hero-div{
+
+    #hero .hero .hero-main{
         align-items: flex-start;
     }
+
     #hero .hero h2{
         font-size: 7rem;
     }
@@ -1306,6 +1360,38 @@ to {
     #hero .hero .buttons{
         flex-wrap: nowrap;
     }
+    #hero .hero-div .social-media{
+        display: flex;
+        position: absolute;
+        right: 0;
+    }
+    #hero .hero-div .social-media ul{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 40px;
+        font-size: 4rem;
+    
+    }
+    #hero .hero-div .social-media ul li{
+        margin: 20px;
+        list-style-type: none;
+    }
+    
+    #hero .hero-div .social-media ul li a, a:visited, a:focus{
+        color: #ffffffb7;
+        transition: 0.3s ease transform, 0.3s ease color;    
+    }
+    #hero .hero-div .social-media ul li a:hover{
+        color: #FFFFFF;
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+
+    #movie .movie .social-media-phone{
+        display: none;
+    }
+
     #header .phone{
         display: flex;
     }
@@ -1358,7 +1444,7 @@ to {
         margin: 0 15px
     }
 
-    #services .all-services .service-col .service-item h1{
+    #services .all-services .service-col .service-item h3{
         font-size: 2rem;
         display: inline-block;
     }
@@ -1392,6 +1478,8 @@ to {
         flex: 1 1 0;
         min-height: 250px;
         margin: 15px 0px;
+        transition: .3s box-shadow;
+
         }
 
     #upupup{
@@ -1402,7 +1490,6 @@ to {
 
     #services .all-services .service-item:hover{
         box-shadow: 0px 0px 20px #7c29e24d;
-        transition: .3s box-shadow;
     }
 
     #photos .gallery h1{
@@ -1531,6 +1618,7 @@ to {
         flex-direction: row-reverse;
         margin: 20px;
         width: 60%;
+        justify-content: center;
     }
     
     #contact .contact-columns .elements{
@@ -1582,6 +1670,6 @@ to {
 
 @media only screen and (min-width: 1450px){
     #hero .hero h2{
-        font-size: 8rem;
+        font-size: 7.5rem;
     }
 }

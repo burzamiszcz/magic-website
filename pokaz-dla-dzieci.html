@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+  <title>Iluzjonista Hubert Burzyński - magik na każdą okazje!</title>
+  <meta name="description" content="Zapieram dech i oczarowuj umysły - iluzjonista wyczaruje niezapomniane chwile magii na Twoim wydarzeniu. Doświadczenie, zdumiewające sztuczki i niepowtarzalny show!"/>
+  <meta name="author" content="Hubert Burzyński">
+  <meta name="keywords" content="magik, iluzjonista, dzieci, wrocław, częstochowa, katowice, firmówka, wesele, impreza">
+
+
+
+</head>
+
+
+<body>
+       <div id="cookie-banner">
+        <p>Używamy plików cookie i podobnych technologii, które umożliwiają działanie usług i funkcjonalności w naszej witrynie oraz pomagają nam zrozumieć interakcje z naszymi usługami. Klikając przycisk Akceptuj, zgadzasz się na stosowanie przez nas tych technologii w celach marketingowych i analitycznych</p>
+       <a href="polityka-prywatnosci.html">Dowiedz się więcej</a>
+        <div class="buttons-cookie">
+            <div class="button-cookie" onclick="acceptCookies()">Akceptuj</div>
+            <div class="button-cookie-decline" onclick="declineCookies()">Odrzuć</div>
+      	</div>
+    </div>
+  <script>
+  window.onload = function () {
+    if (getCookie("cookies_accepted") == null) {
+    document.getElementById("cookie-banner").classList.add('active');
+  }}
+ </script>
+  
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EDQBFMHYGY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EDQBFMHYGY');
+</script>
+</script>
+     <!-- Header section-->
+    
+        <!-- movie section-->
+        <section id="movie">
+            <div class="movie container">
+                <h1>Pokaz dla dzieci</h1>
+                <div class="iframe-container">
+                    <iframe width="1920" height="1080" src="" id="youtube-dzieci"
+                     title="YouTube video player" 
+                     frameborder="0"
+                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                     allowfullscreen></iframe>
+                  	<div class="cookies-youtube" id="cookies-youtube">
+                        <p>Wyraź zgodę na pliki cookies, aby zobaczyć materiał wideo.</p>
+                      <div class="button-cookie" onclick="acceptCookies()">Akceptuj</div>
+                    </div>  
+              	</div>
+            </div>
+        </section>
+        <!-- End movie section-->
+
+   
+    <!-- End contact section  -->
+
+    <script src="./app.js"></script>
+      <script src="./cookies.js"></script>
+
+</body>
+</html>
