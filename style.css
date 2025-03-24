@@ -481,7 +481,7 @@ to {
 
 #about{
     box-shadow: #483455 0 0 0.5rem;
-    background-image: url(./img/aboutme-background.jpg);
+    background-image: url(./img/about-me/aboutme-background.jpg);
     background-size: cover;
     background-position: top center;
     position: relative;
@@ -937,7 +937,7 @@ to {
 
 #recommendation{
     box-shadow: #483455 0 0 0.5rem;
-    background-image: url(./img/aboutme-background.jpg);
+    background-image: url(./img/about-me/aboutme-background.jpg);
     background-size: cover;
     background-position: top center;
     position: relative;
