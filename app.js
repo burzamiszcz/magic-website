@@ -369,7 +369,7 @@ console.log(rollItem.scrollHeight)
 
 // Scroll reveal animation
 const revealElements = () => {
-    const reveals = document.querySelectorAll('#services .title, #services .service-item');
+    const reveals = document.querySelectorAll('#services .title, #services .service-item, #about .col-left, #about .col-right');
     
     reveals.forEach((element) => {
         const windowHeight = window.innerHeight;
