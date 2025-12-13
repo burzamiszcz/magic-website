@@ -245,19 +245,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const images = document.querySelectorAll(".roll-elem");
 let imgSrc;
-// get images src onclick
+let currentImageIndex = 0;
+let allImageSources = [];
+
+// Collect all image sources
 images.forEach((img) => {
+    const style = window.getComputedStyle(img);
+    const backgroundImage = style.backgroundImage;
+    const src = backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '');
+    allImageSources.push(src);
+});
+
+// Get images src onclick
+images.forEach((img, index) => {
     img.addEventListener("click", (e) => {
         if (window.screen.width > 0) {
-            var style = window.getComputedStyle(e.target)
-            var backgroundImage = style.backgroundImage
-            var imgSrc = backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '');
-            console.log(imgSrc)
+            const style = window.getComputedStyle(e.target);
+            const backgroundImage = style.backgroundImage;
+            const imgSrc = backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '');
+            currentImageIndex = index;
             imgModal(imgSrc);
         }
     });
 });
-
 
 const main = document.querySelector('*');
 const rollItem = document.querySelector('.roll-elem');
@@ -266,18 +276,92 @@ let imgModal = (src) => {
     header.style.display = "none";
     const modal = document.createElement("div");
     modal.setAttribute("class", "modal");
-    //add the modal to the main section or the parent element
-    document.querySelector("#photos").append(modal);
-    //adding image to modal
+    
+    // Close button
+    const closeBtn = document.createElement("button");
+    closeBtn.setAttribute("class", "modal-close");
+    closeBtn.innerHTML = '&times;';
+    closeBtn.onclick = (e) => {
+        e.stopPropagation();
+        closeModal();
+    };
+    
+    // Previous button
+    const prevBtn = document.createElement("button");
+    prevBtn.setAttribute("class", "modal-nav modal-prev");
+    prevBtn.innerHTML = '&#8249;';
+    prevBtn.onclick = (e) => {
+        e.stopPropagation();
+        navigateImage(-1);
+    };
+    
+    // Next button
+    const nextBtn = document.createElement("button");
+    nextBtn.setAttribute("class", "modal-nav modal-next");
+    nextBtn.innerHTML = '&#8250;';
+    nextBtn.onclick = (e) => {
+        e.stopPropagation();
+        navigateImage(1);
+    };
+    
+    // Image
     const newImage = document.createElement("img");
     newImage.setAttribute("src", src);
-    modal.append(newImage)
-    modal.onclick = () =>{
-        modal.remove();
-        main.style.overflow = "";
-        header.style.display = ""
-    }
+    newImage.setAttribute("id", "modal-image");
+    
+    modal.append(closeBtn);
+    modal.append(prevBtn);
+    modal.append(newImage);
+    modal.append(nextBtn);
+    document.querySelector("#photos").append(modal);
+    
+    // Close on background click
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    };
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', handleKeyPress);
 };
+
+function navigateImage(direction) {
+    currentImageIndex = (currentImageIndex + direction + allImageSources.length) % allImageSources.length;
+    const modalImage = document.getElementById('modal-image');
+    if (modalImage) {
+        // Add fade out
+        modalImage.style.opacity = '0';
+        
+        // Change image and fade in after short delay
+        setTimeout(() => {
+            modalImage.src = allImageSources[currentImageIndex];
+            setTimeout(() => {
+                modalImage.style.opacity = '1';
+            }, 50);
+        }, 200);
+    }
+}
+
+function closeModal() {
+    const modal = document.querySelector('.modal');
+    if (modal) {
+        modal.remove();
+    }
+    main.style.overflow = "";
+    header.style.display = "";
+    document.removeEventListener('keydown', handleKeyPress);
+}
+
+function handleKeyPress(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    } else if (e.key === 'ArrowLeft') {
+        navigateImage(-1);
+    } else if (e.key === 'ArrowRight') {
+        navigateImage(1);
+    }
+}
 
 
 const rollItem1 = document.getElementById('roll1');
