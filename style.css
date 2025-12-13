@@ -463,7 +463,7 @@ hr.rounded {
 
 #hero::after {
     content: '';
-    background: linear-gradient(90deg, rgba(0,0,0,1) 2%, rgba(0,212,255,0) 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.8) 100%);
     background-size: cover;
     background-repeat: no-repeat;
     position: absolute;
@@ -471,7 +471,6 @@ hr.rounded {
     top: 0;
     height: 100%;
     width: 100%;
-    opacity: 0.3;
     z-index: -1;
 }
 
@@ -506,10 +505,14 @@ hr.rounded {
 }
 
 #hero h2 {
-    color: white;
     font-size: 10vw;
     font-weight: bolder;
     display: inline-block;
+    background: linear-gradient(135deg, #fff 0%, #fff 40%, #C89DFB 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 20px rgba(129, 42, 233, 0.4));
 }
 
 #hero p {
@@ -633,19 +636,7 @@ hr.rounded {
     z-index: 1;
 }
 
-#about::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, 
-        rgba(0, 0, 0, 0.7) 0%, 
-        rgba(72, 52, 85, 0.5) 50%, 
-        rgba(129, 42, 233, 0.3) 100%);
-    z-index: -1;
-}
+
 
 #about .about {
     text-align: center;
@@ -804,27 +795,80 @@ hr.rounded {
 
 #movie .movie .social-media-phone ul {
     display: flex;
-    font-size: 9vw;
+    font-size: 5vw;
 }
 
 #movie .movie .social-media-phone ul li {
     display: flex;
     margin: 0 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+#movie .movie .social-media-phone ul li.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#movie .movie .social-media-phone ul li:nth-child(1).reveal {
+    transition-delay: 0.1s;
+}
+
+#movie .movie .social-media-phone ul li:nth-child(2).reveal {
+    transition-delay: 0.2s;
+}
+
+#movie .movie .social-media-phone ul li:nth-child(3).reveal {
+    transition-delay: 0.3s;
+}
+
+#movie .movie .social-media-phone ul li:nth-child(4).reveal {
+    transition-delay: 0.4s;
 }
 
 #movie .movie .social-media-phone ul li a,
 #movie .movie .social-media-phone ul li a:visited,
 #movie .movie .social-media-phone ul li a:focus {
-    color: #ffffffc7;
-    text-shadow: 0 0 35px var(--glow-purple);
+    color: white;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 #movie .movie .social-media-phone ul li a:hover {
-    color: var(--light-purple);
-    text-shadow: 0 0 50px var(--primary-purple), 
-                 0 0 25px var(--light-purple);
-    transform: translateY(-5px) scale(1.1);
+    cursor: pointer;
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(129, 42, 233, 0.6);
+    border-color: rgba(200, 157, 251, 0.5);
+}
+
+#movie .movie .social-media-phone ul li a.fa-facebook-f:hover {
+    background: linear-gradient(135deg, #1877F2, #4267B2);
+    box-shadow: 0 8px 25px rgba(24, 119, 242, 0.5);
+}
+
+#movie .movie .social-media-phone ul li a.fa-youtube:hover {
+    background: linear-gradient(135deg, #FF0000, #CC0000);
+    box-shadow: 0 8px 25px rgba(255, 0, 0, 0.5);
+}
+
+#movie .movie .social-media-phone ul li a.fa-instagram:hover {
+    background: linear-gradient(135deg, #E4405F, #FD1D1D, #F77737, #FCAF45);
+    box-shadow: 0 8px 25px rgba(228, 64, 95, 0.5);
+}
+
+#movie .movie .social-media-phone ul li a.fa-tiktok:hover {
+    background: linear-gradient(135deg, #00F2EA, #FF0050);
+    box-shadow: 0 8px 25px rgba(0, 242, 234, 0.5);
 }
 
 #movie .movie h1 {
@@ -833,11 +877,12 @@ hr.rounded {
     display: block;
     font-size: 8vw;
     position: relative;
-    color: white;
+    background: linear-gradient(135deg, #fff, #C89DFB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 20px rgba(129, 42, 233, 0.4));
     margin-bottom: 40px;
-    text-shadow: 0 0 30px rgba(129, 42, 233, 0.6), 
-                 0 0 60px rgba(129, 42, 233, 0.4),
-                 0 4px 20px rgba(0, 0, 0, 0.5);
     letter-spacing: 2px;
 }
 
@@ -1001,8 +1046,11 @@ hr.rounded {
     width: fit-content;
     font-size: 5vw;
     position: relative;
-    color: var(--dark-purple);
-    text-shadow: 0 2px 20px rgba(129, 42, 233, 0.15);
+    background: linear-gradient(135deg, var(--dark-purple), #C89DFB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 20px rgba(129, 42, 233, 0.3));
 }
 
 #services .all-services .service-col {
@@ -1179,7 +1227,11 @@ hr.rounded {
     width: fit-content;
     font-size: 5vw;
     position: relative;
-    color: var(--dark-purple);
+    background: linear-gradient(135deg, var(--dark-purple), #C89DFB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 20px rgba(129, 42, 233, 0.3));
     margin: 30px;
 }
 
@@ -1450,7 +1502,11 @@ hr.rounded {
     display: block;
     font-size: 8vw;
     position: relative;
-    color: white;
+    background: linear-gradient(135deg, #fff, #C89DFB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 20px rgba(129, 42, 233, 0.4));
     margin: 30px 0 50px;
 }
 
@@ -1650,7 +1706,8 @@ hr.rounded {
 
 /* ========== CONTACT SECTION ========== */
 #contact {
-    background-image: url(./img/movie-background.jpg);
+    box-shadow: var(--dark-purple) 0 0 0.5rem;
+    background-image: url(./img/about-me/aboutme-background.jpg);
     background-size: cover;
     background-position: top center;
     position: relative;
@@ -1676,7 +1733,11 @@ hr.rounded {
     display: block;
     font-size: 8vw;
     position: relative;
-    color: white;
+    background: linear-gradient(135deg, #fff, #C89DFB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 20px rgba(129, 42, 233, 0.4));
     margin-bottom: 30px;
     text-align: center;
 }
@@ -1695,7 +1756,6 @@ hr.rounded {
 
 #contact .contact-columns .elements {
     margin: 20px;
-    border-radius: var(--border-radius-small);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1705,7 +1765,7 @@ hr.rounded {
 #contact .contact-columns .elements h1 {
     font-family: var(--font-secondary);
     font-weight: bolder;
-    color: var(--dark-purple);
+    color: white;
     text-align: center;
     margin-top: 20px;
 }
@@ -1715,8 +1775,20 @@ hr.rounded {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    margin: 10px 25px;
+    align-items: center;
+    margin: 15px 25px;
     width: 80%;
+    transition: all 0.3s ease;
+}
+
+#contact .contact-columns .elements .contact-elem:hover {
+    transform: translateX(10px);
+}
+
+#contact .contact-columns .elements .contact-elem .logo img {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 0 10px rgba(129, 42, 233, 0.5));
 }
 
 #contact .contact-columns .elements hr.rounded {
@@ -1750,7 +1822,20 @@ hr.rounded {
 }
 
 #contact .contact-columns .email-background {
-    background-color: rgba(255, 255, 255, 0.15);
+    margin: 20px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+#contact .contact-columns .email-background:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(129, 42, 233, 0.4);
+    border-color: rgba(200, 157, 251, 0.3);
 }
 
 #contact .contact-columns .email {
@@ -1774,13 +1859,26 @@ hr.rounded {
     width: 100%;
     padding: 12px;
     margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-family: var(--font-tertiary);
+    transition: all 0.3s ease;
+}
+
+#contact input[type=text]::placeholder,
+#contact textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
 }
 
 #contact input:focus,
 #contact select:focus,
 #contact textarea:focus {
     outline: none;
-    box-shadow: 0 0 2px var(--dark-purple);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--light-purple);
+    box-shadow: 0 0 20px rgba(129, 42, 233, 0.4);
 }
 
 #contact .email-send {
@@ -1908,6 +2006,10 @@ hr.rounded {
         position: relative;
         z-index: 1;
     }
+    
+    #hero::after {
+        display: none;
+    }
     #hero .hero {
         align-items: center;
         justify-content: flex-start;
@@ -1958,14 +2060,45 @@ hr.rounded {
     #hero .hero-div .social-media ul li a,
     #hero .hero-div .social-media ul li a:visited,
     #hero .hero-div .social-media ul li a:focus {
-        color: #ffffffb7;
-        transition: var(--transition-medium) transform, var(--transition-medium) color;
+        color: #fff;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     #hero .hero-div .social-media ul li a:hover {
-        color: #FFFFFF;
-        transform: scale(1.2);
+        transform: translateY(-5px) scale(1.1);
         cursor: pointer;
+        box-shadow: 0 10px 30px rgba(129, 42, 233, 0.6);
+        border-color: rgba(200, 157, 251, 0.5);
+    }
+    
+    #hero .hero-div .social-media ul li a.fa-facebook-f:hover {
+        background: linear-gradient(135deg, #1877F2, #4267B2);
+        box-shadow: 0 10px 30px rgba(24, 119, 242, 0.5);
+    }
+    
+    #hero .hero-div .social-media ul li a.fa-youtube:hover {
+        background: linear-gradient(135deg, #FF0000, #CC0000);
+        box-shadow: 0 10px 30px rgba(255, 0, 0, 0.5);
+    }
+    
+    #hero .hero-div .social-media ul li a.fa-instagram:hover {
+        background: linear-gradient(135deg, #E4405F, #FD1D1D, #F77737, #FCAF45);
+        box-shadow: 0 10px 30px rgba(228, 64, 95, 0.5);
+    }
+    
+    #hero .hero-div .social-media ul li a.fa-tiktok:hover {
+        background: linear-gradient(135deg, #00F2EA, #FF0050);
+        box-shadow: 0 10px 30px rgba(0, 242, 234, 0.5);
     }
 
     /* Movie Desktop */
