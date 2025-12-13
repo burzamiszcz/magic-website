@@ -282,3 +282,21 @@ let imgModal = (src) => {
 
 const rollItem1 = document.getElementById('roll1');
 console.log(rollItem.scrollHeight)
+
+// Scroll reveal animation
+const revealElements = () => {
+    const reveals = document.querySelectorAll('#services .title, #services .service-item');
+    
+    reveals.forEach((element) => {
+        const windowHeight = window.innerHeight;
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < windowHeight - elementVisible) {
+            element.classList.add('reveal');
+        }
+    });
+};
+
+window.addEventListener('scroll', revealElements);
+window.addEventListener('load', revealElements);
