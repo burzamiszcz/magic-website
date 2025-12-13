@@ -465,7 +465,6 @@ hr.rounded {
 
 #hero::after {
     content: '';
-    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.8) 100%);
     background-size: cover;
     background-repeat: no-repeat;
     position: absolute;
@@ -1124,7 +1123,7 @@ hr.rounded {
 
 #services .all-services .service-col .service-item {
     position: relative;
-    margin: 10px;
+    margin: 10px 0;
     max-width: 380px;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
     backdrop-filter: blur(10px);
@@ -1135,7 +1134,6 @@ hr.rounded {
     align-items: center;
     justify-content: center;
     border-radius: 20px;
-    padding: 20px 15px;
     box-shadow: 0 4px 20px rgba(129, 42, 233, 0.1), 
                 0 2px 8px rgba(0, 0, 0, 0.05);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1200,7 +1198,7 @@ hr.rounded {
 #services .all-services .service-col .service-item h3 {
     margin-top: 10px;
     margin-bottom: 5px;
-    font-size: calc(18px + 0.5vw);
+    font-size: calc(12px + 0.5vw);
     font-family: var(--font-secondary);
     font-weight: bold;
     color: var(--dark-purple);
@@ -1215,7 +1213,7 @@ hr.rounded {
 #services .all-services .service-col .service-item p {
     font-family: var(--font-tertiary);
     line-height: 1.6;
-    font-size: 1.30rem;
+    font-size: 1.15rem;
     margin: 5px 8px;
     color: rgba(72, 52, 85, 0.85);
     transition: color 0.3s ease;
@@ -2337,10 +2335,10 @@ hr.rounded {
         align-items: center;
         justify-content: center;
         text-align: center;
-        margin: 15px 0;
+        margin: 10px 0;
         flex: 1 1 0;
-        min-height: 320px;
-        padding: 22px 16px;
+        min-height: 280px;
+        padding: 18px 14px;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         will-change: transform, box-shadow;
     }
@@ -2354,26 +2352,20 @@ hr.rounded {
     }
     
     #services .all-services .service-col .service-item p {
-        font-size: 1.1rem;
+        font-size: 1.4rem;
         line-height: 1.6;
         margin: 6px 12px;
         overflow-wrap: break-word;
         word-wrap: break-word;
         hyphens: auto;
         text-align: center;
+        max-width: 92%;
     }
     
     #services .all-services .service-col .service-item img {
-        width: 42%;
-        max-width: 75px;
+        width: 38%;
         display: block;
-        margin: 5px auto 8px auto;
-    }
-
-    #services .all-services .service-col .service-item p {
-        font-size: 1.3rem;
-        max-width: 80%;
-        display: inline-block;
+        margin: 5px auto 6px auto;
     }
 
     #services .all-services .service-col .service-item img {
