@@ -284,10 +284,15 @@
         <div class="recommendation container">
             <div class="recommendation">
                 <h1>Rekomendacje</h1>
-                <div class="columns">
-                    <img alt="krolik z kapelusza" src="./img/recommendation-rabbit.png">
-                    <div class="items">
-                        <div class="recommendation-item active">
+                <div class="carousel-container">
+                    <button class="carousel-nav carousel-nav-left" aria-label="Poprzednia opinia">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    
+                    <div class="carousel-track">
+                        <div class="recommendation-item">
                             <h2>Piotr P.</h2>
                             <p>Zaprosiliśmy Pana Huberta na imprezę firmową, aby urozmaicił nasze wydarzenie. Jego humor i magiczne efekty zachwyciły zarząd, a goście byli oczarowani. Po występie wszyscy dopytywali, czyj to był pomysł. Polecam z całego serca i z pewnością to nie ostatni raz, kiedy się spotkamy!</p>
                         </div>
@@ -306,10 +311,17 @@
                         <div class="recommendation-item">
                             <h2>Justyna L.</h2>
                             <p>Iluzjonista na firmowej imprezie to strzał w dziesiątkę! Hubert sprawił, że cała nasza drużyna była oczarowana. Niesamowite efekty magiczne, które wprowadziły niesamowitą atmosferę do naszego wydarzenia. Na pewno będziemy pamiętać to spotkanie!</p>
-                        </div>                        
-                        <div class="right-slide">></div>
+                        </div>
                     </div>
+                    
+                    <button class="carousel-nav carousel-nav-right" aria-label="Następna opinia">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
                 </div>
+                
+                <div class="carousel-indicators"></div>
             </div>
         </div>
     </section>

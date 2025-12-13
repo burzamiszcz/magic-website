@@ -12,14 +12,20 @@ hamburger.addEventListener('click', ()=>{
 
 document.addEventListener('scroll',()=>{
     var scroll_position = window.scrollY;
+    const headerElement = document.querySelector('#header');
 
     if(scroll_position > 50) {
         header.style.backgroundColor = "#11041a99";
-        logo.style.opacity = "0"
+        logo.style.opacity = "0";
+        if(headerElement) {
+            headerElement.classList.add('scrolled');
+        }
     }else{
-        header.style.backgroundColor = 'transparent'
-        logo.style.opacity = "0.8"
-
+        header.style.backgroundColor = 'transparent';
+        logo.style.opacity = "0.8";
+        if(headerElement) {
+            headerElement.classList.remove('scrolled');
+        }
     }
 
 });
@@ -131,10 +137,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 600);
     }
     
-    // Event listeners
-    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
-    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-    
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') prevSlide();
@@ -178,8 +180,58 @@ document.addEventListener('DOMContentLoaded', function() {
         isDragging = false;
     }, { passive: true });
     
+    // Auto-play functionality
+    let autoplayInterval;
+    
+    function startAutoplay() {
+        autoplayInterval = setInterval(() => {
+            nextSlide();
+        }, 5000);
+    }
+    
+    function stopAutoplay() {
+        clearInterval(autoplayInterval);
+    }
+    
+    function resetAutoplay() {
+        stopAutoplay();
+        startAutoplay();
+    }
+    
+    // Update event listeners to reset autoplay
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetAutoplay();
+        });
+    }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetAutoplay();
+        });
+    }
+    
+    indicators.forEach((indicator) => {
+        const originalClick = indicator.onclick;
+        indicator.addEventListener('click', () => {
+            resetAutoplay();
+        });
+    });
+    
+    track.addEventListener('touchstart', stopAutoplay);
+    track.addEventListener('touchend', resetAutoplay);
+    
+    // Pause on hover
+    const container = document.querySelector('.carousel-container');
+    if (container) {
+        container.addEventListener('mouseenter', stopAutoplay);
+        container.addEventListener('mouseleave', startAutoplay);
+    }
+    
     // Initialize
     updateCarousel();
+    startAutoplay();
     
     // Update on window resize with debounce
     let resizeTimer;

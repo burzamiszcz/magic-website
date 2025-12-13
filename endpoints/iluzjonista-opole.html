@@ -291,11 +291,15 @@
         <div class="recommendation container">
             <div class="recommendation">
                 <h1>Rekomendacje</h1>
-                <div class="columns">
-                    <img alt="krolik z kapelusza" src="./img/recommendation-rabbit.png">
-                    <div class="items">
-                        <div class="left-slide"><p><</p></div>
-                        <div class="recommendation-item active">
+                <div class="carousel-container">
+                    <button class="carousel-nav carousel-nav-left" aria-label="Poprzednia opinia">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    
+                    <div class="carousel-track">
+                        <div class="recommendation-item">
                             <h2>Anna M.</h2>
                             <p>Rewelacja! Dzieci w Opolu były zachwycone, a dorośli nie mogli uwierzyć w to, co się działo! Na pewno sięgnę po Pana Huberta na kolejne wydarzenie.</p>
                         </div>
@@ -307,9 +311,16 @@
                             <h2>Karolina P.</h2>
                             <p>Zaskakujący i pełen magii wieczór! Moje dzieci i ich przyjaciele w Opolu były w szoku! Polecam, kto nie wierzy w magię, po takim pokazie zmienia zdanie!</p>
                         </div>
-                        <div class="right-slide">></div>
                     </div>
+                    
+                    <button class="carousel-nav carousel-nav-right" aria-label="Następna opinia">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
                 </div>
+                
+                <div class="carousel-indicators"></div>
             </div>
         </div>
     </section>
