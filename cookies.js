@@ -36,14 +36,23 @@ function eraseCookie(name) {
 function acceptCookies() {
     setCookie("cookies_accepted", true, 365);
     document.getElementById("cookie-banner").classList.remove('active');
-    document.getElementById("cookies-youtube").classList.remove('active');
+    
+    var cookiesYoutube = document.getElementById("cookies-youtube");
+    if (cookiesYoutube) {
+        cookiesYoutube.classList.remove('active');
+    }
+    
+    var cookiesYoutubeDzieci = document.getElementById("cookies-youtube-dzieci");
+    if (cookiesYoutubeDzieci) {
+        cookiesYoutubeDzieci.classList.remove('active');
+    }
 
     var youtube = document.getElementById("youtube");
     var youtubeDzieci = document.getElementById("youtube-dzieci");
 
     if (youtubeDzieci) {
         youtubeDzieci.src = "https://www.youtube.com/embed/v75OTeV5Jy8?si=1k5ybYjbJoonA5xJ"
-    } else {
+    } else if (youtube) {
         youtube.src = "https://www.youtube.com/embed/Fh7-FLVOv_g";
     }
 
@@ -59,7 +68,14 @@ function declineCookies() {
 window.onload = function () {
     if (getCookie("cookies_accepted") == null) {
         document.getElementById("cookie-banner").classList.add('active');
-        document.getElementById("cookies-youtube").classList.add('active');
+        var cookiesYoutube = document.getElementById("cookies-youtube");
+        if (cookiesYoutube) {
+            cookiesYoutube.classList.add('active');
+        }
+        var cookiesYoutubeDzieci = document.getElementById("cookies-youtube-dzieci");
+        if (cookiesYoutubeDzieci) {
+            cookiesYoutubeDzieci.classList.add('active');
+        }
     }
     else{
         var youtube = document.getElementById("youtube");
@@ -67,7 +83,7 @@ window.onload = function () {
 
         if (youtubeDzieci) {
             youtubeDzieci.src = "https://www.youtube.com/embed/v75OTeV5Jy8?si=1k5ybYjbJoonA5xJ"
-        } else {
+        } else if (youtube) {
             youtube.src = "https://www.youtube.com/embed/Fh7-FLVOv_g";
         }
         document.head.appendChild(scriptElement);

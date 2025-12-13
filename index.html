@@ -447,8 +447,8 @@
                     </div>
                 </div>
                 <div class="email-background">
-                    <form action="sendmail.php" method="POST">
-                    <div class="email">
+                    <form id="contact-form" action="sendmail.php" method="POST">
+                    <div class="email" id="form-content">
                         <label for="name">Imie nazwisko:</label>
                         <input type="text" id="name" name="name" required>
                         <label for="phone">Numer telefonu:</label>
@@ -463,6 +463,11 @@
                           </label>
                         <button type="submit" class="button">Wyślij wiadomość</button>
                         
+                    </div>
+                    <div class="email success-message" id="success-message" style="display: none;">
+                        <h1 style="font-size: 2.5rem; text-align: center; margin: 40px 0;">Dziękuję za kontakt!</h1>
+                        <p style="font-size: 1.5rem; text-align: center; margin-bottom: 40px;">Wiadomość została wysłana.<br>Odpowiem najszybciej jak to możliwe.</p>
+                        <div onclick="location.reload();" class="button" style="cursor: pointer; text-align: center; max-width: 300px; margin: 0 auto;">Wyślij kolejną wiadomość</div>
                     </div>
                 </form>
         </div>

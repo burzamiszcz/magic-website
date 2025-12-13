@@ -75,21 +75,15 @@
      <section id="header">
         <div class="header container">
             <div class="nav-bar">
-                <h1><a href="#" aria-label="Przenieś do sekcji głównej">Hubert Burzyński</a></h1>
-
-                <div class="logo">
-                   <img src="img/logo-main.svg" alt="">
-                </div>
-
                 <div class="nav-list">
                     <a aria-label="Zadzwoń do mnie" href="tel:+48782784335"><div class="hamburger2"><i class="fa fa-phone" style="font-size:34px; color:white;"></i><div class="bar"></div></div></a>
                     <div class="hamburger"><div class="bar"></div></div>
                     <ul>
-                        <li><a aria-label="Przenieś do o mnie" href="#about" data-after="O mnie">O mnie</a></li>
                         <li><a aria-label="Przenieś do film promocyjny" href="#movie" data-after="Film promocyjny">Film promocyjny</a></li>
                         <li><a aria-label="Przenieś do Oferta" href="#services" data-after="Oferta">Oferta</a></li>
                         <li><a aria-label="Przenieś do zdjęcia" href="#photos" data-after="Zdjęcia">Galeria</a></li>
                         <li><a aria-label="Przenieś do sekcji opinie" href="#recommendation" data-after="Rekomandacje">Rekomendacje</a></li>
+                        <li><a aria-label="Przenieś do o mnie" href="#about" data-after="O mnie">O mnie</a></li>
                         <li><a aria-label="Przenieś do sekcji kontakt" href="#contact" data-after="Kontakt">Kontakt</a></li>
                     </ul>
                     <ul style="display: none">
@@ -392,8 +386,8 @@
                     </div>
                 </div>
                 <div class="email-background">
-                    <form action="sendmail.php" method="POST">
-                    <div class="email">
+                    <form id="contact-form" action="sendmail.php" method="POST">
+                    <div class="email" id="form-content">
                         <label for="name">Imie nazwisko:</label>
                         <input type="text" id="name" name="name" required>
                         <label for="phone">Numer telefonu:</label>
@@ -408,6 +402,11 @@
                           </label>
                         <button type="submit" class="button">Wyślij wiadomość</button>
                         
+                    </div>
+                    <div class="email success-message" id="success-message" style="display: none;">
+                        <h1 style="font-size: 2.5rem; text-align: center; margin: 40px 0;">Dziękuję za kontakt!</h1>
+                        <p style="font-size: 1.5rem; text-align: center; margin-bottom: 40px;">Wiadomość została wysłana.<br>Odpowiem najszybciej jak to możliwe.</p>
+                        <div onclick="location.reload();" class="button" style="cursor: pointer; text-align: center; max-width: 300px; margin: 0 auto;">Wyślij kolejną wiadomość</div>
                     </div>
                 </form>
         </div>

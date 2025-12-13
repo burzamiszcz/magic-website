@@ -140,7 +140,8 @@ hr.rounded {
 #about .col-right .photos,
 #contact .back-to-main,
 #cookie-banner .button-cookie,
-#movie .movie .iframe-container .cookies-youtube .button-cookie {
+#movie .movie .iframe-container .cookies-youtube .button-cookie,
+#movie .movie .iframe-container .cookies-youtube-dzieci .button-cookie {
     background-color: var(--primary-purple);
     color: white;
     padding: 8px;
@@ -158,7 +159,8 @@ hr.rounded {
 #about .col-right .photos:hover,
 #contact .back-to-main:hover,
 #cookie-banner .button-cookie:hover,
-#movie .movie .iframe-container .cookies-youtube .button-cookie:hover {
+#movie .movie .iframe-container .cookies-youtube .button-cookie:hover,
+#movie .movie .iframe-container .cookies-youtube-dzieci .button-cookie:hover {
     box-shadow: var(--shadow-glow-hover);
     background-color: white;
     color: var(--primary-purple);
@@ -747,6 +749,17 @@ hr.rounded {
     z-index: 1;
 }
 
+#movie.standalone {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#movie.standalone .movie {
+    padding: 40px 0;
+}
+
 #movie::before {
     content: '';
     position: absolute;
@@ -884,9 +897,24 @@ hr.rounded {
     filter: drop-shadow(0 2px 20px rgba(129, 42, 233, 0.4));
     margin-bottom: 40px;
     letter-spacing: 2px;
-    opacity: 0;
-    transform: translateY(-30px);
+    opacity: 1;
+    transform: translateY(0);
     transition: all 0.6s ease;
+}
+
+#movie .movie h1:not(.reveal) {
+    animation: fadeInFromTop 0.8s ease forwards;
+}
+
+@keyframes fadeInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 #movie .movie h1.reveal {
@@ -904,8 +932,23 @@ hr.rounded {
                 inset 0 0 0 2px rgba(129, 42, 233, 0.2);
     transition: all 0.5s ease;
     background: linear-gradient(135deg, rgba(129, 42, 233, 0.1), rgba(200, 157, 251, 0.05));
-    opacity: 0;
-    transform: scale(0.9) translateY(50px);
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+#movie .movie .iframe-container:not(.reveal) {
+    animation: fadeInScale 0.8s ease forwards;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 #movie .movie .iframe-container.reveal {
@@ -963,7 +1006,8 @@ hr.rounded {
     border-radius: 18px;
 }
 
-#movie .movie .iframe-container .cookies-youtube {
+#movie .movie .iframe-container .cookies-youtube,
+#movie .movie .iframe-container .cookies-youtube-dzieci {
     position: absolute;
     display: none;
     flex-direction: column;
@@ -974,13 +1018,17 @@ hr.rounded {
     left: 0;
     width: 100%;
     height: 100%;
+    background: rgba(10, 0, 20, 0.95);
+    z-index: 10;
 }
 
-#movie .movie .iframe-container .cookies-youtube.active {
+#movie .movie .iframe-container .cookies-youtube.active,
+#movie .movie .iframe-container .cookies-youtube-dzieci.active {
     display: flex;
 }
 
-#movie .movie .iframe-container .cookies-youtube p {
+#movie .movie .iframe-container .cookies-youtube p,
+#movie .movie .iframe-container .cookies-youtube-dzieci p {
     font-family: var(--font-tertiary);
     text-align: center;
     font-size: 1.5rem;
@@ -989,7 +1037,8 @@ hr.rounded {
     margin: 20px;
 }
 
-#movie .movie .iframe-container .cookies-youtube .button-cookie {
+#movie .movie .iframe-container .cookies-youtube .button-cookie,
+#movie .movie .iframe-container .cookies-youtube-dzieci .button-cookie {
     width: 80%;
     max-width: 350px;
 }
@@ -1933,6 +1982,27 @@ hr.rounded {
     flex-direction: column;
     margin: 20px 40px;
     margin-bottom: 0;
+}
+
+#contact .success-message {
+    padding: 40px;
+    text-align: center;
+}
+
+#contact .success-message h1 {
+    background: linear-gradient(135deg, #fff, #C89DFB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 20px rgba(129, 42, 233, 0.4));
+}
+
+#contact .success-message p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+#contact .success-message .button {
+    margin-top: 20px;
 }
 
 #contact .contact-columns .email label {

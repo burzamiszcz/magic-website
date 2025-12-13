@@ -26,12 +26,6 @@
             <div class="button-cookie-decline" onclick="declineCookies()">Odrzuć</div>
       	</div>
     </div>
-  <script>
-  window.onload = function () {
-    if (getCookie("cookies_accepted") == null) {
-    document.getElementById("cookie-banner").classList.add('active');
-  }}
- </script>
   
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EDQBFMHYGY"></script>
@@ -46,7 +40,7 @@
      <!-- Header section-->
     
         <!-- movie section-->
-        <section id="movie">
+        <section id="movie" class="standalone">
             <div class="movie container">
                 <h1>Pokaz dla dzieci</h1>
                 <div class="iframe-container">
@@ -55,7 +49,7 @@
                      frameborder="0"
                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                      allowfullscreen></iframe>
-                  	<div class="cookies-youtube" id="cookies-youtube">
+                  	<div class="cookies-youtube" id="cookies-youtube-dzieci">
                         <p>Wyraź zgodę na pliki cookies, aby zobaczyć materiał wideo.</p>
                       <div class="button-cookie" onclick="acceptCookies()">Akceptuj</div>
                     </div>  

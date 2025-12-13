@@ -26,12 +26,6 @@
             <div class="button-cookie-decline" onclick="declineCookies()">Odrzuć</div>
       	</div>
     </div>
-  <script>
-  window.onload = function () {
-    if (getCookie("cookies_accepted") == null) {
-    document.getElementById("cookie-banner").classList.add('active');
-  }}
- </script>
   
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EDQBFMHYGY"></script>
@@ -46,7 +40,7 @@
      <!-- Header section-->
     
         <!-- movie section-->
-        <section id="movie">
+        <section id="movie" class="standalone">
             <div class="movie container">
                 <h1>Film promocyjny</h1>
                 <div class="iframe-container">

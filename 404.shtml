@@ -7,46 +7,386 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="/path/to/flickity.css" media="screen">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
 
+  <title>404 - Iluzjonista Hubert Burzyński</title>
+  
+  <style>
+    /* 404 Page Styles */
+    .page-404 {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0a0014 0%, #1a0033 50%, #0a0014 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  <title>Iluzjonista Hubert Burzyński</title>
+    /* Animated gradient background */
+    .gradient-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(129, 42, 233, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(200, 157, 251, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(106, 14, 214, 0.1) 0%, transparent 40%);
+      animation: gradientMove 15s ease infinite;
+      z-index: 1;
+    }
+
+    @keyframes gradientMove {
+      0%, 100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.2) rotate(5deg);
+        opacity: 0.8;
+      }
+    }
+
+    /* Sparkles/Particles */
+    .sparkles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(200, 157, 251, 0.6);
+      animation: sparkleFloat linear infinite;
+    }
+
+    @keyframes sparkleFloat {
+      0% {
+        transform: translateY(0) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* Magic circles */
+    .magic-circle {
+      position: absolute;
+      border: 2px solid rgba(129, 42, 233, 0.3);
+      border-radius: 50%;
+      animation: magicPulse 4s ease-in-out infinite;
+    }
+
+    .magic-circle:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .magic-circle:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      bottom: 15%;
+      right: 15%;
+      animation-delay: 1.5s;
+    }
+
+    .magic-circle:nth-child(3) {
+      width: 150px;
+      height: 150px;
+      top: 60%;
+      left: 70%;
+      animation-delay: 3s;
+    }
+
+    @keyframes magicPulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.3;
+      }
+      50% {
+        transform: scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    /* Content container */
+    .error-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 40px;
+      max-width: 800px;
+    }
+
+    .error-404 {
+      font-size: 180px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #fff 0%, #C89DFB 50%, #812AE9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0;
+      line-height: 1;
+      animation: float 3s ease-in-out infinite;
+      text-shadow: 0 0 80px rgba(200, 157, 251, 0.5);
+      filter: drop-shadow(0 0 30px rgba(129, 42, 233, 0.7));
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    .error-title {
+      font-size: 3rem;
+      color: #fff;
+      margin: 30px 0;
+      font-weight: 700;
+      text-shadow: 0 0 20px rgba(129, 42, 233, 0.8);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 20px rgba(129, 42, 233, 0.8), 0 0 30px rgba(200, 157, 251, 0.5);
+      }
+      to {
+        text-shadow: 0 0 30px rgba(129, 42, 233, 1), 0 0 50px rgba(200, 157, 251, 0.8);
+      }
+    }
+
+    .error-description {
+      font-size: 1.5rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin: 20px 0 50px;
+      line-height: 1.6;
+    }
+
+    .back-button {
+      display: inline-block;
+      padding: 20px 50px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, #812AE9 0%, #C89DFB 100%);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 10px 30px rgba(129, 42, 233, 0.4);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .back-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .back-button:hover::before {
+      left: 100%;
+    }
+
+    .back-button:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(129, 42, 233, 0.6);
+    }
+
+    .rabbit-magic {
+      position: absolute;
+      bottom: 40px;
+      right: 50px;
+      width: 150px;
+      opacity: 0.8;
+      animation: rabbitBounce 2s ease-in-out infinite;
+      z-index: 5;
+      filter: drop-shadow(0 0 20px rgba(129, 42, 233, 0.6));
+    }
+
+    @keyframes rabbitBounce {
+      0%, 100% {
+        transform: translateY(0) rotate(-5deg);
+      }
+      50% {
+        transform: translateY(-15px) rotate(5deg);
+      }
+    }
+
+    /* Stars in background */
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .error-404 {
+        font-size: 120px;
+      }
+
+      .error-title {
+        font-size: 2rem;
+      }
+
+      .error-description {
+        font-size: 1.2rem;
+        padding: 0 20px;
+      }
+
+      .back-button {
+        padding: 15px 35px;
+        font-size: 1rem;
+      }
+
+      .rabbit-magic {
+        width: 100px;
+        bottom: 20px;
+        right: 20px;
+      }
+
+      .magic-circle {
+        display: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
-     <!-- Header section-->
+  <div class="page-404">
+    <!-- Animated gradient background -->
+    <div class="gradient-bg"></div>
 
-     <!-- End header section-->
+    <!-- Magic circles -->
+    <div class="magic-circle"></div>
+    <div class="magic-circle"></div>
+    <div class="magic-circle"></div>
 
+    <!-- Sparkles container -->
+    <div class="sparkles" id="sparkles"></div>
 
+    <!-- Main content -->
+    <div class="error-content">
+      <h1 class="error-404">🎩✨</h1>
+      <h2 class="error-title">Szukasz prawdziwego MAGIKA?</h2>
+      <p class="error-description">
+        Świetnie trafiłeś!<br>
+        Przenieś się na moją stronę i odkryj prawdziwą magię!
+      </p>
+      <a href="index.html" class="back-button">Zobacz moją ofertę</a>
+    </div>
 
-    <!-- Contact section -->
+    <!-- Animated rabbit -->
+    <img src="./img/end-rabbit.svg" alt="królik" class="rabbit-magic">
+  </div>
 
-    <section id="contact">
-        <div class="contact container">
-            <div class="contact-columns">
+  <script>
+    // Create sparkles
+    function createSparkles() {
+      const sparklesContainer = document.getElementById('sparkles');
+      const sparkleCount = 50;
 
-                <div class="email-background">
+      for (let i = 0; i < sparkleCount; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        
+        // Random position
+        sparkle.style.left = Math.random() * 100 + '%';
+        
+        // Random animation duration
+        sparkle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+        
+        // Random delay
+        sparkle.style.animationDelay = Math.random() * 5 + 's';
+        
+        // Random size
+        const size = Math.random() * 3 + 1;
+        sparkle.style.width = size + 'px';
+        sparkle.style.height = size + 'px';
+        
+        sparklesContainer.appendChild(sparkle);
+      }
 
-                    <div class="email-send">
-                        <h1><b>Szukasz prawdziwego MAGIKA?</b><br><br>
-                            Świetnie trafiłeś!</h1>
-                        <hr class="rounded">
-                            <!-- <a href="index.html#"><h2 style="margin-bottom: 100px; cursor: pointer; text-shadow: 0 0 10px #812AE9;">Powróć na strone główną</h2><a> -->
-                                <div onclick="location.href='index.html#';" class="back-to-main">PRZEJDŹ DO STRONY<br>Iluzjonista Hubert Burzyński</div>
+      // Create stars
+      for (let i = 0; i < 30; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        
+        const size = Math.random() * 2 + 1;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        
+        star.style.animationDelay = Math.random() * 3 + 's';
+        star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        
+        sparklesContainer.appendChild(star);
+      }
+    }
 
-                        
-                    </div>
-                </form>
-        </div>
-        </div>
-            <div class="end-rabbit">
-                <img src="./img/end-rabbit.svg">
-            </div>
-    </section>
+    // Mouse move parallax effect
+    document.addEventListener('mousemove', (e) => {
+      const mouseX = e.clientX / window.innerWidth - 0.5;
+      const mouseY = e.clientY / window.innerHeight - 0.5;
 
-    <!-- End contact section  -->
+      document.querySelectorAll('.magic-circle').forEach((circle, index) => {
+        const speed = (index + 1) * 20;
+        circle.style.transform = `translate(${mouseX * speed}px, ${mouseY * speed}px)`;
+      });
 
-    <script src="./app.js"></script>
+      const gradientBg = document.querySelector('.gradient-bg');
+      gradientBg.style.transform = `translate(${mouseX * 30}px, ${mouseY * 30}px) scale(1.1)`;
+    });
+
+    // Initialize
+    createSparkles();
+  </script>
 </body>
 </html>

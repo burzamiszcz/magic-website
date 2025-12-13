@@ -5,64 +5,268 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="/path/to/flickity.css" media="screen">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
   <meta name="robots" content="noindex"/>
 
-
-  <title>Iluzjonista Hubert Burzyński</title>
+  <title>Polityka Prywatności - Iluzjonista Hubert Burzyński</title>
+  
   <style>
-    .politykaPrywatnosci{
-        margin: 10px;
-        color: white;
+    body {
+      background: linear-gradient(135deg, #0a0014 0%, #1a0033 50%, #0a0014 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
     }
-    .politykaPrywatnosci h1{
-        font-size: 15px;
-        margin: 10px;
+
+    .privacy-page {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
     }
-    .politykaPrywatnosci h2{
-        margin: 15px;
-        font-size: 15px;
+
+    /* Animated background */
+    .gradient-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(129, 42, 233, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(200, 157, 251, 0.1) 0%, transparent 50%);
+      animation: gradientMove 15s ease infinite;
+      z-index: 0;
     }
-    .politykaPrywatnosci li{
-        margin: 0px 30px;
+
+    @keyframes gradientMove {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(5deg); }
     }
-@media only screen and (min-width: 1200px){
-    .politykaPrywatnosci{
-        margin: 300px;
-        color: white;
+
+    /* Header */
+    .privacy-header {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 80px 20px 40px;
+      background: linear-gradient(180deg, rgba(10, 0, 20, 0.9) 0%, transparent 100%);
     }
-    .politykaPrywatnosci h1{
-        font-size: 15px;
-        margin: 10px;
+
+    .privacy-header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff 0%, #C89DFB 50%, #812AE9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0 0 20px 0;
+      animation: fadeInDown 0.8s ease;
+      filter: drop-shadow(0 0 20px rgba(129, 42, 233, 0.5));
     }
-    .politykaPrywatnosci h2{
-        margin: 15px;
-        font-size: 15px;
+
+    .privacy-header p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      line-height: 1.6;
     }
-    .politykaPrywatnosci li{
-        margin: 0px 30px;
-    }}
+
+    .back-link {
+      display: inline-block;
+      color: #C89DFB;
+      text-decoration: none;
+      font-size: 1rem;
+      padding: 10px 25px;
+      border: 2px solid rgba(200, 157, 251, 0.3);
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .back-link:hover {
+      background: rgba(129, 42, 233, 0.2);
+      border-color: #C89DFB;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(129, 42, 233, 0.3);
+    }
+
+    /* Content container */
+    .privacy-content {
+      position: relative;
+      z-index: 10;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px 100px;
+    }
+
+    .privacy-section {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(200, 157, 251, 0.1);
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 30px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.6s ease forwards;
+      transition: all 0.3s ease;
+    }
+
+    .privacy-section:hover {
+      border-color: rgba(200, 157, 251, 0.3);
+      box-shadow: 0 10px 40px rgba(129, 42, 233, 0.2);
+      transform: translateY(-5px);
+    }
+
+    .privacy-section:nth-child(1) { animation-delay: 0.1s; }
+    .privacy-section:nth-child(2) { animation-delay: 0.2s; }
+    .privacy-section:nth-child(3) { animation-delay: 0.3s; }
+    .privacy-section:nth-child(4) { animation-delay: 0.4s; }
+    .privacy-section:nth-child(5) { animation-delay: 0.5s; }
+    .privacy-section:nth-child(6) { animation-delay: 0.6s; }
+    .privacy-section:nth-child(7) { animation-delay: 0.7s; }
+    .privacy-section:nth-child(8) { animation-delay: 0.8s; }
+    .privacy-section:nth-child(9) { animation-delay: 0.9s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .privacy-section h2 {
+      font-size: 1.8rem;
+      color: #fff;
+      margin: 0 0 20px 0;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .privacy-section h2::before {
+      content: '';
+      width: 6px;
+      height: 30px;
+      background: linear-gradient(135deg, #812AE9, #C89DFB);
+      border-radius: 3px;
+    }
+
+    .privacy-section p,
+    .privacy-section li {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    .privacy-section ol,
+    .privacy-section ul {
+      padding-left: 20px;
+      margin: 15px 0;
+    }
+
+    .privacy-section li {
+      margin-bottom: 12px;
+    }
+
+    .privacy-section ul ul,
+    .privacy-section ol ol {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .privacy-section a {
+      color: #C89DFB;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .privacy-section a:hover {
+      color: #fff;
+      text-shadow: 0 0 10px rgba(200, 157, 251, 0.5);
+    }
+
+    .privacy-section strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .disclaimer {
+      background: rgba(129, 42, 233, 0.1);
+      border-left: 4px solid #812AE9;
+      padding: 25px;
+      margin-top: 30px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200, 157, 251, 0.3), transparent);
+      margin: 25px 0;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .privacy-header h1 {
+        font-size: 2rem;
+      }
+
+      .privacy-header p {
+        font-size: 1rem;
+      }
+
+      .privacy-section {
+        padding: 25px;
+      }
+
+      .privacy-section h2 {
+        font-size: 1.4rem;
+      }
+
+      .privacy-section p,
+      .privacy-section li {
+        font-size: 0.95rem;
+      }
+    }
   </style>
 </head>
 
 <body>
-     <!-- Header section-->
+  <div class="privacy-page">
+    <!-- Animated background -->
+    <div class="gradient-bg"></div>
 
-     <!-- End header section-->
+    <!-- Header -->
+    <div class="privacy-header">
+      <h1>Polityka Prywatności</h1>
+      <p>Polityka prywatności opisuje zasady przetwarzania przez nas informacji na Twój temat, w tym danych osobowych oraz ciasteczek, czyli tzw. cookies.</p>
+      <a href="index.html" class="back-link">← Powrót do strony głównej</a>
+    </div>
 
-
-
-    <!-- Contact section -->
-
-    <section id="contact">
-        <div class="politykaPrywatnosci">
-            <h1>Polityka prywatności</h1>
-            <hr>
-            <h2>Polityka prywatności opisuje zasady przetwarzania przez nas informacji na Twój temat, w tym danych osobowych oraz ciasteczek, czyli tzw. cookies.</h2>
-            <hr>
-            <div class="lh166">
-            <h2 class="pb-12"><strong>1. Informacje ogólne</strong></h2>
+    <!-- Content -->
+    <div class="privacy-content">
+      
+      <div class="privacy-section">
+        <h2>1. Informacje ogólne</h2>
             <ol>
             <li>Niniejsza polityka dotyczy Serwisu www, funkcjonującego pod adresem url: <b>iluzjonistahubertburzynski.pl</b></li>
             <li>Operatorem serwisu oraz Administratorem danych osobowych jest: Hubert Burzyński ul. Jasińskiego 21 Częstochwoa</li>
@@ -80,14 +284,23 @@
             </ol>
             </li>
             </ol>
-            <h2 class="pb-12"><strong>2. Wybrane metody ochrony danych stosowane przez Operatora</strong></h2>
+      </div>
+
+      <div class="privacy-section">
+        <h2>2. Wybrane metody ochrony danych stosowane przez Operatora</h2>
             <ol><li>Miejsca logowania i wprowadzania danych osobowych są chronione w warstwie transmisji (certyfikat SSL). Dzięki temu dane osobowe i dane logowania, wprowadzone na stronie, zostają zaszyfrowane w komputerze użytkownika i mogą być odczytane jedynie na docelowym serwerze.</li>
             </ol>
-            <h2 class="pb-12"><strong>3. Hosting</strong></h2>
+      </div>
+
+      <div class="privacy-section">
+        <h2>3. Hosting</h2>
             <ol>
             <li>Serwis jest hostowany (technicznie utrzymywany) na serwerach operatora: inna firma</li>
             </ol>
-            <h2 class="pb-12"><strong>4. Twoje prawa i dodatkowe informacje o sposobie wykorzystania danych</strong></h2>
+      </div>
+
+      <div class="privacy-section">
+        <h2>4. Twoje prawa i dodatkowe informacje o sposobie wykorzystania danych</h2>
             <ol><li>W niektórych sytuacjach Administrator ma prawo przekazywać Twoje dane osobowe innym odbiorcom, jeśli będzie to niezbędne do wykonania zawartej z Tobą umowy lub do zrealizowania obowiązków ciążących na Administratorze. Dotyczy to takich grup odbiorców:<ul><li>osoby upoważnione przez nas, pracownicy i współpracownicy, którzy muszą mieć dostęp do danych osobowych w celu wykonywania swoich obowiązków,</li><li>firma hostingowa,</li><li>firmy obsługująca mailingi,</li><li>firmy obsługująca komunikaty SMS,</li><li>firmy, z którymi Administrator współpracuje w zakresie marketingu własnego,</li><li>kurierzy,</li><li>ubezpieczyciele,</li><li>kancelarie prawne i windykatorzy,</li><li>banki,</li><li>operatorzy płatności,</li><li>organy publiczne.</li></ul></li>
             <li>Twoje dane osobowe przetwarzane przez Administratora nie dłużej, niż jest to konieczne do wykonania związanych z nimi czynności określonych osobnymi przepisami (np. o prowadzeniu rachunkowości). W odniesieniu do danych marketingowych dane nie będą przetwarzane dłużej niż przez 3 lata.</li>
             <li>Przysługuje Ci prawo żądania od Administratora:
@@ -104,20 +317,32 @@
             <li>Podanie danych osobowych jest dobrowolne, lecz niezbędne do obsługi Serwisu.</li>
             <li>W stosunku do Ciebie mogą być podejmowane czynności polegające na zautomatyzowanym podejmowaniu decyzji, w tym profilowaniu w celu świadczenia usług w ramach zawartej umowy oraz w celu prowadzenia przez Administratora marketingu bezpośredniego.</li>
              <li>Dane osobowe nie są przekazywane od krajów trzecich w rozumieniu przepisów o ochronie danych osobowych. Oznacza to, że nie przesyłamy ich poza teren Unii Europejskiej.</li></ol>
-            <h2 class="pb-12"><strong>5. Informacje w formularzach</strong></h2>
+      </div>
+
+      <div class="privacy-section">
+        <h2>5. Informacje w formularzach</h2>
             <ol>
             <li>Serwis zbiera informacje podane dobrowolnie przez użytkownika, w tym dane osobowe, o ile zostaną one podane.</li>
             <li>Serwis może zapisać informacje o parametrach połączenia (oznaczenie czasu, adres IP).</li>
             <li>Serwis, w niektórych wypadkach, może zapisać informację ułatwiającą powiązanie danych w formularzu z adresem e-mail użytkownika wypełniającego formularz. W takim wypadku adres e-mail użytkownika pojawia się wewnątrz adresu url strony zawierającej formularz.</li>
             <li>Dane podane w formularzu są przetwarzane w celu wynikającym z funkcji konkretnego formularza, np. w celu dokonania procesu obsługi zgłoszenia serwisowego lub kontaktu handlowego, rejestracji usług itp. Każdorazowo kontekst i opis formularza w czytelny sposób informuje, do czego on służy.</li>
             </ol>
-            
-            <h2 class="pb-12"><strong>6. Logi Administratora</strong></h2>
+      </div>
+
+      <div class="privacy-section">
+        <h2>6. Logi Administratora</h2>
             <ol>
             <li>Informacje zachowaniu użytkowników w serwisie mogą podlegać logowaniu. Dane te są wykorzystywane w celu administrowania serwisem.</li>
-            </ol><h2 class="pb-12"><strong>7. Istotne techniki marketingowe</strong></h2><ol><li>Operator stosuje analizę statystyczną ruchu na stronie, poprzez Google Analytics (Google Inc. z siedzibą w USA). Operator nie przekazuje do operatora tej usługi danych osobowych, a jedynie zanonimizowane informacje. Usługa bazuje na wykorzystaniu ciasteczek w urządzeniu końcowym użytkownika. W zakresie informacji o preferencjach użytkownika gromadzonych przez sieć reklamową Google użytkownik może przeglądać i edytować informacje wynikające z plików cookies przy pomocy narzędzia: https://www.google.com/ads/preferences/</li></ol>
-            
-            <h2 class="pb-12"><strong>8. Informacja o plikach cookies</strong></h2>
+            </ol>
+      </div>
+
+      <div class="privacy-section">
+        <h2>7. Istotne techniki marketingowe</h2>
+        <ol><li>Operator stosuje analizę statystyczną ruchu na stronie, poprzez Google Analytics (Google Inc. z siedzibą w USA). Operator nie przekazuje do operatora tej usługi danych osobowych, a jedynie zanonimizowane informacje. Usługa bazuje na wykorzystaniu ciasteczek w urządzeniu końcowym użytkownika. W zakresie informacji o preferencjach użytkownika gromadzonych przez sieć reklamową Google użytkownik może przeglądać i edytować informacje wynikające z plików cookies przy pomocy narzędzia: https://www.google.com/ads/preferences/</li></ol>
+      </div>
+
+      <div class="privacy-section">
+        <h2>8. Informacja o plikach cookies</h2>
             <ol>
             <li>Serwis korzysta z plików cookies.</li>
             <li>Pliki cookies (tzw. „ciasteczka”) stanowią dane informatyczne, w szczególności pliki tekstowe, które przechowywane są w urządzeniu końcowym Użytkownika Serwisu i przeznaczone są do korzystania ze stron internetowych Serwisu. Cookies zazwyczaj zawierają nazwę strony internetowej, z której pochodzą, czas przechowywania ich na urządzeniu końcowym oraz unikalny numer.</li>
@@ -133,7 +358,10 @@
             <li>Ograniczenia stosowania plików cookies mogą wpłynąć na niektóre funkcjonalności dostępne na stronach internetowych Serwisu.</li>
             <li>Pliki cookies zamieszczane w urządzeniu końcowym Użytkownika Serwisu wykorzystywane mogą być również przez współpracujące z operatorem Serwisu podmioty, w szczególności dotyczy to firm: Google (Google Inc. z siedzibą w USA), Facebook (Facebook Inc. z siedzibą w USA), Twitter (Twitter Inc. z siedzibą w USA).</li>
             </ol>
-            <h2 class="pb-12"><strong>9. Zarządzanie plikami cookies – jak w praktyce wyrażać i cofać zgodę?</strong></h2>
+      </div>
+
+      <div class="privacy-section">
+        <h2>9. Zarządzanie plikami cookies – jak w praktyce wyrażać i cofać zgodę?</h2>
             <ol>
             <li>Jeśli użytkownik nie chce otrzymywać plików cookies, może zmienić ustawienia przeglądarki. Zastrzegamy, że wyłączenie obsługi plików cookies niezbędnych dla procesów uwierzytelniania, bezpieczeństwa, utrzymania preferencji użytkownika może utrudnić,&nbsp;a w skrajnych przypadkach może uniemożliwić korzystanie ze stron www</li>
             <li>W celu zarządzania ustawienia cookies wybierz z listy poniżej przeglądarkę internetową, której używasz i postępuj zgodnie z instrukcjami:
@@ -154,16 +382,14 @@
             </li>
             </ol>
             
-            <div class="disclaimer pt-36">
-            <p>Niniejszy wzór polityki został wygenerowany bezpłatnie, w celach informacyjnych, w oparciu o naszą wiedzę, branżowe praktyki i przepisy prawa obowiązujące na dzień 2018-08-14. Zalecamy sprawdzenie wzoru polityki przed użyciem jej na stronie. Wzór opiera się na najczęściej występujących na stronach internetowych sytuacjach, ale może nie odzwierciedlać pełnej i dokładnej specyfiki Twojej strony www. Przeczytaj uważnie wygenerowany dokument i w razie potrzeb dostosuj go do Twojej sytuacji lub zasięgnij porady prawnej. Nie bierzemy odpowiedzialności za skutki posługiwania się tym dokumentem, ponieważ tylko Ty masz wpłw na to, czy wszystkie informacje w nim zawarte są zgodne z prawdą. Zwróć także uwagę, że Polityka Prywatności, nawet najlepsza, jest tylko jednym z elementów Twojej troski o dane osobowe i prywatność użytkownika na stronie www.</p>
+            <div class="disclaimer">
+              <p>Niniejszy wzór polityki został wygenerowany bezpłatnie, w celach informacyjnych, w oparciu o naszą wiedzę, branżowe praktyki i przepisy prawa obowiązujące na dzień 2018-08-14. Zalecamy sprawdzenie wzoru polityki przed użyciem jej na stronie. Wzór opiera się na najczęściej występujących na stronach internetowych sytuacjach, ale może nie odzwierciedlać pełnej i dokładnej specyfiki Twojej strony www. Przeczytaj uważnie wygenerowany dokument i w razie potrzeb dostosuj go do Twojej sytuacji lub zasięgnij porady prawnej. Nie bierzemy odpowiedzialności za skutki posługiwania się tym dokumentem, ponieważ tylko Ty masz wpływ na to, czy wszystkie informacje w nim zawarte są zgodne z prawdą. Zwróć także uwagę, że Polityka Prywatności, nawet najlepsza, jest tylko jednym z elementów Twojej troski o dane osobowe i prywatność użytkownika na stronie www.</p>
             </div>
-            
-            </div>
-            </div>
-    </section>
+      </div>
 
-    <!-- End contact section  -->
+    </div>
+  </div>
 
-    <script src="./app.js"></script>
+  <script src="./app.js"></script>
 </body>
 </html>

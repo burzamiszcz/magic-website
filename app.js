@@ -384,3 +384,47 @@ const revealElements = () => {
 
 window.addEventListener('scroll', revealElements);
 window.addEventListener('load', revealElements);
+
+// Contact Form Handler
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const submitButton = this.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.textContent;
+        
+        // Disable button and show loading state
+        submitButton.disabled = true;
+        submitButton.textContent = 'Wysyłanie...';
+        
+        fetch('sendmail.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                // Hide form and show success message
+                document.getElementById('form-content').style.display = 'none';
+                document.getElementById('success-message').style.display = 'block';
+                
+                // Scroll to success message
+                document.getElementById('success-message').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        })
+        .catch(error => {
+            // Re-enable button on error
+            submitButton.disabled = false;
+            submitButton.textContent = originalButtonText;
+            alert('Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie lub skontaktuj się telefonicznie.');
+            console.error('Error:', error);
+        });
+    });
+}
+
