@@ -320,23 +320,26 @@
         <div class="recommendation container">
             <div class="recommendation">
                 <h1>Rekomendacje</h1>
-                <div class="columns">
-                    <img alt="krolik z kapelusza" src="./img/recommendation-rabbit.png">
-                    <div class="items">
-                        <div class="left-slide"><p><</p></div>
-                        <div class="recommendation-item active">
+                
+                <div class="carousel-container">
+                    <button class="carousel-nav carousel-nav-left" aria-label="Poprzednia opinia">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    
+                    <div class="carousel-track">
+                        <div class="recommendation-item">
                             <h2>Karolina G.</h2>
                             <p>Świetny! Potrafi zainteresować nie tylko tych najmłodszych. Pozostawia wiele pytań: „co, jak, kiedy?”.</p>
                         </div>
                         <div class="recommendation-item">
                             <h2>Pola K.</h2>
-                            <p>Świetny iluzjonista. Nigdy nikt mnie aż tak nie oczarował. Chętnie wzięłabym numer telefonu, niestety iluzjonista Hubert jest bardzo tajemniczy. Bardzo polecam każdemu kto nie wierzy w magię, po takim przeżyciu każdy uwierzy. Pozdrawiam Pana Huberta iluzjonistę.
-                            </p>
+                            <p>Świetny iluzjonista. Nigdy nikt mnie aż tak nie oczarował. Chętnie wzięłabym numer telefonu, niestety iluzjonista Hubert jest bardzo tajemniczy. Bardzo polecam każdemu kto nie wierzy w magię, po takim przeżyciu każdy uwierzy. Pozdrawiam Pana Huberta iluzjonistę.</p>
                         </div>
                         <div class="recommendation-item">
                             <h2>Włodek C.</h2>
-                            <p>Co jak co ale flaszki to jeszcze nigdy mi nikt nie wyczarował!
-                            </p>
+                            <p>Co jak co ale flaszki to jeszcze nigdy mi nikt nie wyczarował!</p>
                         </div>
                         <div class="recommendation-item">
                             <h2>Weronika P.</h2>
@@ -362,9 +365,16 @@
                             <h2>Ewelina K.</h2>
                             <p>18-naste urodziny mojej córki Zosi były czymś niezwykłym, a magicznej atmosfery dołożył tutaj Pan Hubert. Występ pierwsza klasa, a sztuczki z bliska podobały się strasznie. Córka zachwycona!</p>
                         </div>
-                        <div class="right-slide">></div>
                     </div>
+                    
+                    <button class="carousel-nav carousel-nav-right" aria-label="Następna opinia">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
                 </div>
+                
+                <div class="carousel-indicators"></div>
             </div>
         </div>
     </section>

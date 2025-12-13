@@ -32,42 +32,164 @@ menu_item.forEach((item) => {
 });
 
 
-var slides = document.querySelector('.recommendation .items').children;
-var nextSlide = document.querySelector(".recommendation .items .right-slide");
-var prevSlide = document.querySelector(".recommendation .items .left-slide");
-var totalSlides = slides.length - 1;
-var index = 1
-
-nextSlide.onclick = function () {
-    next("next");
-}
-
-prevSlide.onclick = function () {
-    next("prev");
-}
-
-function next(direction) {
-
-    if (direction=="next"){
-        index++;
-        if (index == totalSlides){
-            index = 1;
+// Carousel functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const track = document.querySelector('.carousel-track');
+    const items = document.querySelectorAll('.recommendation-item');
+    const prevBtn = document.querySelector('.carousel-nav-left');
+    const nextBtn = document.querySelector('.carousel-nav-right');
+    const indicatorsContainer = document.querySelector('.carousel-indicators');
+    
+    if (!track || !items.length) return;
+    
+    let currentIndex = 0;
+    const totalItems = items.length;
+    let isAnimating = false;
+    
+    // Create indicators
+    for (let i = 0; i < totalItems; i++) {
+        const indicator = document.createElement('div');
+        indicator.classList.add('indicator');
+        if (i === 0) indicator.classList.add('active');
+        indicator.addEventListener('click', () => goToSlide(i));
+        indicatorsContainer.appendChild(indicator);
+    }
+    
+    const indicators = document.querySelectorAll('.indicator');
+    
+    function updateCarousel() {
+        // Get container and current item dimensions
+        const container = document.querySelector('.carousel-container');
+        const containerWidth = container.offsetWidth;
+        const item = items[currentIndex];
+        const itemStyle = window.getComputedStyle(item);
+        const itemWidth = item.offsetWidth;
+        const marginLeft = parseFloat(itemStyle.marginLeft);
+        const marginRight = parseFloat(itemStyle.marginRight);
+        
+        // Total space one item takes (width + both margins)
+        const itemTotalWidth = itemWidth + marginLeft + marginRight;
+        
+        // Calculate the exact center of the container
+        const containerCenter = containerWidth / 2;
+        
+        // Calculate where the center of current item should be
+        const itemCenter = itemWidth / 2;
+        
+        // Calculate how much to move: center of container minus (position of item + half item width)
+        const currentItemPosition = (currentIndex * itemTotalWidth) + marginLeft + itemCenter;
+        const offset = containerCenter - currentItemPosition;
+        
+        track.style.transform = `translateX(${offset}px)`;
+        
+        // Update active states
+        items.forEach((item, index) => {
+            item.classList.remove('active', 'prev', 'next');
+            
+            if (index === currentIndex) {
+                item.classList.add('active');
+            } else if (index === currentIndex - 1 || (currentIndex === 0 && index === totalItems - 1)) {
+                item.classList.add('prev');
+            } else if (index === currentIndex + 1 || (currentIndex === totalItems - 1 && index === 0)) {
+                item.classList.add('next');
+            }
+        });
+        
+        // Update indicators
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentIndex);
+        });
+    }
+    
+    function goToSlide(index) {
+        if (isAnimating || index === currentIndex) return;
+        isAnimating = true;
+        currentIndex = index;
+        updateCarousel();
+        setTimeout(() => {
+            isAnimating = false;
+        }, 600);
+    }
+    
+    function nextSlide() {
+        if (isAnimating) return;
+        isAnimating = true;
+        currentIndex = (currentIndex + 1) % totalItems;
+        updateCarousel();
+        setTimeout(() => {
+            isAnimating = false;
+        }, 600);
+    }
+    
+    function prevSlide() {
+        if (isAnimating) return;
+        isAnimating = true;
+        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+        updateCarousel();
+        setTimeout(() => {
+            isAnimating = false;
+        }, 600);
+    }
+    
+    // Event listeners
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') prevSlide();
+        if (e.key === 'ArrowRight') nextSlide();
+    });
+    
+    // Touch/Swipe support
+    let startX = 0;
+    let startY = 0;
+    let isDragging = false;
+    
+    track.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        isDragging = true;
+    }, { passive: true });
+    
+    track.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const currentY = e.touches[0].clientY;
+        const diffY = Math.abs(currentY - startY);
+        
+        // If vertical scroll is more significant, don't prevent it
+        if (diffY > 10) {
+            isDragging = false;
         }
-    }
-    else{
-       if(index == 1){
-           index = totalSlides - 1; 
-       }
-       else{
-           index--;
-       }
-    }
-
-    for (i=1; i < slides.length; i++){
-        slides[i].classList.remove("active");
-    }
-    slides[index].classList.add("active");
-}
+    }, { passive: true });
+    
+    track.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }
+        isDragging = false;
+    }, { passive: true });
+    
+    // Initialize
+    updateCarousel();
+    
+    // Update on window resize with debounce
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            updateCarousel();
+        }, 250);
+    });
+});
 
 const images = document.querySelectorAll(".roll-elem");
 let imgSrc;

@@ -919,6 +919,7 @@ hr.rounded {
     background-position: top center;
     position: relative;
     z-index: 1;
+    overflow: hidden;
 }
 
 #recommendation .recommendation {
@@ -926,6 +927,7 @@ hr.rounded {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    padding: 50px 20px;
 }
 
 #recommendation .recommendation h1 {
@@ -935,88 +937,201 @@ hr.rounded {
     font-size: 8vw;
     position: relative;
     color: white;
-    margin: 30px 0;
+    margin: 30px 0 50px;
 }
 
-#recommendation .recommendation .columns {
+/* Carousel Container */
+#recommendation .carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: visible;
+    padding: 40px 0;
+    perspective: 1000px;
+}
+
+/* Carousel Track */
+#recommendation .carousel-track {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
+    justify-content: flex-start;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
 }
 
-#recommendation .recommendation .columns img {
-    width: 50%;
-}
-
-#recommendation .recommendation .items {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 50px;
-}
-
-#recommendation .recommendation .items .recommendation-item {
-    display: none;
-    flex-direction: column;
-    animation: zoom 1s ease;
-}
-
-#recommendation .recommendation .items .recommendation-item.active {
-    height: 400px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+/* Recommendation Items */
+#recommendation .recommendation-item {
+    flex-shrink: 0;
+    width: 600px;
+    max-width: 90vw;
+    margin: 0 15px;
+    padding: 40px 30px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--glow-purple);
-    box-shadow: 0 0 100px #7c29e234;
-    padding: 30px;
-    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    box-shadow: 0 0 40px rgba(124, 41, 226, 0.2);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.4;
+    filter: blur(4px);
+    transform: scale(0.8);
+    display: flex;
+    flex-direction: column;
     justify-content: center;
+    min-height: 300px;
+    pointer-events: none;
 }
 
-#recommendation .recommendation .items .recommendation-item h2 {
+#recommendation .recommendation-item.active {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+    box-shadow: 0 0 100px rgba(124, 41, 226, 0.6);
+    background: rgba(255, 255, 255, 0.1);
+    pointer-events: auto;
+    z-index: 10;
+}
+
+#recommendation .recommendation-item.prev,
+#recommendation .recommendation-item.next {
+    opacity: 0.6;
+    filter: blur(3px);
+    transform: scale(0.85);
+    z-index: 5;
+}
+
+#recommendation .recommendation-item h2 {
     font-family: var(--font-secondary);
     font-weight: bolder;
-    width: fit-content;
-    font-size: calc(30px + 0.5vw);
+    font-size: clamp(2rem, 4vw, 3.5rem);
     color: var(--light-purple);
-    margin: 5px 10px;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
-#recommendation .recommendation .items .recommendation-item p {
+#recommendation .recommendation-item p {
     font-family: var(--font-tertiary);
-    font-size: 1.5rem;
-    line-height: 3rem;
-    color: white;
-    margin: 10px;
-}
-
-#recommendation .recommendation .items .left-slide,
-#recommendation .recommendation .items .right-slide {
-    font-size: 14px;
-    background-color: #c79dfb60;
-    box-shadow: 0 0 10px #c79dfb60;
-    border-radius: 50%;
-    padding: 15px;
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    line-height: 1.8;
     color: white;
     text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Navigation Buttons */
+#recommendation .carousel-nav {
+    position: absolute;
+    top: 50%;
+    margin-top: -27.5px;
+    width: 55px;
+    height: 55px;
+    background: rgba(129, 42, 233, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid var(--light-purple);
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    z-index: 200;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
-    transition: var(--transition-medium) background-color;
-    position: relative;
-    z-index: 10;
-    margin: 10px;
-    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
 }
 
-#recommendation .recommendation .items .left-slide:hover,
-#recommendation .recommendation .items .right-slide:hover {
-    background-color: var(--dark-purple);
+#recommendation .carousel-nav:hover {
+    background: var(--primary-purple);
+    box-shadow: 0 0 30px var(--glow-purple);
+    transform: scale(1.15);
+    border-color: white;
+}
+
+#recommendation .carousel-nav:active {
+    transform: scale(0.95);
+}
+
+#recommendation .carousel-nav-left {
+    left: 10px;
+}
+
+#recommendation .carousel-nav-right {
+    right: 10px;
+}
+
+#recommendation .carousel-nav svg {
+    width: 30px;
+    height: 30px;
+}
+
+/* Carousel Indicators */
+#recommendation .carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+#recommendation .carousel-indicators .indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#recommendation .carousel-indicators .indicator.active {
+    background: var(--light-purple);
+    box-shadow: 0 0 15px var(--light-purple);
+    transform: scale(1.3);
+}
+
+/* Mobile optimizations */
+@media only screen and (max-width: 768px) {
+    #recommendation .carousel-container {
+        padding: 40px 0;
+    }
+    
+    #recommendation .recommendation-item {
+        width: 280px;
+        max-width: calc(100vw - 130px);
+        margin: 0 10px;
+        padding: 30px 20px;
+        min-height: 250px;
+    }
+    
+    #recommendation .carousel-nav {
+        width: 50px;
+        height: 50px;
+        margin-top: -25px;
+    }
+    
+    #recommendation .carousel-nav svg {
+        width: 24px;
+        height: 24px;
+    }
+    
+    #recommendation .carousel-nav-left {
+        left: 5px;
+    }
+    
+    #recommendation .carousel-nav-right {
+        right: 5px;
+    }
+    
+    #recommendation .recommendation-item h2 {
+        font-size: clamp(1.8rem, 5vw, 2.5rem);
+    }
+    
+    #recommendation .recommendation-item p {
+        font-size: clamp(1.3rem, 3vw, 1.5rem);
+        line-height: 1.6;
+    }
 }
 
 /* ========== CONTACT SECTION ========== */
@@ -1486,40 +1601,42 @@ hr.rounded {
     #photos .photo-elem.active {
         background-attachment: fixed;
     }
-
-    .modal img {
-        width: 50%;
-        object-fit: cover;
-    }
-
     /* Recommendation Desktop */
     #recommendation .recommendation h1 {
         font-size: 5rem;
     }
 
-    #recommendation .recommendation .columns {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: row;
+    #recommendation .carousel-container {
+        width: 90%;
+        max-width: 1400px;
     }
 
-    #recommendation .recommendation .columns img {
-        width: 20%;
-        margin: 30px;
+    #recommendation .recommendation-item {
+        width: 700px;
+        max-width: 80vw;
+        margin: 0 20px;
+        padding: 60px 50px;
+        min-height: 350px;
     }
 
-    #recommendation .recommendation .items {
-        width: 40%;
+    #recommendation .recommendation-item.prev,
+    #recommendation .recommendation-item.next {
+        opacity: 0.7;
+        filter: blur(2px);
     }
 
-    #recommendation .recommendation .items .recommendation-item {
-        width: 100%;
-        margin: 30px;
+    #recommendation .carousel-nav {
+        width: 65px;
+        height: 65px;
+        margin-top: -32.5px;
     }
 
-    #recommendation .recommendation .items .recommendation-item.active {
-        width: 1200px;
+    #recommendation .carousel-nav-left {
+        left: 20px;
+    }
+
+    #recommendation .carousel-nav-right {
+        right: 20px;
     }
 
     /* Contact Desktop */
