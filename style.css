@@ -695,6 +695,36 @@ hr.rounded {
     z-index: 1;
 }
 
+#movie::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+        rgba(129, 42, 233, 0.15) 0%, 
+        rgba(0, 0, 0, 0.6) 50%, 
+        rgba(106, 14, 214, 0.15) 100%);
+    z-index: -1;
+    animation: movieGradient 10s ease infinite alternate;
+}
+
+@keyframes movieGradient {
+    0% {
+        background: linear-gradient(135deg, 
+            rgba(129, 42, 233, 0.15) 0%, 
+            rgba(0, 0, 0, 0.6) 50%, 
+            rgba(106, 14, 214, 0.15) 100%);
+    }
+    100% {
+        background: linear-gradient(135deg, 
+            rgba(106, 14, 214, 0.2) 0%, 
+            rgba(0, 0, 0, 0.65) 50%, 
+            rgba(129, 42, 233, 0.2) 100%);
+    }
+}
+
 #movie .movie {
     text-align: center;
     max-width: 1400px;
@@ -726,6 +756,14 @@ hr.rounded {
 #movie .movie .social-media-phone ul li a:focus {
     color: #ffffffc7;
     text-shadow: 0 0 35px var(--glow-purple);
+    transition: all 0.3s ease;
+}
+
+#movie .movie .social-media-phone ul li a:hover {
+    color: var(--light-purple);
+    text-shadow: 0 0 50px var(--primary-purple), 
+                 0 0 25px var(--light-purple);
+    transform: translateY(-5px) scale(1.1);
 }
 
 #movie .movie h1 {
@@ -735,14 +773,30 @@ hr.rounded {
     font-size: 8vw;
     position: relative;
     color: white;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+    text-shadow: 0 0 30px rgba(129, 42, 233, 0.6), 
+                 0 0 60px rgba(129, 42, 233, 0.4),
+                 0 4px 20px rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
 }
 
 #movie .movie .iframe-container {
     overflow: hidden;
     position: relative;
     width: 80%;
-    box-shadow: var(--shadow-medium);
+    border-radius: 20px;
+    box-shadow: 0 0 60px rgba(129, 42, 233, 0.4),
+                0 20px 80px rgba(0, 0, 0, 0.6),
+                inset 0 0 0 2px rgba(129, 42, 233, 0.2);
+    transition: all 0.5s ease;
+    background: linear-gradient(135deg, rgba(129, 42, 233, 0.1), rgba(200, 157, 251, 0.05));
+}
+
+#movie .movie .iframe-container:hover {
+    box-shadow: 0 0 80px rgba(129, 42, 233, 0.6),
+                0 25px 100px rgba(0, 0, 0, 0.7),
+                inset 0 0 0 2px rgba(129, 42, 233, 0.4);
+    transform: translateY(-5px) scale(1.01);
 }
 
 #movie .movie .iframe-container::after {
@@ -751,12 +805,41 @@ hr.rounded {
     content: '';
 }
 
+#movie .movie .iframe-container::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        var(--primary-purple), 
+        var(--light-purple), 
+        var(--accent-purple), 
+        var(--primary-purple));
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0.5;
+    filter: blur(15px);
+    animation: borderRotate 4s linear infinite;
+}
+
+@keyframes borderRotate {
+    0% {
+        filter: blur(15px) hue-rotate(0deg);
+    }
+    100% {
+        filter: blur(15px) hue-rotate(360deg);
+    }
+}
+
 #movie .movie .iframe-container iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    border-radius: 18px;
 }
 
 #movie .movie .iframe-container .cookies-youtube {
