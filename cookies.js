@@ -51,9 +51,9 @@ function acceptCookies() {
     var youtubeDzieci = document.getElementById("youtube-dzieci");
 
     if (youtubeDzieci) {
-        youtubeDzieci.src = "https://www.youtube.com/embed/v75OTeV5Jy8?si=1k5ybYjbJoonA5xJ"
+        youtubeDzieci.src = "https://www.youtube.com/embed/v75OTeV5Jy8?si=1k5ybYjbJoonA5xJ&autoplay=1&mute=1"
     } else if (youtube) {
-        youtube.src = "https://www.youtube.com/embed/Fh7-FLVOv_g";
+        youtube.src = "https://www.youtube.com/embed/Fh7-FLVOv_g?autoplay=1&mute=1";
     }
 
   	document.head.appendChild(scriptElement);
@@ -82,9 +82,9 @@ window.onload = function () {
         var youtubeDzieci = document.getElementById("youtube-dzieci");
 
         if (youtubeDzieci) {
-            youtubeDzieci.src = "https://www.youtube.com/embed/v75OTeV5Jy8?si=1k5ybYjbJoonA5xJ"
+            youtubeDzieci.src = "https://www.youtube.com/embed/v75OTeV5Jy8?si=1k5ybYjbJoonA5xJ&autoplay=1&mute=1"
         } else if (youtube) {
-            youtube.src = "https://www.youtube.com/embed/Fh7-FLVOv_g";
+            youtube.src = "https://www.youtube.com/embed/Fh7-FLVOv_g?autoplay=1&mute=1";
         }
         document.head.appendChild(scriptElement);
         document.head.appendChild(scriptElement2);

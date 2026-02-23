@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCarousel();
         setTimeout(() => {
             isAnimating = false;
-        }, 600);
+        }, 700);
     }
     
     function nextSlide() {
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCarousel();
         setTimeout(() => {
             isAnimating = false;
-        }, 600);
+        }, 700);
     }
     
     function prevSlide() {
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCarousel();
         setTimeout(() => {
             isAnimating = false;
-        }, 600);
+        }, 700);
     }
     
     // Keyboard navigation
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function startAutoplay() {
         autoplayInterval = setInterval(() => {
             nextSlide();
-        }, 5000);
+        }, 6000);
     }
     
     function stopAutoplay() {
@@ -384,6 +384,35 @@ const revealElements = () => {
 
 window.addEventListener('scroll', revealElements);
 window.addEventListener('load', revealElements);
+
+// YouTube Autoplay on Scroll
+const youtubeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        const iframe = entry.target.querySelector('iframe');
+        if (!iframe || !iframe.src) return;
+        
+        if (entry.isIntersecting) {
+            // Video is visible - ensure autoplay
+            if (iframe.src && !iframe.src.includes('autoplay=1')) {
+                const separator = iframe.src.includes('?') ? '&' : '?';
+                iframe.src = iframe.src + separator + 'autoplay=1&mute=1';
+            }
+        } else {
+            // Video is not visible - pause by removing autoplay
+            if (iframe.src && iframe.src.includes('autoplay=1')) {
+                iframe.src = iframe.src.replace(/[?&]autoplay=1/, '').replace(/&mute=1/, '');
+            }
+        }
+    });
+}, {
+    threshold: 0.5 // Video needs to be 50% visible
+});
+
+// Observe iframe container
+const iframeContainer = document.querySelector('.iframe-container');
+if (iframeContainer) {
+    youtubeObserver.observe(iframeContainer);
+}
 
 // Contact Form Handler
 const contactForm = document.getElementById('contact-form');
