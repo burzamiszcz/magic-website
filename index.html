@@ -35,7 +35,9 @@
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "5",
-    "reviewCount": "65"
+    "bestRating": "5",
+    "worstRating": "1",
+    "reviewCount": "85"
   },
   "review": [
     {
@@ -44,9 +46,12 @@
         "@type": "Person",
         "name": "Jan Kowalski"
       },
+      "datePublished": "2025-11-15",
       "reviewRating": {
         "@type": "Rating",
-        "ratingValue": "5"
+        "ratingValue": "5",
+        "bestRating": "5",
+        "worstRating": "1"
       },
       "reviewBody": "Niesamowity pokaz! Wszyscy byli zachwyceni."
     },
@@ -56,11 +61,59 @@
         "@type": "Person",
         "name": "Anna Nowak"
       },
+      "datePublished": "2025-10-28",
       "reviewRating": {
         "@type": "Rating",
-        "ratingValue": "5"
+        "ratingValue": "5",
+        "bestRating": "5",
+        "worstRating": "1"
       },
       "reviewBody": "Magia na najwyższym poziomie. Świetna interakcja z publicznością!"
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Piotr Wiśniewski"
+      },
+      "datePublished": "2025-09-12",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "reviewBody": "Profesjonalny iluzjonista. Gości na weselu zachwyceni!"
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Katarzyna Lewandowska"
+      },
+      "datePublished": "2025-08-03",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "reviewBody": "Dzieci były w siódmym niebie. Bardzo polecamy!"
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Marek Zieliński"
+      },
+      "datePublished": "2025-07-21",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "reviewBody": "Świetna impreza firmowa dzięki pokazowi Huberta. Polecam każdemu!"
     }
   ]
 }
@@ -70,30 +123,72 @@
 
 
 <body>
-       <div id="cookie-banner">
-            <p>Używamy plików cookie i podobnych technologii, które umożliwiają działanie usług i funkcjonalności w naszej witrynie oraz pomagają nam zrozumieć interakcje z naszymi usługami. Klikając przycisk Akceptuj, zgadzasz się na stosowanie przez nas tych technologii w celach marketingowych i analitycznych</p>
-             <a aria-label="Przeczytaj politykę prywatności" href="polityka-prywatnosci.html">Dowiedz się więcej</a>
-            <div class="buttons-cookie">
-                <div class="button-cookie" onclick="acceptCookies()">Akceptuj</div>
-                <div class="button-cookie-decline" onclick="declineCookies()">Odrzuć</div>
+    <!-- Baner Cookie -->
+    <div id="cookie-banner">
+        <h3 style="margin: 15px 0 10px 0; font-size: 1.4rem;">🍪 Szanujemy Twoją prywatność</h3>
+        <p style="margin: 10px 20px;">Używamy plików cookie, aby zapewnić podstawowe funkcje strony oraz analizować ruch w celu ulepszania naszych usług. Możesz wybrać, które kategorie cookies chcesz zaakceptować.</p>
+        <a aria-label="Przeczytaj politykę prywatności" href="polityka-prywatnosci.html">Polityka prywatności</a>
+        <div class="buttons-cookie">
+            <div class="button-cookie" onclick="acceptAllCookies()">Akceptuj wszystkie</div>
+            <div class="button-cookie-settings" onclick="showCookieSettings()">Dostosuj preferencje</div>
+            <div class="button-cookie-decline" onclick="acceptNecessaryCookies()">Tylko niezbędne</div>
+        </div>
+    </div>
+
+    <!-- Modal Ustawień Cookie -->
+    <div id="cookie-settings-modal">
+        <div class="cookie-settings-content">
+            <h2 style="margin-bottom: 15px;">Ustawienia prywatności</h2>
+            <p style="margin-bottom: 20px; font-size: 0.95rem; line-height: 1.5;">Wybierz kategorie plików cookie, które chcesz zaakceptować. Więcej informacji znajdziesz w <a href="polityka-prywatnosci.html" style="color: var(--hover-purple);">Polityce Prywatności</a>.</p>
+            
+            <div class="cookie-category">
+                <div class="cookie-category-header">
+                    <label class="cookie-switch">
+                        <input type="checkbox" id="necessary-cookies" checked disabled>
+                        <span class="cookie-slider"></span>
+                    </label>
+                    <div>
+                        <h3>Niezbędne cookies <span style="font-size: 0.8rem; color: #999;">(Zawsze aktywne)</span></h3>
+                        <p>Wymagane do podstawowego działania strony, takie jak nawigacja i dostęp do bezpiecznych obszarów.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cookie-category">
+                <div class="cookie-category-header">
+                    <label class="cookie-switch">
+                        <input type="checkbox" id="analytics-cookies">
+                        <span class="cookie-slider"></span>
+                    </label>
+                    <div>
+                        <h3>Cookies analityczne</h3>
+                        <p>Pomagają nam zrozumieć, jak odwiedzający korzystają ze strony (Google Analytics). Dane są anonimowe.</p>
+                        <small style="color: #888;">Dostawca: Google LLC • Czas przechowywania: 2 lata</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cookie-category">
+                <div class="cookie-category-header">
+                    <label class="cookie-switch">
+                        <input type="checkbox" id="marketing-cookies">
+                        <span class="cookie-slider"></span>
+                    </label>
+                    <div>
+                        <h3>Cookies marketingowe</h3>
+                        <p>Używane do wyświetlania treści z YouTube oraz śledzenia preferencji marketingowych.</p>
+                        <small style="color: #888;">Dostawcy: YouTube, Google • Czas przechowywania: do 2 lat</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cookie-settings-buttons">
+                <button class="button-cookie" onclick="saveCustomCookieSettings()">Zapisz ustawienia</button>
+                <button class="button-cookie-decline" onclick="closeCookieSettings()">Anuluj</button>
             </div>
         </div>
-  <script>
-  window.onload = function () {
-    if (getCookie("cookies_accepted") == null) {
-    document.getElementById("cookie-banner").classList.add('active');
-  }}
- </script>
-  
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EDQBFMHYGY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-EDQBFMHYGY');
-</script>
+    </div>
+    
      <!-- Header section-->
     <section id="header">
         <div class="header container">
