@@ -414,6 +414,20 @@ if (iframeContainer) {
     youtubeObserver.observe(iframeContainer);
 }
 
+// Phone Click Tracking
+const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+phoneLinks.forEach(link => {
+    link.addEventListener('click', function() {
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'phone_click', {
+                'event_category': 'Contact',
+                'event_label': 'Phone Number Click',
+                'value': 1
+            });
+        }
+    });
+});
+
 // Contact Form Handler
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
@@ -434,6 +448,15 @@ if (contactForm) {
         })
         .then(response => {
             if (response.ok) {
+                // Track form submission conversion
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'form_submit', {
+                        'event_category': 'Contact',
+                        'event_label': 'Contact Form Submission',
+                        'value': 1
+                    });
+                }
+                
                 // Hide form and show success message
                 document.getElementById('form-content').style.display = 'none';
                 document.getElementById('success-message').style.display = 'block';

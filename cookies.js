@@ -70,6 +70,8 @@ function applyCookiePreferences(preferences) {
     // Cookies marketingowe (YouTube)
     if (preferences.marketing) {
         loadYouTube();
+    } else {
+        showYouTubePlaceholder();
     }
 }
 
@@ -113,6 +115,29 @@ function loadYouTube() {
     }
 }
 
+// Pokaż placeholder YouTube, gdy brak zgody marketingowej
+function showYouTubePlaceholder() {
+    var cookiesYoutube = document.getElementById("cookies-youtube");
+    if (cookiesYoutube) {
+        cookiesYoutube.classList.add('active');
+    }
+
+    var cookiesYoutubeDzieci = document.getElementById("cookies-youtube-dzieci");
+    if (cookiesYoutubeDzieci) {
+        cookiesYoutubeDzieci.classList.add('active');
+    }
+
+    var youtube = document.getElementById("youtube");
+    if (youtube) {
+        youtube.src = "about:blank";
+    }
+
+    var youtubeDzieci = document.getElementById("youtube-dzieci");
+    if (youtubeDzieci) {
+        youtubeDzieci.src = "about:blank";
+    }
+}
+
 // Akceptuj wszystkie cookies
 function acceptAllCookies() {
     var prefs = saveCookiePreferences(true, true, true);
@@ -124,6 +149,7 @@ function acceptAllCookies() {
 function acceptNecessaryCookies() {
     saveCookiePreferences(true, false, false);
     document.getElementById("cookie-banner").classList.remove('active');
+    showYouTubePlaceholder();
 }
 
 // Pokaż modal ustawień
@@ -172,16 +198,9 @@ window.onload = function () {
     // Jeśli brak preferencji, pokaż baner
     if (!preferences) {
         document.getElementById("cookie-banner").classList.add('active');
-        
+
         // Pokaż info o YouTube
-        var cookiesYoutube = document.getElementById("cookies-youtube");
-        if (cookiesYoutube) {
-            cookiesYoutube.classList.add('active');
-        }
-        var cookiesYoutubeDzieci = document.getElementById("cookies-youtube-dzieci");
-        if (cookiesYoutubeDzieci) {
-            cookiesYoutubeDzieci.classList.add('active');
-        }
+        showYouTubePlaceholder();
     } else {
         // Zastosuj zapisane preferencje
         applyCookiePreferences(preferences);
