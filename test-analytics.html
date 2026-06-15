@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Analytics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .status {
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        button {
+            background: #812AE9;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #6A0ED6;
+        }
+        #log {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            padding: 8px;
+            margin: 5px 0;
+            border-left: 3px solid #812AE9;
+            background: #f9f9f9;
+        }
+        .log-time {
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Test Google Analytics & Konwersji</h1>
+    
+    <div id="status"></div>
+    
+    <h2>Testy do wykonania:</h2>
+    
+    <button onclick="testGtagLoaded()">1. Sprawdź czy gtag załadowany</button>
+    <button onclick="testPhoneClick()">2. Test kliknięcia telefonu</button>
+    <button onclick="testFormSubmit()">3. Test wysłania formularza</button>
+    <button onclick="clearLog()">Wyczyść logi</button>
+    
+    <div id="log"></div>
+
+    <script src="cookies.js"></script>
+    <script src="ga.js"></script>
+
+    <script>
+        const statusDiv = document.getElementById('status');
+        const logDiv = document.getElementById('log');
+
+        function addLog(message, type = 'info') {
+            const time = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `<span class="log-time">[${time}]</span> ${message}`;
+            logDiv.insertBefore(entry, logDiv.firstChild);
+        }
+
+        function showStatus(message, type) {
+            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function testGtagLoaded() {
+            addLog('Sprawdzanie czy gtag jest załadowany...');
+            
+            if (typeof gtag === 'undefined') {
+                showStatus('❌ BŁĄD: gtag nie jest załadowany! Czy zaakceptowałeś cookies analityczne?', 'error');
+                addLog('❌ gtag NIE ZNALEZIONY', 'error');
+                return false;
+            }
+            
+            if (typeof window.dataLayer === 'undefined') {
+                showStatus('❌ BŁĄD: dataLayer nie istnieje!', 'error');
+                addLog('❌ dataLayer NIE ZNALEZIONY', 'error');
+                return false;
+            }
+            
+            showStatus('✅ SUKCES: Google Analytics jest załadowany poprawnie!', 'success');
+            addLog('✅ gtag działa poprawnie');
+            addLog(`✅ dataLayer ma ${window.dataLayer.length} wpisów`);
+            
+            // Pokaż zawartość dataLayer
+            addLog('📋 Zawartość dataLayer:');
+            window.dataLayer.forEach((item, index) => {
+                if (Array.isArray(item)) {
+                    addLog(`  [${index}] ${JSON.stringify(item)}`);
+                } else {
+                    addLog(`  [${index}] ${typeof item}: ${JSON.stringify(item).substring(0, 100)}`);
+                }
+            });
+            
+            // Sprawdź czy GA4 jest skonfigurowany
+            const hasConfig = window.dataLayer.some(item => {
+                if (Array.isArray(item)) {
+                    return item[0] === 'config' && item[1] === 'G-EDQBFMHYGY';
+                }
+                if (typeof item === 'object' && item !== null) {
+                    return item['0'] === 'config' && item['1'] === 'G-EDQBFMHYGY';
+                }
+                return false;
+            });
+            
+            if (hasConfig) {
+                addLog('✅ GA4 (G-EDQBFMHYGY) poprawnie skonfigurowany');
+            } else {
+                addLog('⚠️ Nie znaleziono standardowego config, ale to może być OK jeśli widzisz logi powyżej');
+            }
+            
+            return true;
+        }
+
+        function testPhoneClick() {
+            if (!testGtagLoaded()) return;
+            
+            addLog('Wysyłanie testowego eventu phone_click...');
+            
+            try {
+                gtag('event', 'phone_click', {
+                    'event_category': 'Contact',
+                    'event_label': 'Phone Number Click - TEST',
+                    'value': 1
+                });
+                
+                showStatus('✅ SUKCES: Event "phone_click" wysłany! Sprawdź w GA4 Realtime.', 'success');
+                addLog('✅ Event phone_click wysłany do GA4');
+                addLog('📊 Otwórz GA4 → Reports → Realtime aby zobaczyć event');
+            } catch (error) {
+                showStatus('❌ BŁĄD: ' + error.message, 'error');
+                addLog('❌ Błąd wysyłania eventu: ' + error.message);
+            }
+        }
+
+        function testFormSubmit() {
+            if (!testGtagLoaded()) return;
+            
+            addLog('Wysyłanie testowego eventu form_submit...');
+            
+            try {
+                gtag('event', 'form_submit', {
+                    'event_category': 'Contact',
+                    'event_label': 'Contact Form Submission - TEST',
+                    'value': 1
+                });
+                
+                showStatus('✅ SUKCES: Event "form_submit" wysłany! Sprawdź w GA4 Realtime.', 'success');
+                addLog('✅ Event form_submit wysłany do GA4');
+                addLog('📊 Otwórz GA4 → Reports → Realtime aby zobaczyć event');
+            } catch (error) {
+                showStatus('❌ BŁĄD: ' + error.message, 'error');
+                addLog('❌ Błąd wysyłania eventu: ' + error.message);
+            }
+        }
+
+        function clearLog() {
+            logDiv.innerHTML = '';
+            statusDiv.innerHTML = '';
+        }
+
+        // Auto-test przy załadowaniu
+        window.onload = function() {
+            setTimeout(() => {
+                addLog('🚀 Strona załadowana, gotowa do testów');
+                addLog('ℹ️ Kliknij "1. Sprawdź czy gtag załadowany" aby zacząć');
+                
+                // Pokaż info o cookies
+                const prefs = getCookiePreferences();
+                if (prefs && prefs.analytics) {
+                    addLog('✅ Cookies analityczne zaakceptowane');
+                } else {
+                    showStatus('⚠️ UWAGA: Musisz zaakceptować cookies analityczne aby gtag załadował się!', 'info');
+                    addLog('⚠️ Cookies analityczne NIE zaakceptowane - zaakceptuj i odśwież stronę');
+                }
+            }, 1000);
+        };
+    </script>
+</body>
+</html>

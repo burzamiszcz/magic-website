@@ -1527,7 +1527,8 @@ hr.rounded {
     z-index: 1;
 }
 
-#photos .gallery h1 {
+#photos .gallery h1,
+#photos .gallery h2 {
     font-family: var(--font-secondary);
     font-weight: bolder;
     display: block;
@@ -1545,7 +1546,8 @@ hr.rounded {
     transition: all 0.6s ease;
 }
 
-#photos .gallery h1.reveal {
+#photos .gallery h1.reveal,
+#photos .gallery h2.reveal {
     opacity: 1;
     transform: translateX(0);
 }
@@ -2713,7 +2715,8 @@ hr.rounded {
     }
 
     /* Photos Desktop */
-    #photos .gallery h1 {
+    #photos .gallery h1,
+    #photos .gallery h2 {
         font-size: 5rem;
     }
 
