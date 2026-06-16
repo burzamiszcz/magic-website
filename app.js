@@ -4,6 +4,50 @@ const menu_item = document.querySelectorAll('.header .nav-bar .nav-list ul li a'
 const header = document.querySelector('.header.container');
 const logo = document.querySelector('.header .logo');
 
+const sparkleLayer = document.querySelector('.sparkle-layer');
+
+function createSparkles() {
+    if (!sparkleLayer) return;
+
+    sparkleLayer.innerHTML = '';
+
+    const sparkleCount = window.matchMedia('(max-width: 768px)').matches ? 22 : 40;
+
+    for (let index = 0; index < sparkleCount; index += 1) {
+        const sparkle = document.createElement('span');
+        const size = 3 + Math.random() * 8;
+        const left = Math.random() * 100;
+        const top = Math.random() * 100;
+        const driftX = 12 + Math.random() * 28;
+        const driftY = 16 + Math.random() * 44;
+        const driftDirection = Math.random() > 0.5 ? 1 : -1;
+        const duration = 8 + Math.random() * 10;
+        const delay = -Math.random() * duration;
+        const opacity = 0.4 + Math.random() * 0.5;
+
+        sparkle.className = 'sparkle';
+        sparkle.style.setProperty('--sparkle-size', `${size}px`);
+        sparkle.style.setProperty('--sparkle-dx', `${driftX * driftDirection}px`);
+        sparkle.style.setProperty('--sparkle-dy', `${driftY}px`);
+        sparkle.style.setProperty('--sparkle-duration', `${duration}s`);
+        sparkle.style.setProperty('--sparkle-delay', `${delay}s`);
+        sparkle.style.setProperty('--sparkle-opacity', opacity.toFixed(2));
+        sparkle.style.left = `${left}%`;
+        sparkle.style.top = `${top}%`;
+        sparkle.style.width = `${size}px`;
+        sparkle.style.height = `${size}px`;
+
+        sparkleLayer.appendChild(sparkle);
+    }
+}
+
+createSparkles();
+
+window.addEventListener('resize', () => {
+    clearTimeout(window.__sparkleResizeTimer);
+    window.__sparkleResizeTimer = setTimeout(createSparkles, 150);
+});
+
 
 hamburger.addEventListener('click', ()=>{
     hamburger.classList.toggle('active');
@@ -369,7 +413,7 @@ console.log(rollItem.scrollHeight)
 
 // Scroll reveal animation
 const revealElements = () => {
-    const reveals = document.querySelectorAll('#services .title, #services .service-item, #about .col-left, #about .col-right, #movie .movie .social-media-phone ul li, #movie .movie h1, #movie .movie .iframe-container, #photos .gallery h1, #photos .gallery .items .roll-elem');
+    const reveals = document.querySelectorAll('#services .title, #services .service-item, #about .col-left, #about .col-right, #movie .movie .social-media-phone ul li, #movie .movie h1, #movie .movie .iframe-container, #photos .gallery h1, #photos .gallery h2, #photos .gallery .items .roll-elem');
     
     reveals.forEach((element) => {
         const windowHeight = window.innerHeight;

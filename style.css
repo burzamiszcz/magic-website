@@ -44,8 +44,115 @@
 }
 
 body {
-    background-color: black;
+    position: relative;
+    isolation: isolate;
+    background-color: #050008;
+    background-image:
+        radial-gradient(circle at top, rgba(129, 42, 233, 0.16), transparent 32%),
+        radial-gradient(circle at 85% 20%, rgba(200, 157, 251, 0.08), transparent 26%),
+        radial-gradient(circle at 15% 80%, rgba(106, 14, 214, 0.1), transparent 28%),
+        linear-gradient(180deg, #050008 0%, #0b0410 100%);
     overflow-x: hidden;
+}
+
+.sparkle-layer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: lighten;
+}
+
+.sparkle-layer::before,
+.sparkle-layer::after {
+    content: '';
+    position: absolute;
+    inset: -10%;
+    background-repeat: no-repeat;
+    opacity: 0.85;
+    filter: blur(18px);
+}
+
+.sparkle-layer::before {
+    background-image:
+        radial-gradient(circle at 18% 20%, rgba(200, 157, 251, 0.2), transparent 18%),
+        radial-gradient(circle at 82% 14%, rgba(129, 42, 233, 0.22), transparent 16%),
+        radial-gradient(circle at 70% 72%, rgba(200, 157, 251, 0.1), transparent 20%);
+    animation: sparkleDrift 18s ease-in-out infinite alternate;
+}
+
+.sparkle-layer::after {
+    background-image:
+        radial-gradient(circle at 10% 70%, rgba(129, 42, 233, 0.16), transparent 15%),
+        radial-gradient(circle at 52% 18%, rgba(200, 157, 251, 0.14), transparent 18%),
+        radial-gradient(circle at 90% 58%, rgba(255, 255, 255, 0.06), transparent 12%);
+    animation: sparkleDrift 24s ease-in-out infinite alternate-reverse;
+}
+
+.sparkle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(224, 192, 255, 0.98) 28%, rgba(156, 91, 255, 0.9) 46%, rgba(129, 42, 233, 0.22) 66%, transparent 72%);
+    box-shadow: 0 0 14px rgba(224, 192, 255, 0.7), 0 0 30px rgba(129, 42, 233, 0.45);
+    animation: sparkleFloat var(--sparkle-duration, 14s) ease-in-out infinite;
+    animation-delay: var(--sparkle-delay, 0s);
+    opacity: var(--sparkle-opacity, 0.8);
+}
+
+.sparkle::before,
+.sparkle::after {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: calc(var(--sparkle-size, 4px) * 2.5);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 1), transparent);
+    transform: translate(-50%, -50%);
+}
+
+.sparkle::after {
+    width: 1px;
+    height: calc(var(--sparkle-size, 4px) * 2.5);
+    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 1), transparent);
+}
+
+@keyframes sparkleFloat {
+    0% {
+        transform: translate3d(0, 0, 0) scale(0.85) rotate(0deg);
+        filter: blur(0px);
+    }
+    25% {
+        transform: translate3d(calc(var(--sparkle-dx, 18px) * 0.55), calc(var(--sparkle-dy, -24px) * 0.55), 0) scale(1.05) rotate(25deg);
+    }
+    50% {
+        transform: translate3d(calc(var(--sparkle-dx, 18px) * -0.45), calc(var(--sparkle-dy, -24px) * 1), 0) scale(1.18) rotate(-18deg);
+        filter: blur(0.35px);
+    }
+    75% {
+        transform: translate3d(calc(var(--sparkle-dx, 18px) * 0.35), calc(var(--sparkle-dy, -24px) * 0.72), 0) scale(1.08) rotate(18deg);
+    }
+    100% {
+        transform: translate3d(0, 0, 0) scale(0.85) rotate(0deg);
+        filter: blur(0px);
+    }
+}
+
+@keyframes sparkleDrift {
+    from {
+        transform: translate3d(-1.5%, -1%, 0) scale(1);
+    }
+    to {
+        transform: translate3d(1.5%, 1%, 0) scale(1.05);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sparkle-layer::before,
+    .sparkle-layer::after,
+    .sparkle {
+        animation: none;
+    }
 }
 
 html {
@@ -697,6 +804,7 @@ hr.rounded {
     background-size: cover;
     background-position: top center;
     position: relative;
+    overflow: hidden;
     z-index: 1;
 }
 
@@ -709,13 +817,16 @@ hr.rounded {
     top: 0;
     height: 100%;
     width: 100%;
-    z-index: -1;
+    z-index: 0;
+    pointer-events: none;
 }
 
 #hero .hero {
     color: white;
     align-items: flex-end;
     font-family: var(--font-secondary);
+    position: relative;
+    z-index: 1;
 }
 
 #hero .hero-div {
@@ -740,7 +851,7 @@ hr.rounded {
     font-size: 4rem;
     color: var(--light-purple);
     font-weight: lighter;
-    text-shadow: 1px 1px 8px rgb(50, 8, 101);
+    text-shadow: 1px 1px 12px rgba(19, 2, 40, 0.95);
 }
 
 #hero h2 {
@@ -751,7 +862,7 @@ hr.rounded {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 2px 20px rgba(129, 42, 233, 0.4));
+    filter: drop-shadow(0 2px 18px rgba(14, 3, 28, 0.85));
 }
 
 #hero p {
@@ -762,6 +873,8 @@ hr.rounded {
     width: 0;
     min-width: 100%;
     line-height: 1.5;
+    color: rgba(255, 255, 255, 0.98);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55);
 }
 
 #hero .hero .buttons {
@@ -1409,6 +1522,7 @@ hr.rounded {
     border-radius: 20px;
     padding: 2px;
     background: linear-gradient(135deg, var(--primary-purple), var(--light-purple), var(--accent-purple));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -2493,9 +2607,6 @@ hr.rounded {
         z-index: 1;
     }
     
-    #hero::after {
-        display: none;
-    }
     #hero .hero {
         align-items: center;
         justify-content: flex-start;
