@@ -1,44 +1,69 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-		<!--	created with www.mysitemapgenerator.com	-->
-		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url>
-	<loc>https://www.iluzjonistahubertburzynski.pl/</loc>
-	<lastmod>2026-05-28T12:00:00+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://www.iluzjonistahubertburzynski.pl/iluzjonista-wroclaw</loc>
-	<lastmod>2026-05-28T12:00:00+01:00</lastmod>
-	<priority>0.9</priority>
-</url>
-<url>
-	<loc>https://www.iluzjonistahubertburzynski.pl/iluzjonista-opole</loc>
-	<lastmod>2026-05-28T12:00:00+01:00</lastmod>
-	<priority>0.9</priority>
-</url>
-<url>
-	<loc>https://www.iluzjonistahubertburzynski.pl/iluzjonista-czestochowa</loc>
-	<lastmod>2026-05-28T12:00:00+01:00</lastmod>
-	<priority>0.9</priority>
-</url>
-<url>
-	<loc>https://www.iluzjonistahubertburzynski.pl/iluzjonista-katowice</loc>
-	<lastmod>2026-05-28T12:00:00+01:00</lastmod>
-	<priority>0.9</priority>
-</url>
-<url>
-	<loc>https://www.iluzjonistahubertburzynski.pl/iluzjonista-legnica</loc>
-	<lastmod>2026-05-28T12:00:00+01:00</lastmod>
-	<priority>0.9</priority>
-</url>
-<url>
-	<loc>https://www.iluzjonistahubertburzynski.pl/iluzjonista-impreza-firmowa</loc>
-	<lastmod>2026-05-28T12:00:00+01:00</lastmod>
-	<priority>0.9</priority>
-</url>
-<url>
-	<loc>https://www.iluzjonistahubertburzynski.pl/iluzjonista-dla-dzieci</loc>
-	<lastmod>2026-05-28T12:00:00+01:00</lastmod>
-	<priority>0.9</priority>
-</url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://iluzjonistahubertburzynski.pl/</loc>
+    <lastmod>2026-06-29T00:00:00+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://iluzjonistahubertburzynski.pl/film-promocyjny.html</loc>
+    <lastmod>2026-06-29T00:00:00+02:00</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://iluzjonistahubertburzynski.pl/pokaz-dla-dzieci.html</loc>
+    <lastmod>2026-06-29T00:00:00+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://iluzjonistahubertburzynski.pl/endpoints/iluzjonista-wroclaw.html</loc>
+    <lastmod>2026-06-29T00:00:00+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://iluzjonistahubertburzynski.pl/endpoints/iluzjonista-opole.html</loc>
+    <lastmod>2026-06-29T00:00:00+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://iluzjonistahubertburzynski.pl/endpoints/iluzjonista-czestochowa.html</loc>
+    <lastmod>2026-06-29T00:00:00+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://iluzjonistahubertburzynski.pl/endpoints/iluzjonista-katowice.html</loc>
+    <lastmod>2026-06-29T00:00:00+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://iluzjonistahubertburzynski.pl/endpoints/iluzjonista-legnica.html</loc>
+    <lastmod>2026-06-29T00:00:00+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://iluzjonistahubertburzynski.pl/endpoints/iluzjonista-impreza-firmowa.html</loc>
+    <lastmod>2026-06-29T00:00:00+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://iluzjonistahubertburzynski.pl/endpoints/iluzjonista-dla-dzieci.html</loc>
+    <lastmod>2026-06-29T00:00:00+02:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://iluzjonistahubertburzynski.pl/polityka-prywatnosci.html</loc>
+    <lastmod>2026-06-29T00:00:00+02:00</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
 </urlset>

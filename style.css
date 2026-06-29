@@ -1037,7 +1037,7 @@ hr.rounded {
     }
 }
 
-#about .col-right h1 {
+#about .col-right h2 {
     font-family: var(--font-secondary);
     font-weight: bolder;
     display: block;
@@ -1452,7 +1452,7 @@ hr.rounded {
     animation: fadeInUp 0.8s ease forwards;
 }
 
-#services .title h1 {
+#services .title h2 {
     font-size: 3vw;
     font-family: var(--font-secondary);
     font-weight: normal;
@@ -1460,7 +1460,7 @@ hr.rounded {
     opacity: 0.8;
 }
 
-#services .title h2 {
+#services .title h3 {
     font-family: var(--font-secondary);
     font-weight: bolder;
     display: block;
@@ -1690,8 +1690,6 @@ hr.rounded {
 
 #photos .gallery .items .roll-elem {
     position: relative;
-    background-size: cover;
-    background-position: center;
     border-radius: 15px;
     overflow: hidden;
     cursor: pointer;
@@ -1701,6 +1699,16 @@ hr.rounded {
     aspect-ratio: 1;
     opacity: 0;
     transform: scale(0.8) translateY(30px);
+}
+
+#photos .gallery .items .roll-elem img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
 }
 
 #photos .gallery .items .roll-elem.reveal {
@@ -1994,7 +2002,7 @@ hr.rounded {
     padding: 50px 20px;
 }
 
-#recommendation .recommendation h1 {
+#recommendation .recommendation > h2 {
     font-family: var(--font-secondary);
     font-weight: bolder;
     display: block;
@@ -2301,7 +2309,7 @@ hr.rounded {
     justify-content: center;
 }
 
-#contact .title h1 {
+#contact .title h2 {
     font-family: var(--font-secondary);
     font-weight: bolder;
     display: block;
@@ -2316,7 +2324,7 @@ hr.rounded {
     text-align: center;
 }
 
-#contact .title h2 {
+#contact .title h3 {
     font-size: 3rem;
     color: var(--light-purple);
     font-weight: lighter;
@@ -2739,7 +2747,7 @@ hr.rounded {
         align-items: flex-start;
     }
 
-    #about .col-right h1 {
+    #about .col-right h2 {
         font-size: 5rem;
         width: fit-content;
     }
@@ -2750,11 +2758,11 @@ hr.rounded {
     }
 
     /* Services Desktop */
-    #services .title h1 {
+    #services .title h2 {
         font-size: 3rem;
     }
 
-    #services .title h2 {
+    #services .title h3 {
         font-size: 5rem;
     }
 
@@ -2845,8 +2853,6 @@ hr.rounded {
 
     #photos .gallery .items .roll-elem {
         position: relative;
-        background-size: cover;
-        background-position: center;
         border-radius: 20px;
         overflow: hidden;
         cursor: pointer;
@@ -2877,7 +2883,7 @@ hr.rounded {
         background-attachment: fixed;
     }
     /* Recommendation Desktop */
-    #recommendation .recommendation h1 {
+    #recommendation .recommendation > h2 {
         font-size: 5rem;
     }
 
@@ -2915,11 +2921,11 @@ hr.rounded {
     }
 
     /* Contact Desktop */
-    #contact .title h1 {
+    #contact .title h2 {
         font-size: 5rem;
     }
 
-    #contact .title h2 {
+    #contact .title h3 {
         font-size: 2rem;
     }
 
