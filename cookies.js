@@ -62,7 +62,7 @@ function getCookiePreferences() {
 function applyCookiePreferences(preferences) {
     // Zawsze ładujemy niezbędne cookies (już są w HTML)
     
-    // Cookies analityczne (Google Analytics)
+    // Cookies analityczne (Google Analytics + Microsoft Clarity)
     if (preferences.analytics) {
         loadAnalytics();
     }
@@ -75,7 +75,7 @@ function applyCookiePreferences(preferences) {
     }
 }
 
-// Załaduj Google Analytics
+// Załaduj Google Analytics + Microsoft Clarity
 function loadAnalytics() {
     if (!document.querySelector('script[src*="gtag/js"]')) {
         document.head.appendChild(scriptElement2);
@@ -91,6 +91,21 @@ function loadAnalytics() {
         document.head.appendChild(gtagInit);
         document.head.appendChild(scriptElement);
     }
+
+    loadClarity();
+}
+
+// Załaduj Microsoft Clarity
+function loadClarity() {
+    if (window.clarity || document.querySelector('script[src*="clarity.ms/tag"]')) {
+        return;
+    }
+
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xrizye2hoe");
 }
 
 // Załaduj YouTube
