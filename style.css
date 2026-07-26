@@ -2653,18 +2653,20 @@ hr.rounded {
     #hero .hero .hero-main {
         align-items: flex-start;
         width: auto;
-        max-width: min(640px, calc(100vw - 280px));
+        max-width: none;
         padding: 0;
     }
 
     #hero .hero h2 {
         font-size: 7rem;
+        white-space: nowrap;
     }
 
     #hero .hero h1 {
         font-size: clamp(2.4rem, 3.2vw, 4rem);
         position: relative;
         top: 25px;
+        text-align: left;
     }
 
     #hero .hero p {
@@ -2673,6 +2675,7 @@ hr.rounded {
 
     #hero .hero .buttons {
         flex-wrap: nowrap;
+        justify-content: flex-start;
     }
 
     #hero .hero-div .social-media {
@@ -2817,33 +2820,39 @@ hr.rounded {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         text-align: center;
         margin: 10px 0;
-        flex: 1 1 0;
+        flex: 1 1 auto;
         min-height: 280px;
-        padding: 18px 14px;
+        height: auto;
+        padding: 20px 16px 22px;
+        overflow: visible;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         will-change: transform, box-shadow;
     }
 
     #services .all-services .service-col .service-item h3 {
-        font-size: 1.8rem;
-        display: inline-block;
+        font-size: clamp(1.35rem, 1.5vw, 1.7rem);
+        display: block;
         margin: 10px 0 8px 0;
         text-align: center;
         width: 100%;
+        line-height: 1.25;
+        padding: 0 6px;
+        box-sizing: border-box;
     }
     
     #services .all-services .service-col .service-item p {
-        font-size: 1.4rem;
-        line-height: 1.6;
-        margin: 6px 12px;
+        font-size: 1.2rem;
+        line-height: 1.5;
+        margin: 6px 10px 0;
         overflow-wrap: break-word;
         word-wrap: break-word;
         hyphens: auto;
         text-align: center;
-        max-width: 92%;
+        max-width: 100%;
+        flex: 1 1 auto;
     }
     
     #services .all-services .service-col .service-item img {
