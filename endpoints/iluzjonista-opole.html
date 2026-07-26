@@ -7,7 +7,7 @@
     <title>Iluzjonista Opole - Pokazy magii na każdą okazję!</title>
     <meta name="description" content="Iluzjonista w Opolu z wieloletnim doświadczeniem. Pokazy magii na wesele, imprezy firmowe, urodziny, festyny i inne wydarzenia. Zaskocz swoich gości!">
     <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://kit.fontawesome.com/6015f6d8cd.js" crossorigin="anonymous"></script>
   <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
     <link rel="canonical" href="https://iluzjonistahubertburzynski.pl/iluzjonista-opole">
     <meta name="robots" content="index, follow">
@@ -49,34 +49,83 @@
 
 
 <body>
-       <div id="cookie-banner">
-            <p>Używamy plików cookie i podobnych technologii, które umożliwiają działanie usług i funkcjonalności w naszej witrynie oraz pomagają nam zrozumieć interakcje z naszymi usługami. Klikając przycisk Akceptuj, zgadzasz się na stosowanie przez nas tych technologii w celach marketingowych i analitycznych</p>
-             <a aria-label="Przeczytaj politykę prywatności" href="polityka-prywatnosci.html">Dowiedz się więcej</a>
-            <div class="buttons-cookie">
-                <div class="button-cookie" onclick="acceptCookies()">Akceptuj</div>
-                <div class="button-cookie-decline" onclick="declineCookies()">Odrzuć</div>
+       
+    <!-- Baner Cookie -->
+    <div id="cookie-banner">
+        <h3 style="margin: 15px 0 10px 0; font-size: 1.4rem;">🍪 Szanujemy Twoją prywatność</h3>
+        <p style="margin: 10px 20px;">Używamy plików cookie, aby zapewnić podstawowe funkcje strony oraz analizować ruch w celu ulepszania naszych usług. Możesz wybrać, które kategorie cookies chcesz zaakceptować.</p>
+        <a aria-label="Przeczytaj politykę prywatności" href="../polityka-prywatnosci.html">Polityka prywatności</a>
+        <div class="buttons-cookie">
+            <div class="button-cookie" onclick="acceptAllCookies()">Akceptuj wszystkie</div>
+            <div class="button-cookie-settings" onclick="showCookieSettings()">Dostosuj preferencje</div>
+            <div class="button-cookie-decline" onclick="acceptNecessaryCookies()">Tylko niezbędne</div>
+        </div>
+    </div>
+
+    <!-- Modal Ustawień Cookie -->
+    <div id="cookie-settings-modal">
+        <div class="cookie-settings-content">
+            <h2 style="margin-bottom: 15px;">Ustawienia prywatności</h2>
+            <p style="margin-bottom: 20px; font-size: 0.95rem; line-height: 1.5;">Wybierz kategorie plików cookie, które chcesz zaakceptować. Więcej informacji znajdziesz w <a href="../polityka-prywatnosci.html" style="color: var(--hover-purple);">Polityce Prywatności</a>.</p>
+            
+            <div class="cookie-category">
+                <div class="cookie-category-header">
+                    <label class="cookie-switch">
+                        <input type="checkbox" id="necessary-cookies" checked disabled>
+                        <span class="cookie-slider"></span>
+                    </label>
+                    <div>
+                        <h3>Niezbędne cookies <span style="font-size: 0.8rem; color: #999;">(Zawsze aktywne)</span></h3>
+                        <p>Wymagane do podstawowego działania strony, takie jak nawigacja i dostęp do bezpiecznych obszarów.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cookie-category">
+                <div class="cookie-category-header">
+                    <label class="cookie-switch">
+                        <input type="checkbox" id="analytics-cookies">
+                        <span class="cookie-slider"></span>
+                    </label>
+                    <div>
+                        <h3>Cookies analityczne</h3>
+                        <p>Pomagają nam zrozumieć, jak odwiedzający korzystają ze strony (Google Analytics, Microsoft Clarity). Dane są anonimowe.</p>
+                        <small style="color: #888;">Dostawcy: Google LLC, Microsoft • Czas przechowywania: do 2 lat</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cookie-category">
+                <div class="cookie-category-header">
+                    <label class="cookie-switch">
+                        <input type="checkbox" id="marketing-cookies">
+                        <span class="cookie-slider"></span>
+                    </label>
+                    <div>
+                        <h3>Cookies marketingowe</h3>
+                        <p>Używane do wyświetlania treści z YouTube oraz śledzenia preferencji marketingowych.</p>
+                        <small style="color: #888;">Dostawcy: YouTube, Google • Czas przechowywania: do 2 lat</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cookie-settings-buttons">
+                <button class="button-cookie" onclick="saveCustomCookieSettings()">Zapisz ustawienia</button>
+                <button class="button-cookie-decline" onclick="closeCookieSettings()">Anuluj</button>
             </div>
         </div>
-  <script>
-  window.onload = function () {
-    if (getCookie("cookies_accepted") == null) {
-    document.getElementById("cookie-banner").classList.add('active');
-  }}
- </script>
-  
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EDQBFMHYGY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    </div>
 
-  gtag('config', 'G-EDQBFMHYGY');
-</script>
-     <!-- Header section-->
+<!-- Header section-->
      <section id="header">
         <div class="header container">
             <div class="nav-bar">
+                <div class="brand"><a href="../index.html" aria-label="Przenieś do strony głównej">Hubert Burzyński</a></div>
+
+                <div class="logo">
+                   <img src="../img/logo-main.svg" alt="Logo Iluzjonista Hubert Burzyński">
+                </div>
+
                 <div class="nav-list">
                     <a aria-label="Zadzwoń do mnie" href="tel:+48782784335"><div class="hamburger2"><i class="fa fa-phone" style="font-size:34px; color:white;"></i><div class="bar"></div></div></a>
                     <div class="hamburger"><div class="bar"></div></div>
@@ -106,6 +155,7 @@
 
     <!-- Hero section-->
     <section id="hero">
+        <div class="sparkle-layer" aria-hidden="true"></div>
         <div class="hero container">
             
             <div class="hero-div">
@@ -147,7 +197,7 @@
                         <li class="social-elem"><a href="https://maps.app.goo.gl/VvCZaoz8jqFXeZtJ8" class="fa-brands fa-google"></a></li>
                 </ul>
             </div>
-            <h1>Film promocyjny Opole</h1>
+            <h2>Film promocyjny Opole</h2>
             <div class="iframe-container">
                 <iframe width="1920" height="1080" src="" id="youtube"
                     title="YouTube video player" 
@@ -167,8 +217,8 @@
     <section id="services">
         <div class="services container">
             <div class="title">
-                <h1>Oferta</h1>
-                <h2>Iluzje dla dzieci i dorosłych</h2>
+                <h2>Oferta</h2>
+                <h3>Iluzje dla dzieci i dorosłych</h3>
             </div>
             <hr class="rounded">
             <div class="all-services">
@@ -225,58 +275,59 @@
                 </div>
             </div> -->
             <div class="gallery">
-                <h1>Galeria zdjęć z pokazów</h1>
+                <h2>Galeria zdjęć z pokazów</h2>
                 <hr class="rounded">
                 <div class="items">
                     <div id="roll1" class="roll">
-                        <div alt="impreza firmowa" style="background-image: url('./img/gallery/gallery1.jpg');" class="roll-elem">
+                        <div class="roll-elem">
+                            <img src="../img/gallery/gallery1.jpg" alt="Iluzjonista Hubert Burzyński na imprezie firmowej" loading="lazy">
                         </div>
-
-                        <div alt="pokaz sceniczny" style="background-image: url('./img/gallery/gallery2.jpg');" class="roll-elem">
+                        <div class="roll-elem">
+                            <img src="../img/gallery/gallery2.jpg" alt="Pokaz sceniczny iluzjonisty Huberta Burzyńskiego" loading="lazy">
                         </div>
-
-                        <div alt="pokaz dla dzieci" style="background-image: url('./img/gallery/gallery3.jpg');" class="roll-elem">
+                        <div class="roll-elem">
+                            <img src="../img/gallery/gallery3.jpg" alt="Pokaz magii dla dzieci" loading="lazy">
                         </div>
-
-                        <div alt="dzień kobiet" style="background-image: url('./img/gallery/gallery15.jpg');" class="roll-elem">
+                        <div class="roll-elem">
+                            <img src="../img/gallery/gallery15.jpg" alt="Pokaz iluzji na Dzień Kobiet" loading="lazy">
                         </div>
-
-                        <div alt="impreza firmowa" style="background-image: url('./img/gallery/gallery4.jpg');" class="roll-elem">
-                        </div> 
+                        <div class="roll-elem">
+                            <img src="../img/gallery/gallery4.jpg" alt="Iluzjonista na imprezie firmowej Wrocław" loading="lazy">
+                        </div>
                     </div>
                     <div id="roll2" class="roll">
-                        <div alt="prezydent czestochowa" style="background-image: url('./img/gallery/gallery5.jpg');" class="roll-elem">
+                        <div class="roll-elem">
+                            <img src="../img/gallery/gallery5.jpg" alt="Pokaz magii na wydarzeniu miejskim Częstochowa" loading="lazy">
                         </div>
-
-                        <div alt="pokaz dla dzieci w przedszkolu" style="background-image: url('./img/gallery/gallery6.jpg');" class="roll-elem">
+                        <div class="roll-elem">
+                            <img src="../img/gallery/gallery6.jpg" alt="Iluzjonista dla dzieci w przedszkolu" loading="lazy">
                         </div>
-
-                        <div alt="pokaz halloween" style="background-image: url('./img/gallery/gallery7.jpg');" class="roll-elem">
+                        <div class="roll-elem">
+                            <img src="../img/gallery/gallery7.jpg" alt="Pokaz iluzji na Halloween" loading="lazy">
                         </div>
-
-                        <div alt="" style="background-image: url('./img/gallery/gallery8.jpg');" class="roll-elem">
+                        <div class="roll-elem">
+                            <img src="../img/gallery/gallery8.jpg" alt="Iluzjonista Hubert Burzyński pokaz magii" loading="lazy">
                         </div>
-
-                        <div alt="pokaz dla dzieci na dworze" style="background-image: url('./img/gallery/gallery9.jpg');" class="roll-elem">
-                            
+                        <div class="roll-elem">
+                            <img src="../img/gallery/gallery9.jpg" alt="Pokaz magii dla dzieci na świeżym powietrzu" loading="lazy">
                         </div>
                     </div>
                     <div id="roll3" class="roll">
-                        <div alt="pokaz sceniczny dzien kobiet" style="background-image: url('./img/gallery/gallery10.jpg');" class="roll-elem">
+                        <div class="roll-elem">
+                            <img src="../img/gallery/gallery10.jpg" alt="Pokaz sceniczny iluzjonisty na Dzień Kobiet" loading="lazy">
                         </div>
-
-                        <div alt="impreza firmowa magia close up" style="background-image: url('./img/gallery/gallery11.jpg');" class="roll-elem">
+                        <div class="roll-elem">
+                            <img src="../img/gallery/gallery11.jpg" alt="Magia close up na imprezie firmowej" loading="lazy">
                         </div>
-
-                        <div alt="magia close up dzien kobiet" style="background-image: url('./img/gallery/gallery12.jpg');" class="roll-elem">
+                        <div class="roll-elem">
+                            <img src="../img/gallery/gallery12.jpg" alt="Pokaz magia z bliska na Dzień Kobiet" loading="lazy">
                         </div>
-
-                        <div alt="impreza firmowa" style="background-image: url('./img/gallery/gallery13.jpg');" class="roll-elem">
+                        <div class="roll-elem">
+                            <img src="../img/gallery/gallery13.jpg" alt="Iluzjonista Hubert Burzyński występ na imprezie firmowej" loading="lazy">
                         </div>
-
-                        <div alt="magia z asystentem" style="background-image: url('./img/gallery/gallery14.jpg');" class="roll-elem">
+                        <div class="roll-elem">
+                            <img src="../img/gallery/gallery14.jpg" alt="Pokaz magii z asystentem" loading="lazy">
                         </div>
-
                     </div>
             </div>
 
@@ -288,7 +339,7 @@
     <section id="recommendation">
         <div class="recommendation container">
             <div class="recommendation">
-                <h1>Rekomendacje</h1>
+                <h2>Rekomendacje</h2>
                 <div class="carousel-container">
                     <button class="carousel-nav carousel-nav-left" aria-label="Poprzednia opinia">
                         <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -336,7 +387,7 @@
                 </div>
             </div>
             <div class="col-right">
-                <h1>O mnie</h1>
+                <h2>O mnie</h2>
                 <hr class="rounded">
                 <p>Nazywam się Hubert Burzyński i zajmuję się iluzją już od ponad 8 lat, wykonując setki magicznych występów w Opolu oraz okolicznych miastach, takich jak Kluczbork, Brzeg czy Nysa. Posiadam doświadczenie w organizowaniu występów na wydarzeniach takich jak wesele, impreza firmowa, urodziny, festyn, wieczór panieński, dzień kobiet, 18-nastki, Andrzejki, sylwester, WOŚP oraz pikniki. Występuję zarówno dla dzieci, jak i dorosłych, a moje pokazy mają charakter komediowy, dostosowany do charakteru każdego wydarzenia.</p>
                 <div aria-label="Przenieś do sekcji oferta" onclick="location.href='#services';" class="photos">Zobacz ofertę</div>
@@ -353,9 +404,9 @@
     <section id="contact">
         <div class="contact container">
             <div class="title">
-                <h1>Zapraszam do kontaktu!</h1>
+                <h2>Zapraszam do kontaktu!</h2>
                 <hr class="rounded">
-                <h2>Umów występ już dziś!</h2>
+                <h3>Umów występ już dziś!</h3>
             </div>
             <div class="contact-columns">
                 <div class="elements">
@@ -390,7 +441,7 @@
                     </div>
                 </div>
                 <div class="email-background">
-                    <form id="contact-form" action="sendmail.php" method="POST">
+                    <form id="contact-form" action="/sendmail.php" method="POST">
                     <div class="email" id="form-content">
                         <label for="name">Imie nazwisko:</label>
                         <input type="text" id="name" name="name" required>
@@ -402,7 +453,7 @@
                         <textarea id="description" name="message" placeholder="Napisz krótko, co to za wydarzenie, z jakiej okazji.." style="height:100px"></textarea>
                         <label style="width: 0; min-width: 100%; font-size: 1rem; text-align: justify;" required>
                             <input type="checkbox" name="agree" required>
-                            Przez wysłanie tego formularza wyrażam zgodę na przetwarzanie moich danych osobowych przez iluzjoniste Hubert Burzyńskiego w celu udzielenia odpowiedzi na moje zapytanie. Rozumiem, że moje dane będą przetwarzane zgodnie z <a style="color: white" href="polityka-prywatnosci"><u>Polityką Prywatności</u></a> oraz zgodnie z obowiązującymi przepisami o ochronie danych osobowych.
+                            Przez wysłanie tego formularza wyrażam zgodę na przetwarzanie moich danych osobowych przez iluzjoniste Hubert Burzyńskiego w celu udzielenia odpowiedzi na moje zapytanie. Rozumiem, że moje dane będą przetwarzane zgodnie z <a style="color: white" href="../polityka-prywatnosci.html"><u>Polityką Prywatności</u></a> oraz zgodnie z obowiązującymi przepisami o ochronie danych osobowych.
                           </label>
                         <button type="submit" class="button">Wyślij wiadomość</button>
                         

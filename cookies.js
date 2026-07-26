@@ -1,7 +1,7 @@
 // ========== ZARZĄDZANIE COOKIES - RODO COMPLIANT ==========
 
 var scriptElement = document.createElement("script");
-scriptElement.src = "ga.js";
+scriptElement.src = "/ga.js";
 
 var scriptElement2 = document.createElement("script");
 scriptElement2.src = "https://www.googletagmanager.com/gtag/js?id=G-EDQBFMHYGY";

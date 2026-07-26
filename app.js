@@ -486,7 +486,7 @@ if (contactForm) {
         submitButton.disabled = true;
         submitButton.textContent = 'Wysyłanie...';
         
-        fetch('sendmail.php', {
+        fetch('/sendmail.php', {
             method: 'POST',
             body: formData
         })
