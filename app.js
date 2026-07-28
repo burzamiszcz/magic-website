@@ -49,10 +49,19 @@ window.addEventListener('resize', () => {
 });
 
 
+function setMobileMenuOpen(isOpen) {
+    if (!hamburger || !mobile_menu) return;
+    hamburger.classList.toggle('active', isOpen);
+    mobile_menu.classList.toggle('active', isOpen);
+    const headerSection = document.getElementById('header');
+    if (headerSection) {
+        headerSection.classList.toggle('menu-open', isOpen);
+    }
+}
+
 if (hamburger) {
     hamburger.addEventListener('click', ()=>{
-        hamburger.classList.toggle('active');
-        mobile_menu.classList.toggle('active');
+        setMobileMenuOpen(!mobile_menu.classList.contains('active'));
     });
 }
 
@@ -126,9 +135,7 @@ if (cookieBannerEl) {
 
 menu_item.forEach((item) => {
 	item.addEventListener('click', () => {
-		if (!hamburger || !mobile_menu) return;
-		hamburger.classList.toggle('active');
-		mobile_menu.classList.toggle('active');
+		setMobileMenuOpen(false);
 	});
 });
 
@@ -653,6 +660,11 @@ function ensureServiceModal() {
     modal.setAttribute('aria-labelledby', 'service-modal-title');
     modal.innerHTML = `
         <div class="service-modal-dialog">
+            <div class="service-modal-sparkles" aria-hidden="true">
+                <span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="service-modal-glow" aria-hidden="true"></div>
             <button type="button" class="service-modal-close" aria-label="Zamknij">&times;</button>
             <img class="service-modal-icon" alt="" src="">
             <h3 id="service-modal-title"></h3>
@@ -668,6 +680,32 @@ function ensureServiceModal() {
 
 let activeServicePrefill = '';
 let lastFocusedServiceItem = null;
+let serviceModalCloseTimer = null;
+
+function spawnServiceClickBurst(serviceItem) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const rect = serviceItem.getBoundingClientRect();
+    const burst = document.createElement('div');
+    burst.className = 'service-click-burst';
+    burst.setAttribute('aria-hidden', 'true');
+    burst.style.left = `${rect.left + rect.width / 2}px`;
+    burst.style.top = `${rect.top + rect.height / 2}px`;
+
+    for (let i = 0; i < 10; i++) {
+        const spark = document.createElement('span');
+        const angle = (Math.PI * 2 * i) / 10;
+        const distance = 36 + (i % 3) * 14;
+        spark.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
+        spark.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
+        spark.style.animationDelay = `${i * 18}ms`;
+        burst.appendChild(spark);
+    }
+
+    document.body.appendChild(burst);
+    burst.addEventListener('animationend', () => burst.remove(), { once: true });
+    setTimeout(() => burst.remove(), 700);
+}
 
 function openServiceModal(serviceItem) {
     const title = (serviceItem.querySelector('h3')?.textContent || '').trim();
@@ -676,6 +714,11 @@ function openServiceModal(serviceItem) {
     const iconKey = getServiceIconKey(iconSrc);
     const details = serviceDetailsByIcon[iconKey] || serviceFallbackDetails;
     const modal = ensureServiceModal();
+
+    if (serviceModalCloseTimer) {
+        clearTimeout(serviceModalCloseTimer);
+        serviceModalCloseTimer = null;
+    }
 
     lastFocusedServiceItem = serviceItem;
     activeServicePrefill = details.prefill;
@@ -691,6 +734,15 @@ function openServiceModal(serviceItem) {
     const list = modal.querySelector('.service-modal-list');
     list.innerHTML = details.points.map((point) => `<li>${point}</li>`).join('');
 
+    serviceItem.classList.remove('service-item--cast');
+    void serviceItem.offsetWidth;
+    serviceItem.classList.add('service-item--cast');
+    setTimeout(() => serviceItem.classList.remove('service-item--cast'), 550);
+
+    spawnServiceClickBurst(serviceItem);
+
+    modal.classList.remove('active', 'closing');
+    void modal.offsetWidth;
     modal.classList.add('active');
     document.body.classList.add('service-modal-open');
     modal.querySelector('.service-modal-cta').focus();
@@ -706,14 +758,25 @@ function openServiceModal(serviceItem) {
 
 function closeServiceModal() {
     const modal = document.getElementById('service-modal');
-    if (!modal || !modal.classList.contains('active')) return;
+    if (!modal || !modal.classList.contains('active') || modal.classList.contains('closing')) return;
 
-    modal.classList.remove('active');
+    modal.classList.add('closing');
     document.body.classList.remove('service-modal-open');
 
-    if (lastFocusedServiceItem) {
-        lastFocusedServiceItem.focus();
+    const finishClose = () => {
+        modal.classList.remove('active', 'closing');
+        serviceModalCloseTimer = null;
+        if (lastFocusedServiceItem) {
+            lastFocusedServiceItem.focus();
+        }
+    };
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        finishClose();
+        return;
     }
+
+    serviceModalCloseTimer = setTimeout(finishClose, 280);
 }
 
 function goToContactFromService() {

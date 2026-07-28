@@ -540,8 +540,8 @@ hr.rounded {
     top: 0;
     width: 100%;
     height: auto;
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     background: transparent;
     border-bottom: 1px solid transparent;
     box-shadow: none;
@@ -554,6 +554,16 @@ hr.rounded {
     background: rgba(10, 5, 15, 0.5);
     border-bottom: 1px solid rgba(129, 42, 233, 0.3);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3), 0 2px 15px rgba(129, 42, 233, 0.15);
+}
+
+/* backdrop-filter traps position:fixed menu inside the navbar — disable while open */
+#header.menu-open,
+#header.menu-open.scrolled {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: transparent;
+    border-bottom-color: transparent;
+    box-shadow: none;
 }
 
 #header span {
@@ -657,15 +667,16 @@ hr.rounded {
     list-style: none;
     position: fixed;
     background-color: rgb(19, 1, 20);
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
     left: 0;
     top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    z-index: 1;
+    z-index: 90;
     overflow-x: hidden;
     transform: translateX(100%);
     transition: var(--transition-slow) transform;
@@ -1646,6 +1657,64 @@ hr.rounded {
 }
 
 /* ========== SERVICE DETAIL MODAL ========== */
+#services .all-services .service-col .service-item.service-item--cast {
+    animation: serviceTileCast 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes serviceTileCast {
+    0% {
+        transform: translateY(-10px) scale(1.02);
+        filter: brightness(1);
+    }
+    35% {
+        transform: translateY(-14px) scale(1.06);
+        filter: brightness(1.18);
+        box-shadow: 0 18px 48px rgba(129, 42, 233, 0.4),
+                    0 0 28px rgba(200, 157, 251, 0.55);
+    }
+    100% {
+        transform: translateY(-10px) scale(1.02);
+        filter: brightness(1);
+    }
+}
+
+.service-click-burst {
+    position: fixed;
+    z-index: 1090;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.service-click-burst span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff 0%, var(--light-purple) 45%, var(--primary-purple) 100%);
+    box-shadow: 0 0 10px rgba(200, 157, 251, 0.9);
+    animation: serviceSparkBurst 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.service-click-burst span:nth-child(odd) {
+    width: 4px;
+    height: 4px;
+    background: #fff;
+}
+
+@keyframes serviceSparkBurst {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.4);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.1);
+    }
+}
+
 #service-modal {
     display: none;
     position: fixed;
@@ -1653,19 +1722,33 @@ hr.rounded {
     inset: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(18, 8, 32, 0.72);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     align-items: center;
     justify-content: center;
     padding: 20px;
     opacity: 0;
-    transition: opacity 0.3s ease;
 }
 
 #service-modal.active {
     display: flex;
-    opacity: 1;
+    perspective: 1100px;
+    animation: serviceModalBackdropIn 0.35s ease forwards;
+}
+
+#service-modal.active.closing {
+    animation: serviceModalBackdropOut 0.28s ease forwards;
+}
+
+@keyframes serviceModalBackdropIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes serviceModalBackdropOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
 }
 
 .service-modal-dialog {
@@ -1677,16 +1760,117 @@ hr.rounded {
     width: 100%;
     max-height: min(90vh, 720px);
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 40px 30px 30px;
     text-align: center;
     box-shadow: 0 16px 48px rgba(124, 41, 226, 0.35),
                 inset 0 1px 0 rgba(255, 255, 255, 0.6);
-    transform: translateY(16px) scale(0.97);
-    transition: transform 0.3s ease;
+    transform-origin: center center;
 }
 
 #service-modal.active .service-modal-dialog {
-    transform: translateY(0) scale(1);
+    animation: serviceModalDialogIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+#service-modal.active.closing .service-modal-dialog {
+    animation: serviceModalDialogOut 0.25s ease forwards;
+}
+
+@keyframes serviceModalDialogIn {
+    0% {
+        opacity: 0;
+        transform: translateY(28px) scale(0.82) rotateX(8deg);
+        filter: blur(8px) brightness(1.35);
+        box-shadow: 0 0 0 rgba(124, 41, 226, 0),
+                    0 0 60px 20px rgba(200, 157, 251, 0.55);
+    }
+    55% {
+        opacity: 1;
+        filter: blur(0) brightness(1.08);
+        box-shadow: 0 20px 56px rgba(124, 41, 226, 0.4),
+                    0 0 40px 8px rgba(200, 157, 251, 0.35);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotateX(0deg);
+        filter: blur(0) brightness(1);
+        box-shadow: 0 16px 48px rgba(124, 41, 226, 0.35),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+}
+
+@keyframes serviceModalDialogOut {
+    to {
+        opacity: 0;
+        transform: translateY(12px) scale(0.94);
+        filter: blur(4px);
+    }
+}
+
+.service-modal-glow {
+    position: absolute;
+    inset: -2px;
+    border-radius: 24px;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 0%, rgba(200, 157, 251, 0.45), transparent 55%);
+    opacity: 0;
+    z-index: 0;
+}
+
+#service-modal.active .service-modal-glow {
+    animation: serviceModalGlowFlash 0.7s ease forwards;
+}
+
+@keyframes serviceModalGlowFlash {
+    0% { opacity: 0; }
+    30% { opacity: 0.9; }
+    100% { opacity: 0; }
+}
+
+.service-modal-sparkles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: visible;
+}
+
+.service-modal-sparkles span {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 10px 2px rgba(200, 157, 251, 0.95);
+    opacity: 0;
+}
+
+#service-modal.active .service-modal-sparkles span {
+    animation: serviceModalSparkle 0.85s ease-out forwards;
+}
+
+.service-modal-sparkles span:nth-child(1) { top: 12%; left: 10%; animation-delay: 0.05s; }
+.service-modal-sparkles span:nth-child(2) { top: 8%; right: 14%; animation-delay: 0.12s; width: 4px; height: 4px; }
+.service-modal-sparkles span:nth-child(3) { top: 28%; right: 6%; animation-delay: 0.18s; }
+.service-modal-sparkles span:nth-child(4) { bottom: 22%; right: 12%; animation-delay: 0.24s; width: 5px; height: 5px; }
+.service-modal-sparkles span:nth-child(5) { bottom: 12%; left: 18%; animation-delay: 0.3s; }
+.service-modal-sparkles span:nth-child(6) { top: 42%; left: 5%; animation-delay: 0.16s; width: 4px; height: 4px; }
+.service-modal-sparkles span:nth-child(7) { top: 18%; left: 48%; animation-delay: 0.08s; width: 3px; height: 3px; }
+.service-modal-sparkles span:nth-child(8) { bottom: 30%; left: 45%; animation-delay: 0.28s; width: 4px; height: 4px; }
+
+@keyframes serviceModalSparkle {
+    0% {
+        opacity: 0;
+        transform: scale(0) translateY(8px);
+    }
+    35% {
+        opacity: 1;
+        transform: scale(1.4) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.4) translateY(-14px);
+    }
 }
 
 .service-modal-close {
@@ -1702,6 +1886,7 @@ hr.rounded {
     font-size: 1.8rem;
     line-height: 1;
     cursor: pointer;
+    z-index: 3;
     transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
@@ -1711,58 +1896,100 @@ hr.rounded {
     transform: scale(1.05);
 }
 
+.service-modal-icon,
+.service-modal-dialog h3,
+.service-modal-lead,
+.service-modal-details,
+.service-modal-list,
+.service-modal-cta {
+    position: relative;
+    z-index: 1;
+}
+
 .service-modal-icon {
-    width: 88px;
-    height: auto;
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
     margin: 0 auto 12px;
-    filter: drop-shadow(0 4px 12px rgba(129, 42, 233, 0.25));
+    filter: drop-shadow(0 4px 10px rgba(129, 42, 233, 0.2));
+}
+
+#service-modal.active .service-modal-icon {
+    animation: serviceModalIconIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+
+@keyframes serviceModalIconIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.4) rotate(-18deg);
+        filter: drop-shadow(0 0 0 rgba(129, 42, 233, 0)) brightness(1.6);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.12) rotate(4deg);
+        filter: drop-shadow(0 6px 15px rgba(129, 42, 233, 0.4)) brightness(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 4px 10px rgba(129, 42, 233, 0.2)) brightness(1);
+    }
 }
 
 .service-modal-dialog h3 {
-    margin: 0 0 16px;
+    margin: 0 0 12px;
     font-family: var(--font-secondary);
-    font-size: clamp(2rem, 5vw, 2.6rem);
-    font-weight: 700;
+    font-size: 1.45rem;
+    font-weight: bold;
+    line-height: 1.25;
     color: var(--dark-purple);
-    background: linear-gradient(135deg, var(--dark-purple), #812AE9);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+}
+
+#service-modal.active .service-modal-dialog h3 {
+    animation: serviceModalContentIn 0.45s ease 0.18s both;
+}
+
+.service-modal-lead,
+.service-modal-details,
+.service-modal-list li {
+    font-family: var(--font-tertiary);
+    font-size: 1.25rem;
+    line-height: 1.5;
+    font-weight: 400;
+    color: rgba(48, 30, 64, 0.82);
 }
 
 .service-modal-lead {
-    margin: 0 0 18px;
-    font-family: var(--font-tertiary);
-    font-size: 1.35rem;
-    line-height: 1.55;
-    font-weight: 500;
-    color: rgba(48, 30, 64, 0.95);
+    margin: 0 0 14px;
+}
+
+#service-modal.active .service-modal-lead {
+    animation: serviceModalContentIn 0.45s ease 0.26s both;
 }
 
 .service-modal-details {
-    margin: 0 0 20px;
-    font-family: var(--font-tertiary);
-    font-size: 1.25rem;
-    line-height: 1.65;
-    color: rgba(48, 30, 64, 0.9);
+    margin: 0 0 16px;
     text-align: left;
+}
+
+#service-modal.active .service-modal-details {
+    animation: serviceModalContentIn 0.45s ease 0.34s both;
 }
 
 .service-modal-list {
     list-style: none;
-    margin: 0 0 28px;
+    margin: 0 0 24px;
     padding: 0;
     text-align: left;
 }
 
+#service-modal.active .service-modal-list {
+    animation: serviceModalContentIn 0.45s ease 0.4s both;
+}
+
 .service-modal-list li {
     position: relative;
-    padding: 12px 0 12px 30px;
-    font-family: var(--font-tertiary);
-    font-size: 1.25rem;
-    line-height: 1.5;
-    font-weight: 500;
-    color: rgba(48, 30, 64, 0.95);
+    padding: 10px 0 10px 28px;
     border-bottom: 1px solid rgba(129, 42, 233, 0.1);
 }
 
@@ -1774,30 +2001,64 @@ hr.rounded {
     content: '';
     position: absolute;
     left: 4px;
-    top: 18px;
-    width: 10px;
-    height: 10px;
+    top: 16px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--primary-purple), var(--light-purple));
     box-shadow: 0 0 8px rgba(129, 42, 233, 0.45);
+}
+
+#service-modal.active .service-modal-list li {
+    animation: serviceModalPointIn 0.4s ease both;
+}
+
+#service-modal.active .service-modal-list li:nth-child(1) { animation-delay: 0.42s; }
+#service-modal.active .service-modal-list li:nth-child(2) { animation-delay: 0.5s; }
+#service-modal.active .service-modal-list li:nth-child(3) { animation-delay: 0.58s; }
+
+@keyframes serviceModalContentIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes serviceModalPointIn {
+    from {
+        opacity: 0;
+        transform: translateX(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .service-modal-cta {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 240px;
-    padding: 14px 32px;
+    min-width: 220px;
+    padding: 12px 28px;
     border: none;
     border-radius: var(--border-radius-round);
     background-color: var(--primary-purple);
     color: white;
-    font-family: inherit;
-    font-size: 1.5rem;
+    font-family: var(--font-secondary);
+    font-size: 1.25rem;
     font-weight: 600;
     cursor: pointer;
     box-shadow: var(--shadow-glow);
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+#service-modal.active .service-modal-cta {
+    animation: serviceModalContentIn 0.45s ease 0.62s both;
 }
 
 .service-modal-cta:hover {
@@ -1820,6 +2081,43 @@ body.service-modal-open {
     .service-modal-cta {
         width: 100%;
         min-width: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #services .all-services .service-col .service-item.service-item--cast,
+    #service-modal.active,
+    #service-modal.active.closing,
+    #service-modal.active .service-modal-dialog,
+    #service-modal.active.closing .service-modal-dialog,
+    #service-modal.active .service-modal-glow,
+    #service-modal.active .service-modal-sparkles span,
+    #service-modal.active .service-modal-icon,
+    #service-modal.active .service-modal-dialog h3,
+    #service-modal.active .service-modal-lead,
+    #service-modal.active .service-modal-details,
+    #service-modal.active .service-modal-list,
+    #service-modal.active .service-modal-list li,
+    #service-modal.active .service-modal-cta,
+    .service-click-burst span {
+        animation: none !important;
+    }
+
+    #service-modal.active {
+        opacity: 1;
+    }
+
+    #service-modal.active .service-modal-dialog,
+    #service-modal.active .service-modal-icon,
+    #service-modal.active .service-modal-dialog h3,
+    #service-modal.active .service-modal-lead,
+    #service-modal.active .service-modal-details,
+    #service-modal.active .service-modal-list,
+    #service-modal.active .service-modal-list li,
+    #service-modal.active .service-modal-cta {
+        opacity: 1;
+        transform: none;
+        filter: none;
     }
 }
 
@@ -3446,6 +3744,27 @@ body.service-modal-open {
 
     #services .all-services .service-col .service-item:hover img {
         transform: scale(1.06);
+    }
+
+    .service-modal-icon {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 16px;
+    }
+
+    .service-modal-dialog h3 {
+        font-size: 2.15rem;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        margin: 0 0 14px;
+    }
+
+    .service-modal-lead,
+    .service-modal-details,
+    .service-modal-list li,
+    .service-modal-cta {
+        font-size: 1.45rem;
+        line-height: 1.55;
     }
 
     #upupup {
