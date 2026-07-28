@@ -472,6 +472,227 @@ phoneLinks.forEach(link => {
     });
 });
 
+// Service tiles modal
+const serviceDetailsByIcon = {
+    'service-celebrations.svg': {
+        lead: 'Pokaz dopasowany do charakteru uroczystości, od kameralnych spotkań po większe przyjęcia.',
+        details: 'Występ łączy klasyczną iluzję z humorem i interakcją z gośćmi. Możemy zagrać na scenie albo podejść do stołów, tak by magia naturalnie wpasowała się w przebieg wieczoru.',
+        points: [
+            'Czas trwania dopasowany do eventu (zwykle 20-45 min)',
+            'Forma sceniczna lub magia z bliska między gośćmi',
+            'Program zrozumiały i angażujący dla różnych grup wiekowych'
+        ],
+        prefill: 'Interesuje mnie pokaz na uroczystość.'
+    },
+    'service-birthday.svg': {
+        lead: 'Urodziny z iluzjonistą to gotowa atrakcja, która trzyma uwagę gości od pierwszej do ostatniej minuty.',
+        details: 'Pokaz buduję pod wiek solenizanta i atmosferę imprezy. Inaczej wygląda występ dla dzieci, inaczej set dla dorosłych. Magia, śmiech i wspólne "jak on to zrobił?" gwarantowane.',
+        points: [
+            'Program dopasowany do wieku urodzinowiczów',
+            'Dużo interakcji i udziału publiczności',
+            'Świetnie działa zarówno w domu, jak i w sali lub lokalu'
+        ],
+        prefill: 'Interesuje mnie magik na urodziny.'
+    },
+    'service-company.svg': {
+        lead: 'Iluzja na firmówce to sposób, by integracja albo gala nie skończyła się na samym networkingu.',
+        details: 'Pokaz firmowy mogę dopasować do tonu wydarzenia: lekki i zabawny albo bardziej widowiskowy. Magia świetnie rozbija lody, angażuje zespół i zostaje w rozmowach długo po evencie.',
+        points: [
+            'Idealny na integracje, gale i eventy firmowe',
+            'Możliwość magii z bliska podczas cocktailu lub bankietu',
+            'Czas i forma występu dopasowane do programu eventu'
+        ],
+        prefill: 'Interesuje mnie iluzjonista na imprezę firmową.'
+    },
+    'service-outside.svg': {
+        lead: 'Pikniki, festyny i eventy plenerowe. Magia działa też na świeżym powietrzu.',
+        details: 'W plenerze stawiam na wyraźne efekty, energię i kontakt z przechodzącą publicznością. Pokaz można zaplanować jako punkt programu albo jako atrakcję krążącą po terenie wydarzenia.',
+        points: [
+            'Sprawdza się na festynach, piknikach i eventach miejskich',
+            'Format sceniczny lub pokaz w tłumie',
+            'Elastyczny czas i lokalizacja występu'
+        ],
+        prefill: 'Interesuje mnie pokaz na imprezę plenerową.'
+    },
+    'service-special.svg': {
+        lead: 'Promocje, targi i eventy handlowe zyskują atrakcję, która realnie zatrzymuje uwagę.',
+        details: 'Pokaz specjalny mogę zbudować wokół Twojej marki lub akcji promocyjnej. Magia przyciąga ludzi do stoiska i buduje pozytywne skojarzenie z firmą.',
+        points: [
+            'Galerie, targi, otwarcia, promocje produktowe',
+            'Możliwość kilku krótszych setów w ciągu dnia',
+            'Efekt wow, który naturalnie zbiera tłum'
+        ],
+        prefill: 'Interesuje mnie pokaz specjalny / promocyjny.'
+    },
+    'service-wedding.svg': {
+        lead: 'Magia na weselu to świetny sposób, by wyróżnić przyjęcie i zaangażować gości.',
+        details: 'Najczęściej sprawdzają się występy między stołami w trakcie bankietu albo krótki pokaz sceniczny. Iluzje dobieram tak, by pasowały do klimatu wesela i nie kolidowały z innymi punktami programu.',
+        points: [
+            'Magia z bliska przy stołach lub krótki pokaz sceniczny',
+            'Możliwość zaangażowania Pary Młodej',
+            'Termin występu dopasowany do przebiegu wesela'
+        ],
+        prefill: 'Interesuje mnie iluzjonista na wesele.'
+    }
+};
+
+const serviceFallbackDetails = {
+    lead: 'Profesjonalny pokaz iluzji dopasowany do charakteru Twojego wydarzenia.',
+    details: 'Każdy występ buduję pod konkretną okazję: długość, formę i poziom interakcji z gośćmi. Napisz kilka słów o evencie, a zaproponuję najlepszy wariant.',
+    points: [
+        'Program szyty na miarę wydarzenia',
+        'Forma sceniczna lub magia z bliska',
+        'Termin i szczegóły ustalamy indywidualnie'
+    ],
+    prefill: 'Interesuje mnie pokaz iluzji.'
+};
+
+function getServiceIconKey(imgSrc) {
+    if (!imgSrc) return '';
+    const fileName = imgSrc.split('/').pop() || '';
+    return fileName.split('?')[0];
+}
+
+function ensureServiceModal() {
+    let modal = document.getElementById('service-modal');
+    if (modal) return modal;
+
+    modal = document.createElement('div');
+    modal.id = 'service-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-labelledby', 'service-modal-title');
+    modal.innerHTML = `
+        <div class="service-modal-dialog">
+            <button type="button" class="service-modal-close" aria-label="Zamknij">&times;</button>
+            <img class="service-modal-icon" alt="" src="">
+            <h3 id="service-modal-title"></h3>
+            <p class="service-modal-lead"></p>
+            <p class="service-modal-details"></p>
+            <ul class="service-modal-list"></ul>
+            <button type="button" class="service-modal-cta">Umów termin</button>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    return modal;
+}
+
+let activeServicePrefill = '';
+let lastFocusedServiceItem = null;
+
+function openServiceModal(serviceItem) {
+    const title = (serviceItem.querySelector('h3')?.textContent || '').trim();
+    const iconEl = serviceItem.querySelector('img');
+    const iconSrc = iconEl?.getAttribute('src') || '';
+    const iconKey = getServiceIconKey(iconSrc);
+    const details = serviceDetailsByIcon[iconKey] || serviceFallbackDetails;
+    const modal = ensureServiceModal();
+
+    lastFocusedServiceItem = serviceItem;
+    activeServicePrefill = details.prefill;
+
+    const modalIcon = modal.querySelector('.service-modal-icon');
+    modalIcon.src = iconSrc;
+    modalIcon.alt = iconEl?.getAttribute('alt') || title;
+
+    modal.querySelector('#service-modal-title').textContent = title;
+    modal.querySelector('.service-modal-lead').textContent = details.lead;
+    modal.querySelector('.service-modal-details').textContent = details.details;
+
+    const list = modal.querySelector('.service-modal-list');
+    list.innerHTML = details.points.map((point) => `<li>${point}</li>`).join('');
+
+    modal.classList.add('active');
+    document.body.classList.add('service-modal-open');
+    modal.querySelector('.service-modal-cta').focus();
+
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'service_click', {
+            event_category: 'Services',
+            event_label: title,
+            value: 1
+        });
+    }
+}
+
+function closeServiceModal() {
+    const modal = document.getElementById('service-modal');
+    if (!modal || !modal.classList.contains('active')) return;
+
+    modal.classList.remove('active');
+    document.body.classList.remove('service-modal-open');
+
+    if (lastFocusedServiceItem) {
+        lastFocusedServiceItem.focus();
+    }
+}
+
+function goToContactFromService() {
+    const prefill = activeServicePrefill;
+    const serviceTitle = document.getElementById('service-modal-title')?.textContent || '';
+
+    closeServiceModal();
+
+    const descriptionField = document.getElementById('description');
+    if (descriptionField && prefill) {
+        const current = descriptionField.value.trim();
+        if (!current) {
+            descriptionField.value = prefill;
+        } else if (!current.includes(prefill)) {
+            descriptionField.value = `${prefill} ${current}`;
+        }
+    }
+
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'service_cta_click', {
+            event_category: 'Services',
+            event_label: serviceTitle,
+            value: 1
+        });
+    }
+
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+            const focusTarget = document.getElementById('name') || descriptionField;
+            if (focusTarget) focusTarget.focus({ preventScroll: true });
+        }, 450);
+    }
+}
+
+(function initServiceModal() {
+    const serviceItems = document.querySelectorAll('#services .service-item');
+    if (!serviceItems.length) return;
+
+    const modal = ensureServiceModal();
+
+    serviceItems.forEach((item) => {
+        item.setAttribute('role', 'button');
+        item.setAttribute('tabindex', '0');
+        const title = (item.querySelector('h3')?.textContent || 'usłudze').trim();
+        item.setAttribute('aria-label', `Więcej o pokazie: ${title}`);
+
+        item.addEventListener('click', () => openServiceModal(item));
+        item.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openServiceModal(item);
+            }
+        });
+    });
+
+    modal.querySelector('.service-modal-close').addEventListener('click', closeServiceModal);
+    modal.querySelector('.service-modal-cta').addEventListener('click', goToContactFromService);
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) closeServiceModal();
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeServiceModal();
+    });
+})();
+
 // Contact Form Handler
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
