@@ -49,33 +49,84 @@ window.addEventListener('resize', () => {
 });
 
 
-hamburger.addEventListener('click', ()=>{
-    hamburger.classList.toggle('active');
-    mobile_menu.classList.toggle('active');
-});
+if (hamburger) {
+    hamburger.addEventListener('click', ()=>{
+        hamburger.classList.toggle('active');
+        mobile_menu.classList.toggle('active');
+    });
+}
 
-document.addEventListener('scroll',()=>{
-    var scroll_position = window.scrollY;
+const STICKY_CTA_HTML = `
+<nav class="sticky-cta" aria-label="Szybki kontakt">
+    <a class="sticky-cta__btn sticky-cta__btn--whatsapp" href="https://wa.me/48782784335?text=Cze%C5%9B%C4%87%2C%20interesuje%20mnie%20pokaz%20magii." target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i><span>WhatsApp</span>
+    </a>
+    <a class="sticky-cta__btn sticky-cta__btn--call" href="tel:+48782784335">
+        <i class="fa fa-phone" aria-hidden="true"></i><span>Zadzwoń</span>
+    </a>
+    <a class="sticky-cta__btn sticky-cta__btn--sms" href="sms:+48782784335">
+        <i class="fa fa-comment" aria-hidden="true"></i><span>SMS</span>
+    </a>
+</nav>
+`.trim();
+
+function ensureStickyCta() {
+    let stickyCta = document.querySelector('.sticky-cta');
+    if (stickyCta) return stickyCta;
+
+    // Inject on any page with contact (covers endpoints if markup is missing)
+    if (!document.getElementById('contact')) return null;
+
+    document.body.insertAdjacentHTML('beforeend', STICKY_CTA_HTML);
+    return document.querySelector('.sticky-cta');
+}
+
+function updateStickyCta() {
+    const stickyCta = ensureStickyCta();
+    if (!stickyCta) return;
+
+    const isMobile = window.matchMedia('(max-width: 1199px)').matches;
+    const cookieBanner = document.getElementById('cookie-banner');
+    const cookieBlocking = Boolean(cookieBanner && cookieBanner.classList.contains('active'));
+    const showSticky = isMobile && window.scrollY > 120 && !cookieBlocking;
+
+    stickyCta.classList.toggle('is-visible', showSticky);
+    document.body.classList.toggle('sticky-cta-visible', showSticky);
+}
+
+function onScrollOrResize() {
+    const scroll_position = window.scrollY;
     const headerElement = document.querySelector('#header');
 
-    if(scroll_position > 50) {
-        header.style.backgroundColor = "#11041a99";
-        logo.style.opacity = "0";
-        if(headerElement) {
-            headerElement.classList.add('scrolled');
-        }
-    }else{
-        header.style.backgroundColor = 'transparent';
-        logo.style.opacity = "0.8";
-        if(headerElement) {
-            headerElement.classList.remove('scrolled');
-        }
+    if (scroll_position > 50) {
+        if (header) header.style.backgroundColor = "#11041a99";
+        if (logo) logo.style.opacity = "0";
+        if (headerElement) headerElement.classList.add('scrolled');
+    } else {
+        if (header) header.style.backgroundColor = 'transparent';
+        if (logo) logo.style.opacity = "0.8";
+        if (headerElement) headerElement.classList.remove('scrolled');
     }
 
-});
+    updateStickyCta();
+}
+
+window.addEventListener('scroll', onScrollOrResize, { passive: true });
+window.addEventListener('resize', updateStickyCta);
+ensureStickyCta();
+updateStickyCta();
+
+const cookieBannerEl = document.getElementById('cookie-banner');
+if (cookieBannerEl) {
+    new MutationObserver(updateStickyCta).observe(cookieBannerEl, {
+        attributes: true,
+        attributeFilter: ['class']
+    });
+}
 
 menu_item.forEach((item) => {
 	item.addEventListener('click', () => {
+		if (!hamburger || !mobile_menu) return;
 		hamburger.classList.toggle('active');
 		mobile_menu.classList.toggle('active');
 	});
@@ -288,42 +339,49 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 const images = document.querySelectorAll(".roll-elem");
-let imgSrc;
 let currentImageIndex = 0;
 let allImageSources = [];
 
+function getRollElemSrc(elem) {
+    if (!elem) return '';
+    const img = elem.querySelector('img');
+    if (img) {
+        return img.currentSrc || img.src || '';
+    }
+    const backgroundImage = window.getComputedStyle(elem).backgroundImage;
+    if (backgroundImage && backgroundImage !== 'none') {
+        return backgroundImage.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+    }
+    return '';
+}
+
 // Collect all image sources
-images.forEach((img) => {
-    const style = window.getComputedStyle(img);
-    const backgroundImage = style.backgroundImage;
-    const src = backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '');
-    allImageSources.push(src);
+images.forEach((elem) => {
+    const src = getRollElemSrc(elem);
+    if (src) allImageSources.push(src);
 });
 
-// Get images src onclick
-images.forEach((img, index) => {
-    img.addEventListener("click", (e) => {
-        if (window.screen.width > 0) {
-            const style = window.getComputedStyle(e.target);
-            const backgroundImage = style.backgroundImage;
-            const imgSrc = backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '');
-            currentImageIndex = index;
-            imgModal(imgSrc);
-        }
+// Open preview on click
+images.forEach((elem, index) => {
+    elem.addEventListener("click", () => {
+        const src = getRollElemSrc(elem);
+        if (!src) return;
+        currentImageIndex = index;
+        imgModal(src);
     });
 });
 
 const main = document.querySelector('*');
-const rollItem = document.querySelector('.roll-elem');
 
 let imgModal = (src) => {
-    header.style.display = "none";
+    if (header) header.style.display = "none";
     const modal = document.createElement("div");
     modal.setAttribute("class", "modal");
     
     // Close button
     const closeBtn = document.createElement("button");
     closeBtn.setAttribute("class", "modal-close");
+    closeBtn.setAttribute("aria-label", "Zamknij podgląd");
     closeBtn.innerHTML = '&times;';
     closeBtn.onclick = (e) => {
         e.stopPropagation();
@@ -333,6 +391,7 @@ let imgModal = (src) => {
     // Previous button
     const prevBtn = document.createElement("button");
     prevBtn.setAttribute("class", "modal-nav modal-prev");
+    prevBtn.setAttribute("aria-label", "Poprzednie zdjęcie");
     prevBtn.innerHTML = '&#8249;';
     prevBtn.onclick = (e) => {
         e.stopPropagation();
@@ -342,6 +401,7 @@ let imgModal = (src) => {
     // Next button
     const nextBtn = document.createElement("button");
     nextBtn.setAttribute("class", "modal-nav modal-next");
+    nextBtn.setAttribute("aria-label", "Następne zdjęcie");
     nextBtn.innerHTML = '&#8250;';
     nextBtn.onclick = (e) => {
         e.stopPropagation();
@@ -352,6 +412,7 @@ let imgModal = (src) => {
     const newImage = document.createElement("img");
     newImage.setAttribute("src", src);
     newImage.setAttribute("id", "modal-image");
+    newImage.setAttribute("alt", "Podgląd zdjęcia z galerii");
     
     modal.append(closeBtn);
     modal.append(prevBtn);
@@ -371,6 +432,7 @@ let imgModal = (src) => {
 };
 
 function navigateImage(direction) {
+    if (!allImageSources.length) return;
     currentImageIndex = (currentImageIndex + direction + allImageSources.length) % allImageSources.length;
     const modalImage = document.getElementById('modal-image');
     if (modalImage) {
@@ -392,8 +454,8 @@ function closeModal() {
     if (modal) {
         modal.remove();
     }
-    main.style.overflow = "";
-    header.style.display = "";
+    if (main) main.style.overflow = "";
+    if (header) header.style.display = "";
     document.removeEventListener('keydown', handleKeyPress);
 }
 
@@ -409,7 +471,6 @@ function handleKeyPress(e) {
 
 
 const rollItem1 = document.getElementById('roll1');
-console.log(rollItem.scrollHeight)
 
 // Scroll reveal animation
 const revealElements = () => {
@@ -466,6 +527,34 @@ phoneLinks.forEach(link => {
             gtag('event', 'phone_click', {
                 'event_category': 'Contact',
                 'event_label': 'Phone Number Click',
+                'value': 1
+            });
+        }
+    });
+});
+
+// WhatsApp Click Tracking
+const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
+whatsappLinks.forEach(link => {
+    link.addEventListener('click', function() {
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'whatsapp_click', {
+                'event_category': 'Contact',
+                'event_label': 'WhatsApp Click',
+                'value': 1
+            });
+        }
+    });
+});
+
+// SMS Click Tracking
+const smsLinks = document.querySelectorAll('a[href^="sms:"]');
+smsLinks.forEach(link => {
+    link.addEventListener('click', function() {
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'sms_click', {
+                'event_category': 'Contact',
+                'event_label': 'SMS Click',
                 'value': 1
             });
         }
