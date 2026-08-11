@@ -671,7 +671,7 @@ function ensureServiceModal() {
             <p class="service-modal-lead"></p>
             <p class="service-modal-details"></p>
             <ul class="service-modal-list"></ul>
-            <button type="button" class="service-modal-cta">Umów termin</button>
+            <button type="button" class="service-modal-cta">Zapytaj o szczegóły</button>
         </div>
     `;
     document.body.appendChild(modal);
