@@ -671,7 +671,7 @@ function ensureServiceModal() {
             <p class="service-modal-lead"></p>
             <p class="service-modal-details"></p>
             <ul class="service-modal-list"></ul>
-            <button type="button" class="service-modal-cta">Zapytaj o szczegóły</button>
+            <button type="button" class="service-modal-cta">Zapytaj o ofertę</button>
         </div>
     `;
     document.body.appendChild(modal);
@@ -681,6 +681,25 @@ function ensureServiceModal() {
 let activeServicePrefill = '';
 let lastFocusedServiceItem = null;
 let serviceModalCloseTimer = null;
+let serviceModalScrollY = 0;
+
+function isCoarsePointer() {
+    return window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
+}
+
+function lockBodyForServiceModal() {
+    serviceModalScrollY = window.scrollY;
+    document.body.classList.add('service-modal-open');
+    document.body.style.top = `-${serviceModalScrollY}px`;
+}
+
+function unlockBodyForServiceModal(restoreScroll) {
+    document.body.classList.remove('service-modal-open');
+    document.body.style.top = '';
+    if (restoreScroll) {
+        window.scrollTo(0, serviceModalScrollY);
+    }
+}
 
 function spawnServiceClickBurst(serviceItem) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -744,8 +763,10 @@ function openServiceModal(serviceItem) {
     modal.classList.remove('active', 'closing');
     void modal.offsetWidth;
     modal.classList.add('active');
-    document.body.classList.add('service-modal-open');
-    modal.querySelector('.service-modal-cta').focus();
+    lockBodyForServiceModal();
+    if (!isCoarsePointer()) {
+        modal.querySelector('.service-modal-cta').focus();
+    }
 
     if (typeof gtag !== 'undefined') {
         gtag('event', 'service_click', {
@@ -756,18 +777,20 @@ function openServiceModal(serviceItem) {
     }
 }
 
-function closeServiceModal() {
+function closeServiceModal(options = {}) {
     const modal = document.getElementById('service-modal');
     if (!modal || !modal.classList.contains('active') || modal.classList.contains('closing')) return;
 
     modal.classList.add('closing');
-    document.body.classList.remove('service-modal-open');
+    if (!options.keepScrollLock) {
+        unlockBodyForServiceModal(true);
+    }
 
     const finishClose = () => {
         modal.classList.remove('active', 'closing');
         serviceModalCloseTimer = null;
-        if (lastFocusedServiceItem) {
-            lastFocusedServiceItem.focus();
+        if (!options.skipFocusRestore && lastFocusedServiceItem) {
+            lastFocusedServiceItem.focus({ preventScroll: true });
         }
     };
 
@@ -779,11 +802,56 @@ function closeServiceModal() {
     serviceModalCloseTimer = setTimeout(finishClose, 280);
 }
 
+function showServiceFormHint(serviceTitle) {
+    const formContent = document.getElementById('form-content');
+    if (!formContent) return;
+
+    let hint = document.getElementById('service-form-hint');
+    if (!hint) {
+        hint = document.createElement('p');
+        hint.id = 'service-form-hint';
+        hint.className = 'service-form-hint';
+        hint.setAttribute('role', 'status');
+        formContent.prepend(hint);
+    }
+
+    const title = serviceTitle ? `Pytasz o: ${serviceTitle}.` : 'Pytasz o pokaz.';
+    hint.textContent = `${title} Uzupełnij formularz — oddzwonię ze szczegółami.`;
+    hint.hidden = false;
+}
+
+function scrollToContactForm() {
+    const formCard = document.querySelector('#contact .email-background')
+        || document.getElementById('form-content')
+        || document.getElementById('contact');
+    if (!formCard) return;
+
+    const headerHeight = document.getElementById('header')?.offsetHeight || 80;
+    const extraGap = 12;
+    const locked = document.body.classList.contains('service-modal-open');
+    const scrollY = locked ? serviceModalScrollY : window.scrollY;
+    const targetTop = Math.max(0, formCard.getBoundingClientRect().top + scrollY - headerHeight - extraGap);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    unlockBodyForServiceModal(false);
+    window.scrollTo(0, scrollY);
+
+    window.scrollTo({
+        top: targetTop,
+        behavior: reducedMotion ? 'auto' : 'smooth'
+    });
+
+    formCard.classList.remove('service-form-target');
+    void formCard.offsetWidth;
+    formCard.classList.add('service-form-target');
+    setTimeout(() => formCard.classList.remove('service-form-target'), 2600);
+}
+
 function goToContactFromService() {
     const prefill = activeServicePrefill;
     const serviceTitle = document.getElementById('service-modal-title')?.textContent || '';
 
-    closeServiceModal();
+    closeServiceModal({ skipFocusRestore: true, keepScrollLock: true });
 
     const descriptionField = document.getElementById('description');
     if (descriptionField && prefill) {
@@ -795,6 +863,8 @@ function goToContactFromService() {
         }
     }
 
+    showServiceFormHint(serviceTitle);
+
     if (typeof gtag !== 'undefined') {
         gtag('event', 'service_cta_click', {
             event_category: 'Services',
@@ -803,14 +873,10 @@ function goToContactFromService() {
         });
     }
 
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setTimeout(() => {
-            const focusTarget = document.getElementById('name') || descriptionField;
-            if (focusTarget) focusTarget.focus({ preventScroll: true });
-        }, 450);
-    }
+    const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 280;
+    setTimeout(() => {
+        scrollToContactForm();
+    }, delay);
 }
 
 (function initServiceModal() {
