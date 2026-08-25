@@ -1,13 +1,6 @@
-// ========== ZARZĄDZANIE COOKIES - RODO COMPLIANT ==========
+// ========== ZARZĄDZANIE COOKIES - RODO + Google Consent Mode v2 ==========
+// gtag.js ładuje się zawsze z <head> (ga.js). Tu tylko: baner, consent update, Clarity, YouTube.
 
-var scriptElement = document.createElement("script");
-scriptElement.src = "/ga.js";
-
-var scriptElement2 = document.createElement("script");
-scriptElement2.src = "https://www.googletagmanager.com/gtag/js?id=G-EDQBFMHYGY";
-scriptElement2.async = true;
-
-// Podstawowe funkcje cookies
 function setCookie(name, value, days) {
     var expires = "";
     if (days) {
@@ -33,7 +26,6 @@ function eraseCookie(name) {
     document.cookie = name + '=; Max-Age=-99999999; path=/';
 }
 
-// Zapisz preferencje cookies
 function saveCookiePreferences(necessary, analytics, marketing) {
     var preferences = {
         necessary: necessary,
@@ -45,7 +37,6 @@ function saveCookiePreferences(necessary, analytics, marketing) {
     return preferences;
 }
 
-// Pobierz preferencje cookies
 function getCookiePreferences() {
     var prefs = getCookie("cookie_preferences");
     if (prefs) {
@@ -58,16 +49,24 @@ function getCookiePreferences() {
     return null;
 }
 
-// Zastosuj preferencje cookies
+function updateGtagConsent(preferences) {
+    if (typeof gtag !== 'function') return;
+
+    gtag('consent', 'update', {
+        analytics_storage: preferences.analytics ? 'granted' : 'denied',
+        ad_storage: preferences.marketing ? 'granted' : 'denied',
+        ad_user_data: preferences.marketing ? 'granted' : 'denied',
+        ad_personalization: preferences.marketing ? 'granted' : 'denied'
+    });
+}
+
 function applyCookiePreferences(preferences) {
-    // Zawsze ładujemy niezbędne cookies (już są w HTML)
-    
-    // Cookies analityczne (Google Analytics + Microsoft Clarity)
+    updateGtagConsent(preferences);
+
     if (preferences.analytics) {
-        loadAnalytics();
+        loadClarity();
     }
-    
-    // Cookies marketingowe (YouTube)
+
     if (preferences.marketing) {
         loadYouTube();
     } else {
@@ -75,27 +74,6 @@ function applyCookiePreferences(preferences) {
     }
 }
 
-// Załaduj Google Analytics + Microsoft Clarity
-function loadAnalytics() {
-    if (!document.querySelector('script[src*="gtag/js"]')) {
-        document.head.appendChild(scriptElement2);
-        
-        // Inicjalizacja gtag
-        var gtagInit = document.createElement('script');
-        gtagInit.innerHTML = `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-EDQBFMHYGY');
-        `;
-        document.head.appendChild(gtagInit);
-        document.head.appendChild(scriptElement);
-    }
-
-    loadClarity();
-}
-
-// Załaduj Microsoft Clarity
 function loadClarity() {
     if (window.clarity || document.querySelector('script[src*="clarity.ms/tag"]')) {
         return;
@@ -108,13 +86,12 @@ function loadClarity() {
     })(window, document, "clarity", "script", "xrizye2hoe");
 }
 
-// Załaduj YouTube
 function loadYouTube() {
     var cookiesYoutube = document.getElementById("cookies-youtube");
     if (cookiesYoutube) {
         cookiesYoutube.classList.remove('active');
     }
-    
+
     var cookiesYoutubeDzieci = document.getElementById("cookies-youtube-dzieci");
     if (cookiesYoutubeDzieci) {
         cookiesYoutubeDzieci.classList.remove('active');
@@ -130,7 +107,6 @@ function loadYouTube() {
     }
 }
 
-// Pokaż placeholder YouTube, gdy brak zgody marketingowej
 function showYouTubePlaceholder() {
     var cookiesYoutube = document.getElementById("cookies-youtube");
     if (cookiesYoutube) {
@@ -153,26 +129,24 @@ function showYouTubePlaceholder() {
     }
 }
 
-// Akceptuj wszystkie cookies
 function acceptAllCookies() {
     var prefs = saveCookiePreferences(true, true, true);
     applyCookiePreferences(prefs);
-    document.getElementById("cookie-banner").classList.remove('active');
+    var banner = document.getElementById("cookie-banner");
+    if (banner) banner.classList.remove('active');
 }
 
-// Akceptuj tylko niezbędne cookies
 function acceptNecessaryCookies() {
-    saveCookiePreferences(true, false, false);
-    document.getElementById("cookie-banner").classList.remove('active');
-    showYouTubePlaceholder();
+    var prefs = saveCookiePreferences(true, false, false);
+    applyCookiePreferences(prefs);
+    var banner = document.getElementById("cookie-banner");
+    if (banner) banner.classList.remove('active');
 }
 
-// Pokaż modal ustawień
 function showCookieSettings() {
     document.getElementById("cookie-banner").classList.remove('active');
     document.getElementById("cookie-settings-modal").classList.add('active');
-    
-    // Załaduj obecne preferencje jeśli istnieją
+
     var prefs = getCookiePreferences();
     if (prefs) {
         document.getElementById('analytics-cookies').checked = prefs.analytics;
@@ -180,24 +154,21 @@ function showCookieSettings() {
     }
 }
 
-// Zamknij modal ustawień
 function closeCookieSettings() {
     document.getElementById("cookie-settings-modal").classList.remove('active');
     document.getElementById("cookie-banner").classList.add('active');
 }
 
-// Zapisz niestandardowe ustawienia
 function saveCustomCookieSettings() {
     var analytics = document.getElementById('analytics-cookies').checked;
     var marketing = document.getElementById('marketing-cookies').checked;
-    
+
     var prefs = saveCookiePreferences(true, analytics, marketing);
     applyCookiePreferences(prefs);
-    
+
     document.getElementById("cookie-settings-modal").classList.remove('active');
 }
 
-// STARA FUNKCJA - dla kompatybilności wstecznej
 function acceptCookies() {
     acceptAllCookies();
 }
@@ -206,19 +177,20 @@ function declineCookies() {
     acceptNecessaryCookies();
 }
 
-// Inicjalizacja przy załadowaniu strony
-window.onload = function () {
+function initCookieBanner() {
     var preferences = getCookiePreferences();
-    
-    // Jeśli brak preferencji, pokaż baner
-    if (!preferences) {
-        document.getElementById("cookie-banner").classList.add('active');
 
-        // Pokaż info o YouTube
+    if (!preferences) {
+        var banner = document.getElementById("cookie-banner");
+        if (banner) banner.classList.add('active');
         showYouTubePlaceholder();
     } else {
-        // Zastosuj zapisane preferencje
         applyCookiePreferences(preferences);
     }
-};
+}
 
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCookieBanner);
+} else {
+    initCookieBanner();
+}
