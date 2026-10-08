@@ -916,22 +916,34 @@ const contactForm = document.getElementById('contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        
+
+        const name = (this.querySelector('[name="name"]')?.value || '').trim();
+        const email = (this.querySelector('[name="email"]')?.value || '').trim();
+        const phone = (this.querySelector('[name="phone"]')?.value || '').trim();
+        const phoneDigits = phone.replace(/\D+/g, '');
+
+        if (name.length < 2 || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || phoneDigits.length < 9) {
+            alert('Uzupełnij poprawnie imię, telefon (min. 9 cyfr) i adres e-mail.');
+            return;
+        }
+
         const formData = new FormData(this);
+        formData.set('name', name);
+        formData.set('email', email);
+        formData.set('phone', phone);
+
         const submitButton = this.querySelector('button[type="submit"]');
         const originalButtonText = submitButton.textContent;
-        
-        // Disable button and show loading state
+
         submitButton.disabled = true;
         submitButton.textContent = 'Wysyłanie...';
-        
+
         fetch('/sendmail.php', {
             method: 'POST',
             body: formData
         })
         .then(response => {
             if (response.ok) {
-                // Track form submission conversion
                 if (typeof gtag !== 'undefined') {
                     gtag('event', 'form_submit', {
                         'event_category': 'Contact',
@@ -939,22 +951,19 @@ if (contactForm) {
                         'value': 1
                     });
                 }
-                
-                // Hide form and show success message
+
                 document.getElementById('form-content').style.display = 'none';
                 document.getElementById('success-message').style.display = 'block';
-                
-                // Scroll to success message
-                document.getElementById('success-message').scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'center' 
+
+                document.getElementById('success-message').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
                 });
             } else {
                 throw new Error('Network response was not ok');
             }
         })
         .catch(error => {
-            // Re-enable button on error
             submitButton.disabled = false;
             submitButton.textContent = originalButtonText;
             alert('Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie lub skontaktuj się telefonicznie.');

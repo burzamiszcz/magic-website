@@ -482,6 +482,10 @@
                 <div class="email-background">
                     <form id="contact-form" action="/sendmail.php" method="POST">
                         <div class="email" id="form-content">
+                            <div style="position:absolute;left:-9999px;top:-9999px;height:0;overflow:hidden;" aria-hidden="true">
+                                <label for="website">Website</label>
+                                <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                            </div>
                             <label for="name">Imię i nazwisko</label>
                             <input type="text" id="name" name="name" placeholder="np. Anna Kowalska" autocomplete="name" required>
                             <label for="phone">Numer telefonu</label>

@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Consent Mode v2 + GA4 -->
+    <script src="ga.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EDQBFMHYGY"></script>
     <title>Test Analytics</title>
     <style>
         body {
@@ -82,7 +85,6 @@
     <div id="log"></div>
 
     <script src="cookies.js"></script>
-    <script src="ga.js"></script>
 
     <script>
         const statusDiv = document.getElementById('status');
@@ -104,7 +106,7 @@
             addLog('Sprawdzanie czy gtag jest załadowany...');
             
             if (typeof gtag === 'undefined') {
-                showStatus('❌ BŁĄD: gtag nie jest załadowany! Czy zaakceptowałeś cookies analityczne?', 'error');
+                showStatus('❌ BŁĄD: gtag nie jest załadowany! Sprawdź czy ga.js jest w <head>.', 'error');
                 addLog('❌ gtag NIE ZNALEZIONY', 'error');
                 return false;
             }
@@ -205,10 +207,10 @@
                 // Pokaż info o cookies
                 const prefs = getCookiePreferences();
                 if (prefs && prefs.analytics) {
-                    addLog('✅ Cookies analityczne zaakceptowane');
+                    addLog('✅ Cookies analityczne zaakceptowane (analytics_storage granted)');
                 } else {
-                    showStatus('⚠️ UWAGA: Musisz zaakceptować cookies analityczne aby gtag załadował się!', 'info');
-                    addLog('⚠️ Cookies analityczne NIE zaakceptowane - zaakceptuj i odśwież stronę');
+                    showStatus('ℹ️ gtag jest załadowany (Consent Mode). Bez zgody: cookieless pingi z analytics_storage=denied.', 'info');
+                    addLog('ℹ️ Brak zgody analytics — Consent Mode denied (OK dla RODO)');
                 }
             }, 1000);
         };
