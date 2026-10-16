@@ -258,6 +258,15 @@
                 }, 400);
             };
             iframe.src = ev.embed;
+
+            if (typeof trackMeta === 'function') {
+                trackMeta('ViewContent', {
+                    content_name: ev.title,
+                    content_ids: [String(ev.id)],
+                    content_type: 'product',
+                    content_category: ev.city || ''
+                });
+            }
         }
 
         function renderFallbackWidget() {
@@ -290,6 +299,12 @@
 
             if (events.length) {
                 renderList(events);
+                if (typeof trackMeta === 'function') {
+                    trackMeta('ViewContent', {
+                        content_name: 'Bilety — lista wydarzeń',
+                        content_type: 'product_group'
+                    });
+                }
             } else {
                 renderFallbackWidget();
             }
@@ -372,6 +387,12 @@
             if (typeof data.scrollTo !== 'undefined') {
                 // KB często wysyła 0 = „pokaż początek embedu” (popup zamówienia)
                 scrollTicketsEmbedIntoView();
+                if (typeof trackMeta === 'function') {
+                    trackMeta('InitiateCheckout', {
+                        content_name: document.getElementById('tickets-title').textContent || 'Bilety',
+                        content_type: 'product'
+                    });
+                }
             }
         });
 
