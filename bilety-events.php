@@ -1,6 +1,7 @@
 <?php
 /**
  * Lista wydarzeń z KupBilecik (do ładnych URL-i /bilety/{slug-miasto-data}).
+ * Kompatybilne z PHP 7.4+.
  */
 header('Content-Type: application/json; charset=UTF-8');
 header('Cache-Control: public, max-age=300');
@@ -16,14 +17,14 @@ if (is_file($CACHE_FILE) && (time() - filemtime($CACHE_FILE)) < $CACHE_TTL) {
     exit;
 }
 
-$months = [
+$months = array(
     'stycznia' => '01', 'lutego' => '02', 'marca' => '03', 'kwietnia' => '04',
     'maja' => '05', 'czerwca' => '06', 'lipca' => '07', 'sierpnia' => '08',
     'wrzesnia' => '09', 'września' => '09', 'pazdziernika' => '10', 'października' => '10',
     'listopada' => '11', 'grudnia' => '12',
-];
+);
 
-$listUrl = 'https://www.kupbilecik.pl/iframe/events?' . http_build_query([
+$listUrl = 'https://www.kupbilecik.pl/iframe/events?' . http_build_query(array(
     'frame_base' => $KB_BASE,
     'frame_list_length' => '50',
     'frame_primary_bg_color' => '7b219f',
@@ -31,20 +32,56 @@ $listUrl = 'https://www.kupbilecik.pl/iframe/events?' . http_build_query([
     'u' => $KB_USER,
     'v' => '1.0',
     'token' => $KB_TOKEN,
-]);
+));
 
-$ctx = stream_context_create([
-    'http' => [
-        'method' => 'GET',
-        'header' => "User-Agent: Mozilla/5.0 (compatible; MagicWebsite/1.0)\r\nAccept: text/html\r\n",
-        'timeout' => 12,
-    ],
-]);
+function kb_fetch_url($url) {
+    $ctx = stream_context_create(array(
+        'http' => array(
+            'method' => 'GET',
+            'header' => "User-Agent: Mozilla/5.0 (compatible; MagicWebsite/1.0)\r\nAccept: text/html\r\n",
+            'timeout' => 12,
+            'ignore_errors' => true,
+        ),
+        'ssl' => array(
+            'verify_peer' => true,
+            'verify_peer_name' => true,
+        ),
+    ));
 
-$html = @file_get_contents($listUrl, false, $ctx);
+    $html = @file_get_contents($url, false, $ctx);
+    if ($html !== false && $html !== '') {
+        return $html;
+    }
+
+    if (function_exists('curl_init')) {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, array(
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_CONNECTTIMEOUT => 8,
+            CURLOPT_TIMEOUT => 12,
+            CURLOPT_USERAGENT => 'Mozilla/5.0 (compatible; MagicWebsite/1.0)',
+            CURLOPT_HTTPHEADER => array('Accept: text/html'),
+        ));
+        $html = curl_exec($ch);
+        $code = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if ($html !== false && $html !== '' && $code >= 200 && $code < 400) {
+            return $html;
+        }
+    }
+
+    return false;
+}
+
+$html = kb_fetch_url($listUrl);
 if ($html === false || $html === '') {
     http_response_code(502);
-    echo json_encode(['ok' => false, 'error' => 'Nie udało się pobrać listy wydarzeń', 'events' => []], JSON_UNESCAPED_UNICODE);
+    echo json_encode(array(
+        'ok' => false,
+        'error' => 'Nie udało się pobrać listy wydarzeń',
+        'events' => array(),
+    ), JSON_UNESCAPED_UNICODE);
     exit;
 }
 
@@ -55,9 +92,9 @@ preg_match_all(
     PREG_SET_ORDER
 );
 
-$events = [];
-$seen = [];
-$usedPaths = [];
+$events = array();
+$seen = array();
+$usedPaths = array();
 
 foreach ($matches as $m) {
     $id = $m[1];
@@ -87,7 +124,9 @@ foreach ($matches as $m) {
         if (preg_match('#(20\d{2})-(\d{2})-(\d{2})#', $chunk, $iso)) {
             $date = $iso[1] . '-' . $iso[2] . '-' . $iso[3];
         } elseif ($when !== '' && preg_match('#(\d{1,2})\s+(\p{L}+)\s+(20\d{2})#u', $when, $dm)) {
-            $mon = mb_strtolower($dm[2], 'UTF-8');
+            $mon = function_exists('mb_strtolower')
+                ? mb_strtolower($dm[2], 'UTF-8')
+                : strtolower($dm[2]);
             if (isset($months[$mon])) {
                 $date = $dm[3] . '-' . $months[$mon] . '-' . str_pad($dm[1], 2, '0', STR_PAD_LEFT);
             }
@@ -96,13 +135,19 @@ foreach ($matches as $m) {
         if (preg_match_all('#>([^<]{5,100})<#u', $chunk, $texts)) {
             foreach ($texts[1] as $raw) {
                 $candidate = trim(html_entity_decode($raw, ENT_QUOTES, 'UTF-8'));
-                $low = mb_strtolower($candidate, 'UTF-8');
+                $low = function_exists('mb_strtolower')
+                    ? mb_strtolower($candidate, 'UTF-8')
+                    : strtolower($candidate);
+                $len = function_exists('mb_strlen')
+                    ? mb_strlen($candidate, 'UTF-8')
+                    : strlen($candidate);
+
                 if (preg_match('#bilety|ocena|dni|http|wybierz#u', $low)) {
                     continue;
                 }
-                if (str_contains($low, 'iluzjonista') || (mb_strlen($candidate) > 12 && !preg_match('#^\d#', $candidate))) {
+                if (strpos($low, 'iluzjonista') !== false || ($len > 12 && !preg_match('#^\d#', $candidate))) {
                     $title = $candidate;
-                    if (str_contains($low, 'iluzjonista')) {
+                    if (strpos($low, 'iluzjonista') !== false) {
                         break;
                     }
                 }
@@ -121,7 +166,7 @@ foreach ($matches as $m) {
     }
     $usedPaths[$pathSlug] = true;
 
-    $events[] = [
+    $events[] = array(
         'id' => $id,
         'city' => $city,
         'slug' => $slug,
@@ -131,19 +176,19 @@ foreach ($matches as $m) {
         'when' => $when,
         'image' => $image,
         'embed' => 'https://www.kupbilecik.pl/iframe/single-event/' . rawurlencode($id) . '/' . rawurlencode($city) . '/' . rawurlencode($slug)
-            . '?' . http_build_query([
+            . '?' . http_build_query(array(
                 'uiframe' => $KB_USER,
                 'u' => $KB_USER,
                 'token' => $KB_TOKEN,
-            ]),
-    ];
+            )),
+    );
 }
 
-$payload = json_encode([
+$payload = json_encode(array(
     'ok' => true,
     'updatedAt' => date('c'),
     'events' => array_values($events),
-], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
 @file_put_contents($CACHE_FILE, $payload);
 echo $payload;
