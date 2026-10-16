@@ -5,9 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Google Consent Mode v2 + GA4 -->
-  <script src="./ga.js"></script>
+  <base href="/">
+  <!-- Google Consent Mode v2 + GA4 -->
+  <script src="/ga.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-EDQBFMHYGY"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/style.css">
   <script src="https://kit.fontawesome.com/6015f6d8cd.js" crossorigin="anonymous"></script>
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
   <link rel="canonical" href="https://iluzjonistahubertburzynski.pl/bilety">
@@ -20,7 +22,7 @@
     <div id="cookie-banner">
         <h3 style="margin: 15px 0 10px 0; font-size: 1.4rem;">🍪 Szanujemy Twoją prywatność</h3>
         <p style="margin: 10px 20px;">Używamy plików cookie, aby zapewnić podstawowe funkcje strony oraz analizować ruch w celu ulepszania naszych usług. Możesz wybrać, które kategorie cookies chcesz zaakceptować.</p>
-        <a aria-label="Przeczytaj politykę prywatności" href="polityka-prywatnosci.html">Polityka prywatności</a>
+        <a aria-label="Przeczytaj politykę prywatności" href="/polityka-prywatnosci.html">Polityka prywatności</a>
         <div class="buttons-cookie">
             <div class="button-cookie" onclick="acceptAllCookies()">Akceptuj wszystkie</div>
             <div class="button-cookie-settings" onclick="showCookieSettings()">Dostosuj preferencje</div>
@@ -31,7 +33,7 @@
     <div id="cookie-settings-modal">
         <div class="cookie-settings-content">
             <h2 style="margin-bottom: 15px;">Ustawienia prywatności</h2>
-            <p style="margin-bottom: 20px; font-size: 0.95rem; line-height: 1.5;">Wybierz kategorie plików cookie, które chcesz zaakceptować. Więcej informacji znajdziesz w <a href="polityka-prywatnosci.html" style="color: var(--hover-purple);">Polityce Prywatności</a>.</p>
+            <p style="margin-bottom: 20px; font-size: 0.95rem; line-height: 1.5;">Wybierz kategorie plików cookie, które chcesz zaakceptować. Więcej informacji znajdziesz w <a href="/polityka-prywatnosci.html" style="color: var(--hover-purple);">Polityce Prywatności</a>.</p>
 
             <div class="cookie-category">
                 <div class="cookie-category-header">
@@ -82,20 +84,20 @@
     <section id="header">
         <div class="header container">
             <div class="nav-bar">
-                <div class="brand"><a href="index.html" aria-label="Strona główna">Hubert Burzyński</a></div>
+                <div class="brand"><a href="/" aria-label="Strona główna">Hubert Burzyński</a></div>
                 <div class="logo">
-                    <a href="index.html" aria-label="Strona główna">
-                        <img src="img/logo-main.svg" alt="Logo Iluzjonista Hubert Burzyński">
+                    <a href="/" aria-label="Strona główna">
+                        <img src="/img/logo-main.svg" alt="Logo Iluzjonista Hubert Burzyński">
                     </a>
                 </div>
                 <div class="nav-list">
                     <a aria-label="Zadzwoń" href="tel:+48782784335"><div class="hamburger2"><i class="fa fa-phone" style="font-size:34px; color:white;"></i><div class="bar"></div></div></a>
                     <div class="hamburger"><div class="bar"></div></div>
                     <ul>
-                        <li><a href="index.html#movie" data-after="Film">Film promocyjny</a></li>
-                        <li><a href="index.html#services" data-after="Oferta">Oferta</a></li>
+                        <li><a href="/#movie" data-after="Film">Film promocyjny</a></li>
+                        <li><a href="/#services" data-after="Oferta">Oferta</a></li>
                         <li><a href="/bilety" data-after="Bilety" aria-current="page">Bilety</a></li>
-                        <li><a href="index.html#contact" data-after="Kontakt">Kontakt</a></li>
+                        <li><a href="/#contact" data-after="Kontakt">Kontakt</a></li>
                     </ul>
                 </div>
             </div>
@@ -124,7 +126,7 @@
             <p id="tickets-status" class="tickets-status">Ładowanie wydarzeń…</p>
 
             <p class="tickets-back">
-                <a id="tickets-back-link" href="index.html">← Wróć na stronę główną</a>
+                <a id="tickets-back-link" href="/">← Wróć na stronę główną</a>
             </p>
         </div>
     </main>
@@ -190,7 +192,7 @@
             document.getElementById('tickets-eyebrow').hidden = false;
             document.getElementById('tickets-title').textContent = 'Bilety na pokazy';
             document.getElementById('tickets-lead').textContent = 'Wybierz termin i zarezerwuj miejsce online.';
-            document.getElementById('tickets-back-link').href = 'index.html';
+            document.getElementById('tickets-back-link').href = '/';
             document.getElementById('tickets-back-link').textContent = '← Wróć na stronę główną';
             document.title = 'Bilety i wydarzenia | Iluzjonista Hubert Burzyński';
             document.getElementById('tickets-detail').hidden = true;
@@ -293,13 +295,13 @@
             }
         }
 
-        fetch('bilety-events.php', { credentials: 'same-origin' })
+        fetch('/bilety-events.php', { credentials: 'same-origin' })
             .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
             .then(boot)
             .catch(function () {
                 if (getRequestedPath()) {
                     document.getElementById('tickets-status').textContent =
-                        'Podstrony wydarzeń wymagają API (bilety-events.php). Uruchom: ./run_server.sh';
+                        'Nie udało się wczytać wydarzenia. Wróć do listy biletów.';
                     document.getElementById('tickets-status').hidden = false;
                 }
                 renderFallbackWidget();
@@ -390,7 +392,7 @@
         </a>
     </nav>
 
-    <script src="./app.js"></script>
-    <script src="./cookies.js"></script>
+    <script src="/app.js"></script>
+    <script src="/cookies.js"></script>
 </body>
 </html>
