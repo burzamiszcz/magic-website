@@ -1,0 +1,8 @@
+Options -Indexes
+RewriteEngine On
+
+# Ładne URL-e biletów:
+#   /bilety              → lista
+#   /bilety/nazwa-miasta → konkretne wydarzenie
+RewriteRule ^bilety/?$ bilety.html [L]
+RewriteRule ^bilety/([A-Za-z0-9\-]+)/?$ bilety.html?e=$1 [L,QSA]

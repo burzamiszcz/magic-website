@@ -3983,3 +3983,272 @@ body.service-modal-open {
         font-size: 7.5rem;
     }
 }
+
+/* ========== TICKETS / EVENTS PAGE ========== */
+#tickets {
+    min-height: 100vh;
+    padding: 84px 16px 40px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+/* Zblurowane tło z hero + przyciemnienie */
+#tickets .tickets-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-image: url(./img/background-hero-mobile.jpg);
+    background-size: cover;
+    background-position: top center;
+    transform: scale(1.08);
+    filter: blur(14px) saturate(1.15);
+    pointer-events: none;
+}
+
+#tickets .tickets-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(8, 0, 16, 0.55) 0%, rgba(12, 0, 24, 0.72) 45%, rgba(5, 0, 12, 0.88) 100%),
+        radial-gradient(ellipse at 50% 0%, rgba(129, 42, 233, 0.28), transparent 55%);
+    filter: none;
+    transform: none;
+}
+
+#tickets > .sparkle-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#tickets .tickets {
+    /* .container = flex row — tu wymuszamy kolumnę, inaczej widget się ściska */
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    max-width: 920px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    min-height: 0;
+    position: relative;
+    z-index: 1;
+}
+
+#tickets .tickets-eyebrow {
+    font-family: var(--font-tertiary);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--hover-purple);
+    margin: 0 0 6px;
+}
+
+#tickets h1 {
+    font-family: var(--font-secondary);
+    font-size: clamp(1.9rem, 5.5vw, 3.2rem);
+    font-weight: bolder;
+    margin: 0 0 8px;
+    background: linear-gradient(135deg, #fff, #C89DFB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+#tickets .tickets-lead {
+    font-family: var(--font-tertiary);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.05rem;
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+/* Widok konkretnego wydarzenia — jeszcze ciaśniejszy nagłówek nad iframe */
+#tickets.tickets--detail {
+    padding-top: 76px;
+}
+
+#tickets.tickets--detail h1 {
+    font-size: clamp(1.35rem, 3.8vw, 2rem);
+    margin-bottom: 4px;
+}
+
+#tickets.tickets--detail .tickets-lead {
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+}
+
+#tickets.tickets--detail .tickets-back {
+    margin-top: 20px;
+}
+
+#tickets .tickets-status {
+    font-family: var(--font-tertiary);
+    color: rgba(255, 255, 255, 0.65);
+    margin: 16px 0 0;
+    font-size: 0.95rem;
+}
+
+#tickets .tickets-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 100%;
+    text-align: left;
+}
+
+#tickets .tickets-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 18px;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(40, 12, 70, 0.85), rgba(12, 2, 22, 0.95));
+    border: 1px solid rgba(200, 157, 251, 0.22);
+    text-decoration: none;
+    color: #fff;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+#tickets .tickets-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(200, 157, 251, 0.55);
+    box-shadow: 0 16px 50px rgba(129, 42, 233, 0.4);
+}
+
+#tickets .tickets-card-media {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: rgba(129, 42, 233, 0.2);
+}
+
+#tickets .tickets-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+#tickets .tickets-card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+}
+
+#tickets .tickets-card-body {
+    padding: 18px 18px 20px;
+}
+
+#tickets .tickets-card-body h2 {
+    font-family: var(--font-secondary);
+    font-size: 1.35rem;
+    margin: 0 0 8px;
+    color: #fff;
+    background: none;
+    -webkit-text-fill-color: #fff;
+}
+
+#tickets .tickets-card-meta {
+    margin: 0;
+    font-family: var(--font-tertiary);
+    font-size: 0.98rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.45;
+}
+
+#tickets .tickets-card-cta {
+    display: inline-block;
+    margin-top: 14px;
+    font-family: var(--font-tertiary);
+    font-size: 0.95rem;
+    color: #e2c6ff;
+}
+
+/* Embed KupBilecik — bez białej „łaty”, loader na ciemnym tle */
+#tickets .tickets-embed {
+    position: relative;
+    width: 100%;
+    min-height: 420px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(10, 0, 18, 0.65);
+    border: 1px solid rgba(200, 157, 251, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+#tickets .tickets-embed-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-tertiary);
+    color: rgba(255, 255, 255, 0.8);
+    background: radial-gradient(ellipse at center, rgba(129, 42, 233, 0.25), rgba(5, 0, 12, 0.92));
+}
+
+#tickets .tickets-embed:not(.is-loading) .tickets-embed-loading {
+    display: none;
+}
+
+#tickets .tickets-embed #tickets-iframe,
+#tickets .tickets-embed #IframeKB,
+#tickets .tickets-embed #KupBilecikPl {
+    display: block;
+    width: 100% !important;
+    min-width: 0;
+    min-height: 640px;
+    height: 820px;
+    border: 0;
+    background: transparent;
+}
+
+#tickets .tickets-embed--fallback {
+    background: #0d0214;
+    padding: 4px;
+}
+
+#tickets .tickets-back {
+    margin: 36px 0 0;
+}
+
+#tickets .tickets-back a {
+    color: rgba(200, 157, 251, 0.85);
+    text-decoration: none;
+    font-family: var(--font-tertiary);
+    font-size: 1rem;
+    transition: color 0.25s ease;
+}
+
+#tickets .tickets-back a:hover {
+    color: #fff;
+}
+
+@media only screen and (min-width: 768px) {
+    #tickets {
+        padding: 96px 32px 48px;
+    }
+
+    #tickets .tickets-bg {
+        background-image: url(./img/hero-background.jpg);
+        filter: blur(16px) saturate(1.2);
+    }
+
+    #tickets.tickets--detail {
+        padding-top: 88px;
+    }
+
+    #tickets .tickets-list {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        max-width: 640px;
+        margin: 0 auto;
+    }
+}

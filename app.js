@@ -83,8 +83,8 @@ function ensureStickyCta() {
     let stickyCta = document.querySelector('.sticky-cta');
     if (stickyCta) return stickyCta;
 
-    // Inject on any page with contact (covers endpoints if markup is missing)
-    if (!document.getElementById('contact')) return null;
+    // Inject on contact pages or bilety (covers endpoints if markup is missing)
+    if (!document.getElementById('contact') && !document.getElementById('tickets')) return null;
 
     document.body.insertAdjacentHTML('beforeend', STICKY_CTA_HTML);
     return document.querySelector('.sticky-cta');

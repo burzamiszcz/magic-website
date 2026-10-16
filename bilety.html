@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Consent Mode v2 + GA4 -->
+  <script src="./ga.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EDQBFMHYGY"></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/6015f6d8cd.js" crossorigin="anonymous"></script>
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+  <link rel="canonical" href="https://iluzjonistahubertburzynski.pl/bilety">
+  <title>Bilety i wydarzenia | Iluzjonista Hubert Burzyński</title>
+  <meta name="description" content="Kup bilety na pokazy iluzji Huberta Burzyńskiego. Wybierz wydarzenie i zarezerwuj miejsce online.">
+  <meta name="robots" content="noindex, follow">
+</head>
+
+<body>
+    <div id="cookie-banner">
+        <h3 style="margin: 15px 0 10px 0; font-size: 1.4rem;">🍪 Szanujemy Twoją prywatność</h3>
+        <p style="margin: 10px 20px;">Używamy plików cookie, aby zapewnić podstawowe funkcje strony oraz analizować ruch w celu ulepszania naszych usług. Możesz wybrać, które kategorie cookies chcesz zaakceptować.</p>
+        <a aria-label="Przeczytaj politykę prywatności" href="polityka-prywatnosci.html">Polityka prywatności</a>
+        <div class="buttons-cookie">
+            <div class="button-cookie" onclick="acceptAllCookies()">Akceptuj wszystkie</div>
+            <div class="button-cookie-settings" onclick="showCookieSettings()">Dostosuj preferencje</div>
+            <div class="button-cookie-decline" onclick="acceptNecessaryCookies()">Tylko niezbędne</div>
+        </div>
+    </div>
+
+    <div id="cookie-settings-modal">
+        <div class="cookie-settings-content">
+            <h2 style="margin-bottom: 15px;">Ustawienia prywatności</h2>
+            <p style="margin-bottom: 20px; font-size: 0.95rem; line-height: 1.5;">Wybierz kategorie plików cookie, które chcesz zaakceptować. Więcej informacji znajdziesz w <a href="polityka-prywatnosci.html" style="color: var(--hover-purple);">Polityce Prywatności</a>.</p>
+
+            <div class="cookie-category">
+                <div class="cookie-category-header">
+                    <label class="cookie-switch">
+                        <input type="checkbox" id="necessary-cookies" checked disabled>
+                        <span class="cookie-slider"></span>
+                    </label>
+                    <div>
+                        <h3>Niezbędne cookies <span style="font-size: 0.8rem; color: #999;">(Zawsze aktywne)</span></h3>
+                        <p>Wymagane do podstawowego działania strony.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cookie-category">
+                <div class="cookie-category-header">
+                    <label class="cookie-switch">
+                        <input type="checkbox" id="analytics-cookies">
+                        <span class="cookie-slider"></span>
+                    </label>
+                    <div>
+                        <h3>Cookies analityczne</h3>
+                        <p>Google Analytics, Microsoft Clarity — dane anonimowe.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cookie-category">
+                <div class="cookie-category-header">
+                    <label class="cookie-switch">
+                        <input type="checkbox" id="marketing-cookies">
+                        <span class="cookie-slider"></span>
+                    </label>
+                    <div>
+                        <h3>Cookies marketingowe</h3>
+                        <p>Treści partnerów zewnętrznych (m.in. sprzedaż biletów).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cookie-settings-buttons">
+                <button class="button-cookie" onclick="saveCustomCookieSettings()">Zapisz ustawienia</button>
+                <button class="button-cookie-decline" onclick="closeCookieSettings()">Anuluj</button>
+            </div>
+        </div>
+    </div>
+
+    <section id="header">
+        <div class="header container">
+            <div class="nav-bar">
+                <div class="brand"><a href="index.html" aria-label="Strona główna">Hubert Burzyński</a></div>
+                <div class="logo">
+                    <a href="index.html" aria-label="Strona główna">
+                        <img src="img/logo-main.svg" alt="Logo Iluzjonista Hubert Burzyński">
+                    </a>
+                </div>
+                <div class="nav-list">
+                    <a aria-label="Zadzwoń" href="tel:+48782784335"><div class="hamburger2"><i class="fa fa-phone" style="font-size:34px; color:white;"></i><div class="bar"></div></div></a>
+                    <div class="hamburger"><div class="bar"></div></div>
+                    <ul>
+                        <li><a href="index.html#movie" data-after="Film">Film promocyjny</a></li>
+                        <li><a href="index.html#services" data-after="Oferta">Oferta</a></li>
+                        <li><a href="/bilety" data-after="Bilety" aria-current="page">Bilety</a></li>
+                        <li><a href="index.html#contact" data-after="Kontakt">Kontakt</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main id="tickets">
+        <div class="tickets-bg" aria-hidden="true"></div>
+        <div class="sparkle-layer" aria-hidden="true"></div>
+        <div class="tickets container">
+            <p class="tickets-eyebrow" id="tickets-eyebrow">Wydarzenia</p>
+            <h1 id="tickets-title">Bilety na pokazy</h1>
+            <p class="tickets-lead" id="tickets-lead">Wybierz termin i zarezerwuj miejsce online.</p>
+
+            <div id="tickets-list" class="tickets-list" hidden></div>
+
+            <div id="tickets-detail" class="tickets-embed" hidden>
+                <div class="tickets-embed-loading" id="tickets-embed-loading">Ładowanie sprzedaży biletów…</div>
+                <iframe id="tickets-iframe" title="KupBilecik — zakup biletów" allow="fullscreen" allowfullscreen></iframe>
+            </div>
+
+            <div id="tickets-fallback" class="tickets-embed tickets-embed--fallback" hidden>
+                <div id="KupBilecikPl"></div>
+            </div>
+
+            <p id="tickets-status" class="tickets-status">Ładowanie wydarzeń…</p>
+
+            <p class="tickets-back">
+                <a id="tickets-back-link" href="index.html">← Wróć na stronę główną</a>
+            </p>
+        </div>
+    </main>
+
+    <script>
+    (function () {
+        var KB_SCRIPT = 'https://www.kupbilecik.pl/js/iframe.js?b=25346&l=25&c1=7b219f&nolinks&u=5681&v=1.0&token=6c33b987b8aaa8ee45bcdcd6b0ceb79f';
+
+        function escapeHtml(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function cityLabel(city) {
+            if (!city) return '';
+            return city.charAt(0).toUpperCase() + city.slice(1);
+        }
+
+        function getRequestedPath() {
+            var params = new URLSearchParams(window.location.search);
+            if (params.get('e')) return params.get('e').toLowerCase();
+
+            var path = window.location.pathname.replace(/\/+$/, '');
+            var match = path.match(/\/bilety\/([^\/]+)$/i);
+            if (match) return decodeURIComponent(match[1]).toLowerCase();
+            return null;
+        }
+
+        function eventUrl(pathSlug) {
+            var pretty = '/bilety/' + encodeURIComponent(pathSlug);
+            if (window.location.protocol === 'file:' || /\.html$/i.test(window.location.pathname)) {
+                return 'bilety.html?e=' + encodeURIComponent(pathSlug);
+            }
+            return pretty;
+        }
+
+        function eventUrlBase() {
+            if (window.location.protocol === 'file:' || /\.html$/i.test(window.location.pathname)) {
+                return 'bilety.html';
+            }
+            return '/bilety';
+        }
+
+        function findEvent(events, path) {
+            if (!path) return null;
+            path = path.toLowerCase();
+            return events.find(function (ev) {
+                return ev.path === path
+                    || ev.slug === path
+                    || (ev.slug + '-' + ev.city) === path
+                    || (ev.slug + '-' + ev.city + '-' + (ev.date || '')) === path
+                    || ev.id === path;
+            }) || null;
+        }
+
+        function renderList(events) {
+            var list = document.getElementById('tickets-list');
+            var status = document.getElementById('tickets-status');
+            document.getElementById('tickets').classList.remove('tickets--detail');
+            document.getElementById('tickets-eyebrow').hidden = false;
+            document.getElementById('tickets-title').textContent = 'Bilety na pokazy';
+            document.getElementById('tickets-lead').textContent = 'Wybierz termin i zarezerwuj miejsce online.';
+            document.getElementById('tickets-back-link').href = 'index.html';
+            document.getElementById('tickets-back-link').textContent = '← Wróć na stronę główną';
+            document.title = 'Bilety i wydarzenia | Iluzjonista Hubert Burzyński';
+            document.getElementById('tickets-detail').hidden = true;
+            document.getElementById('tickets-fallback').hidden = true;
+
+            if (!events.length) {
+                status.textContent = 'Brak nadchodzących wydarzeń.';
+                status.hidden = false;
+                return;
+            }
+
+            list.innerHTML = events.map(function (ev) {
+                var img = ev.image
+                    ? '<img src="' + escapeHtml(ev.image) + '" alt="' + escapeHtml(ev.title) + '" loading="lazy">'
+                    : '<div class="tickets-card-placeholder" aria-hidden="true">🎩</div>';
+                var whenLabel = ev.when || ev.date || '';
+                var meta = [whenLabel, cityLabel(ev.city)].filter(Boolean).join(' · ');
+                return (
+                    '<a class="tickets-card" href="' + eventUrl(ev.path) + '">' +
+                        '<div class="tickets-card-media">' + img + '</div>' +
+                        '<div class="tickets-card-body">' +
+                            '<h2>' + escapeHtml(ev.title) + '</h2>' +
+                            (meta ? '<p class="tickets-card-meta">' + escapeHtml(meta) + '</p>' : '') +
+                            '<span class="tickets-card-cta">Kup bilet →</span>' +
+                        '</div>' +
+                    '</a>'
+                );
+            }).join('');
+
+            list.hidden = false;
+            status.hidden = true;
+        }
+
+        function renderDetail(ev) {
+            document.getElementById('tickets').classList.add('tickets--detail');
+            document.getElementById('tickets-list').hidden = true;
+            document.getElementById('tickets-fallback').hidden = true;
+            document.getElementById('tickets-eyebrow').hidden = true;
+            document.getElementById('tickets-title').textContent = ev.title;
+            document.getElementById('tickets-lead').textContent = [ev.when || ev.date || '', cityLabel(ev.city)].filter(Boolean).join(' · ')
+                || 'Zarezerwuj miejsce online.';
+            document.getElementById('tickets-back-link').href = eventUrlBase();
+            document.getElementById('tickets-back-link').textContent = '← Wszystkie wydarzenia';
+            document.title = ev.title + ' | Bilety | Hubert Burzyński';
+
+            var detail = document.getElementById('tickets-detail');
+            var loading = document.getElementById('tickets-embed-loading');
+            var iframe = document.getElementById('tickets-iframe');
+
+            loading.hidden = false;
+            detail.classList.add('is-loading');
+            detail.hidden = false;
+            document.getElementById('tickets-status').hidden = true;
+
+            iframe.onload = function () {
+                // Single-event bywa cichy z postMessage — schowaj loader po załadowaniu
+                setTimeout(function () {
+                    loading.hidden = true;
+                    detail.classList.remove('is-loading');
+                    if (!iframe.style.height || iframe.style.height === '0px') {
+                        iframe.style.height = '900px';
+                    }
+                }, 400);
+            };
+            iframe.src = ev.embed;
+        }
+
+        function renderFallbackWidget() {
+            var box = document.getElementById('tickets-fallback');
+            var mount = document.getElementById('KupBilecikPl');
+            mount.innerHTML = '';
+            var script = document.createElement('script');
+            script.src = KB_SCRIPT;
+            mount.appendChild(script);
+            box.hidden = false;
+            document.getElementById('tickets-status').textContent =
+                'Pokazuję listę KupBilecik (awaryjnie).';
+            document.getElementById('tickets-status').hidden = false;
+        }
+
+        function boot(data) {
+            var events = (data && data.events) ? data.events : [];
+            var requested = getRequestedPath();
+
+            if (requested) {
+                var ev = findEvent(events, requested);
+                if (ev) {
+                    renderDetail(ev);
+                    return;
+                }
+                document.getElementById('tickets-status').textContent =
+                    'Nie znaleziono wydarzenia. Sprawdź listę poniżej.';
+                document.getElementById('tickets-status').hidden = false;
+            }
+
+            if (events.length) {
+                renderList(events);
+            } else {
+                renderFallbackWidget();
+            }
+        }
+
+        fetch('bilety-events.php', { credentials: 'same-origin' })
+            .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+            .then(boot)
+            .catch(function () {
+                if (getRequestedPath()) {
+                    document.getElementById('tickets-status').textContent =
+                        'Podstrony wydarzeń wymagają API (bilety-events.php). Uruchom: ./run_server.sh';
+                    document.getElementById('tickets-status').hidden = false;
+                }
+                renderFallbackWidget();
+            });
+
+        // Mostek jak w oficjalnym iframe.js KupBilecik:
+        // przy "Zamów bilet" iframe wysyła {scrollTo:0} — modal jest u góry iframe'a,
+        // więc przewijamy stronę tak, by góra iframe'a była widoczna (nie top całej strony).
+        var lastIframeHeight = 0;
+
+        function getTicketsIframe() {
+            return document.getElementById('tickets-iframe')
+                || document.getElementById('IframeKB');
+        }
+
+        function getTicketsEmbedEl() {
+            var detail = document.getElementById('tickets-detail');
+            if (detail && !detail.hidden) return detail;
+            var fallback = document.getElementById('tickets-fallback');
+            if (fallback && !fallback.hidden) return fallback;
+            return getTicketsIframe();
+        }
+
+        function scrollTicketsEmbedIntoView() {
+            var target = getTicketsEmbedEl();
+            if (!target) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+            var header = document.getElementById('header');
+            var headerH = header ? header.offsetHeight : 72;
+            var top = target.getBoundingClientRect().top + window.pageYOffset - headerH - 6;
+            window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        }
+
+        function syncScrollToIframe() {
+            var iframe = getTicketsIframe();
+            if (!iframe || !iframe.contentWindow) return;
+            try {
+                iframe.contentWindow.postMessage(JSON.stringify({
+                    scrollY: window.pageYOffset || window.scrollY || 0,
+                    viewportHeight: window.innerHeight
+                }), 'https://www.kupbilecik.pl');
+            } catch (err) { /* ignore */ }
+        }
+
+        window.addEventListener('message', function (e) {
+            if (!e.origin || e.origin.indexOf('kupbilecik.pl') === -1) return;
+            var data = e.data;
+            try { if (typeof data === 'string') data = JSON.parse(data); } catch (err) { return; }
+            if (!data || typeof data !== 'object') return;
+
+            if (data.height) {
+                var iframe = getTicketsIframe();
+                var detail = document.getElementById('tickets-detail');
+                var loading = document.getElementById('tickets-embed-loading');
+                var nextH = Math.max(480, Number(data.height) || 0);
+                // Modal / formularz często mocno zwiększa wysokość — dociągnij widok do góry iframe
+                if (lastIframeHeight && nextH > lastIframeHeight + 160) {
+                    scrollTicketsEmbedIntoView();
+                }
+                lastIframeHeight = nextH;
+                if (iframe) iframe.style.height = nextH + 'px';
+                if (loading) loading.hidden = true;
+                if (detail) detail.classList.remove('is-loading');
+            }
+
+            if (typeof data.scrollTo !== 'undefined') {
+                // KB często wysyła 0 = „pokaż początek embedu” (popup zamówienia)
+                scrollTicketsEmbedIntoView();
+            }
+        });
+
+        window.addEventListener('scroll', syncScrollToIframe, { passive: true });
+        window.addEventListener('resize', syncScrollToIframe);
+    })();
+    </script>
+
+    <nav class="sticky-cta" aria-label="Szybki kontakt">
+        <a class="sticky-cta__btn sticky-cta__btn--whatsapp" href="https://wa.me/48782784335?text=Cze%C5%9B%C4%87%2C%20interesuje%20mnie%20pokaz%20magii." target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-whatsapp" aria-hidden="true"></i><span>WhatsApp</span>
+        </a>
+        <a class="sticky-cta__btn sticky-cta__btn--call" href="tel:+48782784335">
+            <i class="fa fa-phone" aria-hidden="true"></i><span>Zadzwoń</span>
+        </a>
+        <a class="sticky-cta__btn sticky-cta__btn--sms" href="sms:+48782784335">
+            <i class="fa fa-comment" aria-hidden="true"></i><span>SMS</span>
+        </a>
+    </nav>
+
+    <script src="./app.js"></script>
+    <script src="./cookies.js"></script>
+</body>
+</html>
