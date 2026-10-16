@@ -322,10 +322,10 @@
                 renderFallbackWidget();
             });
 
-        // Mostek jak w oficjalnym iframe.js KupBilecik:
-        // przy "Zamów bilet" iframe wysyła {scrollTo:0} — modal jest u góry iframe'a,
-        // więc przewijamy stronę tak, by góra iframe'a była widoczna (nie top całej strony).
+        // Mostek jak w oficjalnym iframe.js KupBilecik + Meta InitiateCheckout.
+        // KB nie zawsze wysyła scrollTo przy otwarciu formularza — wtedy łapiemy skok wysokości.
         var lastIframeHeight = 0;
+        var initiateCheckoutSent = false;
 
         function getTicketsIframe() {
             return document.getElementById('tickets-iframe')
@@ -352,6 +352,17 @@
             window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
         }
 
+        function fireInitiateCheckout(reason) {
+            if (initiateCheckoutSent) return;
+            if (typeof trackMeta !== 'function') return;
+            initiateCheckoutSent = true;
+            trackMeta('InitiateCheckout', {
+                content_name: document.getElementById('tickets-title').textContent || 'Bilety',
+                content_type: 'product'
+            });
+            try { console.debug('[meta] InitiateCheckout', reason || ''); } catch (e) {}
+        }
+
         function syncScrollToIframe() {
             var iframe = getTicketsIframe();
             if (!iframe || !iframe.contentWindow) return;
@@ -374,9 +385,10 @@
                 var detail = document.getElementById('tickets-detail');
                 var loading = document.getElementById('tickets-embed-loading');
                 var nextH = Math.max(480, Number(data.height) || 0);
-                // Modal / formularz często mocno zwiększa wysokość — dociągnij widok do góry iframe
-                if (lastIframeHeight && nextH > lastIframeHeight + 160) {
+                // Modal / formularz zamówienia mocno zwiększa wysokość iframe
+                if (lastIframeHeight && nextH > lastIframeHeight + 120) {
                     scrollTicketsEmbedIntoView();
+                    fireInitiateCheckout('iframe-height-jump');
                 }
                 lastIframeHeight = nextH;
                 if (iframe) iframe.style.height = nextH + 'px';
@@ -385,14 +397,8 @@
             }
 
             if (typeof data.scrollTo !== 'undefined') {
-                // KB często wysyła 0 = „pokaż początek embedu” (popup zamówienia)
                 scrollTicketsEmbedIntoView();
-                if (typeof trackMeta === 'function') {
-                    trackMeta('InitiateCheckout', {
-                        content_name: document.getElementById('tickets-title').textContent || 'Bilety',
-                        content_type: 'product'
-                    });
-                }
+                fireInitiateCheckout('iframe-scrollTo');
             }
         });
 
