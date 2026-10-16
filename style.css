@@ -4062,8 +4062,88 @@ body.service-modal-open {
     font-family: var(--font-tertiary);
     color: rgba(255, 255, 255, 0.75);
     font-size: 1.05rem;
-    margin: 0 0 20px;
+    margin: 0 0 16px;
     line-height: 1.5;
+}
+
+#tickets .tickets-proof {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto 18px;
+    text-align: center;
+}
+
+#tickets .tickets-proof-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px 8px 11px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(200, 157, 251, 0.28);
+    text-decoration: none;
+    color: #fff;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+#tickets .tickets-proof-rating:hover {
+    background: rgba(200, 157, 251, 0.12);
+    border-color: rgba(200, 157, 251, 0.5);
+}
+
+#tickets .tickets-proof-g {
+    display: block;
+    flex-shrink: 0;
+}
+
+#tickets .tickets-proof-score {
+    font-family: var(--font-secondary);
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+#tickets .tickets-proof-stars {
+    color: #FABB05;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    line-height: 1;
+}
+
+#tickets .tickets-proof-count {
+    font-family: var(--font-tertiary);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#tickets .tickets-proof-quote {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+#tickets .tickets-proof-quote p {
+    margin: 0;
+    font-family: var(--font-tertiary);
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.82);
+    font-style: italic;
+}
+
+#tickets .tickets-proof-quote footer {
+    margin-top: 4px;
+    font-family: var(--font-tertiary);
+    font-size: 0.82rem;
+    color: rgba(200, 157, 251, 0.9);
+    font-style: normal;
 }
 
 /* Widok konkretnego wydarzenia — jeszcze ciaśniejszy nagłówek nad iframe */
@@ -4078,7 +4158,16 @@ body.service-modal-open {
 
 #tickets.tickets--detail .tickets-lead {
     font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+#tickets.tickets--detail .tickets-proof {
     margin-bottom: 12px;
+    gap: 8px;
+}
+
+#tickets.tickets--detail .tickets-proof-quote p {
+    font-size: 0.88rem;
 }
 
 #tickets.tickets--detail .tickets-back {
