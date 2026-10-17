@@ -4062,8 +4062,30 @@ body.service-modal-open {
     font-family: var(--font-tertiary);
     color: rgba(255, 255, 255, 0.75);
     font-size: 1.05rem;
-    margin: 0 0 16px;
+    margin: 0 0 10px;
     line-height: 1.5;
+}
+
+#tickets .tickets-price {
+    display: inline-block;
+    margin: 0 0 14px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-family: var(--font-secondary);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #1a0a2e;
+    background: linear-gradient(135deg, #f6d860, #f0b429);
+    box-shadow: 0 6px 20px rgba(240, 180, 41, 0.35);
+}
+
+#tickets .tickets-price[hidden] {
+    display: none;
+}
+
+#tickets .tickets-price strong {
+    font-weight: 800;
 }
 
 #tickets .tickets-proof {
@@ -4158,7 +4180,13 @@ body.service-modal-open {
 
 #tickets.tickets--detail .tickets-lead {
     font-size: 0.95rem;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+}
+
+#tickets.tickets--detail .tickets-price {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    padding: 6px 12px;
 }
 
 #tickets.tickets--detail .tickets-proof {

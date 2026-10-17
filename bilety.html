@@ -9,7 +9,7 @@
   <!-- Google Consent Mode v2 + GA4 -->
   <script src="/ga.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-EDQBFMHYGY"></script>
-  <link rel="stylesheet" href="/style.css?v=20261016-proof">
+  <link rel="stylesheet" href="/style.css?v=20261017-price">
   <script src="https://kit.fontawesome.com/6015f6d8cd.js" crossorigin="anonymous"></script>
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
   <link rel="canonical" href="https://iluzjonistahubertburzynski.pl/bilety">
@@ -111,6 +111,7 @@
             <p class="tickets-eyebrow" id="tickets-eyebrow">Wydarzenia</p>
             <h1 id="tickets-title">Bilety na pokazy</h1>
             <p class="tickets-lead" id="tickets-lead">Wybierz termin i zarezerwuj miejsce online.</p>
+            <p class="tickets-price" id="tickets-price" hidden>Miejsca już od <strong>39&nbsp;zł</strong></p>
 
             <aside class="tickets-proof" aria-label="Opinie widzów">
                 <a class="tickets-proof-rating" href="https://maps.app.goo.gl/VvCZaoz8jqFXeZtJ8" target="_blank" rel="noopener noreferrer" aria-label="5,0 na Google — 91 opinii">
@@ -210,6 +211,7 @@
             document.getElementById('tickets-eyebrow').hidden = false;
             document.getElementById('tickets-title').textContent = 'Bilety na pokazy';
             document.getElementById('tickets-lead').textContent = 'Wybierz termin i zarezerwuj miejsce online.';
+            document.getElementById('tickets-price').hidden = true;
             document.getElementById('tickets-back-link').href = '/';
             document.getElementById('tickets-back-link').textContent = '← Wróć na stronę główną';
             document.title = 'Bilety i wydarzenia | Iluzjonista Hubert Burzyński';
@@ -252,6 +254,9 @@
             document.getElementById('tickets-title').textContent = ev.title;
             document.getElementById('tickets-lead').textContent = [ev.when || ev.date || '', cityLabel(ev.city)].filter(Boolean).join(' · ')
                 || 'Zarezerwuj miejsce online.';
+            var priceEl = document.getElementById('tickets-price');
+            priceEl.hidden = false;
+            priceEl.innerHTML = 'Miejsca już od <strong>39&nbsp;zł</strong>';
             document.getElementById('tickets-back-link').href = eventUrlBase();
             document.getElementById('tickets-back-link').textContent = '← Wszystkie wydarzenia';
             document.title = ev.title + ' | Bilety | Hubert Burzyński';
