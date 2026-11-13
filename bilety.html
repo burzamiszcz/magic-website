@@ -9,7 +9,7 @@
   <!-- Google Consent Mode v2 + GA4 -->
   <script src="/ga.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-EDQBFMHYGY"></script>
-  <link rel="stylesheet" href="/style.css?v=20261017-price">
+  <link rel="stylesheet" href="/style.css?v=20261113-cards">
   <script src="https://kit.fontawesome.com/6015f6d8cd.js" crossorigin="anonymous"></script>
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
   <link rel="canonical" href="https://iluzjonistahubertburzynski.pl/bilety">
@@ -111,7 +111,7 @@
             <p class="tickets-eyebrow" id="tickets-eyebrow">Wydarzenia</p>
             <h1 id="tickets-title">Bilety na pokazy</h1>
             <p class="tickets-lead" id="tickets-lead">Wybierz termin i zarezerwuj miejsce online.</p>
-            <p class="tickets-price" id="tickets-price" hidden>Miejsca już od <strong>39&nbsp;zł</strong></p>
+            <p class="tickets-price" id="tickets-price" hidden>Miejsca już od <strong>29&nbsp;zł</strong></p>
 
             <aside class="tickets-proof" aria-label="Opinie widzów">
                 <a class="tickets-proof-rating" href="https://maps.app.goo.gl/VvCZaoz8jqFXeZtJ8" target="_blank" rel="noopener noreferrer" aria-label="5,0 na Google — 91 opinii">
@@ -165,6 +165,33 @@
         function cityLabel(city) {
             if (!city) return '';
             return city.charAt(0).toUpperCase() + city.slice(1);
+        }
+
+        // Preferuj nazwę miasta z KupBilecik (z polskimi znakami), slug tylko awaryjnie
+        function evCity(ev) {
+            return ev.cityName || cityLabel(ev.city);
+        }
+
+        // "Częstochowa · 21 listopada 2026, godz. 13:00"
+        function evMeta(ev) {
+            return [evCity(ev), ev.when || ev.date || ''].filter(Boolean).join(' · ');
+        }
+
+        var MONTHS_SHORT = ['sty', 'lut', 'mar', 'kwi', 'maj', 'cze', 'lip', 'sie', 'wrz', 'paź', 'lis', 'gru'];
+        var WEEKDAYS_SHORT = ['niedz.', 'pon.', 'wt.', 'śr.', 'czw.', 'pt.', 'sob.'];
+
+        // { wd: 'sob.', day: '21', mon: 'lis', year: '2026' } z ev.date (YYYY-MM-DD)
+        function dateParts(ev) {
+            var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(ev.date || '');
+            if (!m) return null;
+            var y = +m[1], mo = +m[2], da = +m[3];
+            var dt = new Date(y, mo - 1, da);
+            return { wd: WEEKDAYS_SHORT[dt.getDay()], day: String(da), mon: MONTHS_SHORT[mo - 1], year: String(y) };
+        }
+
+        function timeLabel(ev) {
+            var m = /(\d{1,2}:\d{2})/.exec(ev.when || '');
+            return m ? m[1] : '';
         }
 
         function getRequestedPath() {
@@ -225,19 +252,30 @@
             }
 
             list.innerHTML = events.map(function (ev) {
-                var img = ev.image
-                    ? '<img src="' + escapeHtml(ev.image) + '" alt="' + escapeHtml(ev.title) + '" loading="lazy">'
-                    : '<div class="tickets-card-placeholder" aria-hidden="true">🎩</div>';
-                var whenLabel = ev.when || ev.date || '';
-                var meta = [whenLabel, cityLabel(ev.city)].filter(Boolean).join(' · ');
+                var d = dateParts(ev);
+                var time = timeLabel(ev);
+                var thumb = ev.image
+                    ? '<div class="tickets-card-media"><img src="' + escapeHtml(ev.image) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentNode.hidden=true"></div>'
+                    : '';
+                var badge = d
+                    ? '<div class="tickets-card-date" aria-hidden="true">' +
+                        '<span class="tickets-card-date-wd">' + d.wd + '</span>' +
+                        '<span class="tickets-card-date-day">' + d.day + '</span>' +
+                        '<span class="tickets-card-date-mon">' + d.mon + ' ' + d.year + '</span>' +
+                      '</div>'
+                    : '';
+                var fullWhen = ev.when || ev.date || '';
                 return (
-                    '<a class="tickets-card" href="' + eventUrl(ev.path) + '">' +
-                        '<div class="tickets-card-media">' + img + '</div>' +
+                    '<a class="tickets-card" href="' + eventUrl(ev.path) + '" aria-label="' +
+                        escapeHtml(ev.title + ', ' + evCity(ev) + ', ' + fullWhen + ' — kup bilet') + '">' +
+                        badge +
+                        thumb +
                         '<div class="tickets-card-body">' +
-                            '<h2>' + escapeHtml(ev.title) + '</h2>' +
-                            (meta ? '<p class="tickets-card-meta">' + escapeHtml(meta) + '</p>' : '') +
-                            '<span class="tickets-card-cta">Kup bilet →</span>' +
+                            '<h2>' + escapeHtml(evCity(ev) || ev.title) + '</h2>' +
+                            (time ? '<p class="tickets-card-time">🕒 godz. ' + escapeHtml(time) + '</p>' : '') +
+                            (ev.place ? '<p class="tickets-card-place">' + escapeHtml(ev.place) + '</p>' : '') +
                         '</div>' +
+                        '<span class="tickets-card-cta">Kup bilet</span>' +
                     '</a>'
                 );
             }).join('');
@@ -251,15 +289,20 @@
             document.getElementById('tickets-list').hidden = true;
             document.getElementById('tickets-fallback').hidden = true;
             document.getElementById('tickets-eyebrow').hidden = true;
-            document.getElementById('tickets-title').textContent = ev.title;
-            document.getElementById('tickets-lead').textContent = [ev.when || ev.date || '', cityLabel(ev.city)].filter(Boolean).join(' · ')
+            document.getElementById('tickets-title').textContent = ev.title + (ev.cityName ? ' — ' + ev.cityName : '');
+            document.getElementById('tickets-lead').textContent = [evMeta(ev), ev.place].filter(Boolean).join(' · ')
                 || 'Zarezerwuj miejsce online.';
             var priceEl = document.getElementById('tickets-price');
-            priceEl.hidden = false;
-            priceEl.innerHTML = 'Miejsca już od <strong>39&nbsp;zł</strong>';
+            var minPrice = (typeof ev.minPrice === 'number' && ev.minPrice > 0) ? ev.minPrice : null;
+            if (minPrice !== null) {
+                priceEl.innerHTML = 'Miejsca już od <strong>' + String(minPrice).replace('.', ',') + '&nbsp;zł</strong>';
+                priceEl.hidden = false;
+            } else {
+                priceEl.hidden = true;
+            }
             document.getElementById('tickets-back-link').href = eventUrlBase();
             document.getElementById('tickets-back-link').textContent = '← Wszystkie wydarzenia';
-            document.title = ev.title + ' | Bilety | Hubert Burzyński';
+            document.title = ev.title + (evCity(ev) ? ' — ' + evCity(ev) : '') + (ev.date ? ' (' + ev.date + ')' : '') + ' | Bilety | Hubert Burzyński';
 
             var detail = document.getElementById('tickets-detail');
             var loading = document.getElementById('tickets-embed-loading');
@@ -284,7 +327,7 @@
 
             if (typeof trackMeta === 'function') {
                 trackMeta('ViewContent', {
-                    content_name: ev.title,
+                    content_name: ev.title + (evCity(ev) ? ' — ' + evCity(ev) : ''),
                     content_ids: [String(ev.id)],
                     content_type: 'product',
                     content_category: ev.city || ''

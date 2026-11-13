@@ -32,6 +32,11 @@ MONTHS = {
 }
 
 
+def _text(fragment: str) -> str:
+    """Usuwa tagi, dekoduje encje i zwija białe znaki."""
+    return re.sub(r"\s+", " ", unescape(re.sub(r"<[^>]+>", "", fragment))).strip()
+
+
 def _parse_date(when: str, chunk: str) -> str:
     iso = re.search(r"(20\d{2})-(\d{2})-(\d{2})", chunk)
     if iso:
@@ -66,6 +71,76 @@ def _make_path(slug: str, city: str, date: str, event_id: str, used: set[str]) -
     return candidate
 
 
+def _collect_prices(node, prices: list) -> None:
+    """Ceny wolnych miejsc z mapy numerowanej (places[].price.normal / types[].value)."""
+    if isinstance(node, dict):
+        price = node.get("price")
+        if isinstance(price, dict) and node.get("status") == "free" and node.get("active", True):
+            vals = [price.get("normal")]
+            vals += [t.get("value") for t in (price.get("types") or []) if isinstance(t, dict)]
+            for v in vals:
+                try:
+                    val = float(v)
+                except (TypeError, ValueError):
+                    continue
+                if val > 0:
+                    prices.append(val)
+        for key, v in node.items():
+            if key != "price" and isinstance(v, (dict, list)):
+                _collect_prices(v, prices)
+    elif isinstance(node, list):
+        for v in node:
+            _collect_prices(v, prices)
+
+
+def fetch_min_price(event_id: str):
+    """Najniższa cena dostępnego miejsca (zł) z publicznego get-seats; None gdy brak/błąd."""
+    url = f"https://www.kupbilecik.pl/pl/event/get-seats/{urllib.parse.quote(event_id)}"
+    req = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": "Mozilla/5.0 (compatible; MagicWebsite/1.0)",
+            # bez tego endpoint przekierowuje na stronę HTML zamiast zwrócić JSON
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "application/json",
+            "Referer": "https://www.kupbilecik.pl/",
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=8) as resp:
+            data = json.loads(resp.read().decode("utf-8", errors="replace"))
+    except Exception:
+        return None
+    if not isinstance(data, dict):
+        return None
+
+    prices: list = []
+    for row in data.get("notnum") or []:
+        if not isinstance(row, dict):
+            continue
+        if int(row.get("Count") or 0) <= 0 and "Count" in row:
+            continue
+        try:
+            val = float(row.get("cart_price", row.get("Cena_miejsce")))
+        except (TypeError, ValueError):
+            continue
+        if val > 0:
+            prices.append(val)
+
+    schema = data.get("schema")
+    if isinstance(schema, str):
+        try:
+            schema = json.loads(unescape(schema))
+        except ValueError:
+            schema = None
+    _collect_prices(schema, prices)
+
+    if not prices:
+        return None
+    low = min(prices)
+    return int(low) if low == int(low) else round(low, 2)
+
+
 def fetch_events() -> dict:
     qs = urllib.parse.urlencode(
         {
@@ -84,47 +159,57 @@ def fetch_events() -> dict:
         html = resp.read().decode("utf-8", errors="replace")
 
     pattern = re.compile(r"/iframe/single-event/(\d+)/([^/\"']+)/([^?\"']+)")
+
+    # Każde wydarzenie ma kilka linków w jednej karcie. Blok karty = od pierwszego
+    # linku danego ID do pierwszego linku kolejnego wydarzenia (bez mieszania sąsiadów).
+    firsts: list[tuple[int, str, str, str]] = []
+    seen_ids: set[str] = set()
+    for m in pattern.finditer(html):
+        if m.group(1) in seen_ids:
+            continue
+        seen_ids.add(m.group(1))
+        firsts.append((m.start(), m.group(1), m.group(2), m.group(3)))
+
     events = []
-    seen = set()
     used_paths: set[str] = set()
 
-    for m in pattern.finditer(html):
-        event_id, city, slug = m.group(1), m.group(2), m.group(3)
-        key = f"{event_id}|{city}|{slug}"
-        if key in seen:
-            continue
-        seen.add(key)
+    for idx, (start, event_id, city, slug) in enumerate(firsts):
+        end = firsts[idx + 1][0] if idx + 1 < len(firsts) else min(len(html), start + 8000)
+        chunk = html[start:end]
 
-        chunk = html[max(0, m.start() - 1200) : m.end() + 1800]
-        image = ""
-        when = ""
         title = ""
-
-        im = re.search(r"(https://assets\.kupbilecik\.pl/img/imprezy/[^\"\s]+)", chunk)
-        if im:
-            image = unescape(im.group(1))
-
-        wm = re.search(
-            r">(\d{1,2}\s+[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+\s+20\d{2},[^<]{0,40})<",
-            chunk,
-        )
-        if wm:
-            when = unescape(wm.group(1)).strip()
-
-        for tm in re.finditer(r">([^<]{5,100})<", chunk):
-            candidate = unescape(tm.group(1)).strip()
-            low = candidate.lower()
-            if any(x in low for x in ("bilety", "ocena", "dni", "http", "wybierz")):
-                continue
-            if "iluzjonista" in low or (len(candidate) > 12 and not candidate[0].isdigit()):
-                title = candidate
-                if "iluzjonista" in low:
-                    break
-
+        tm = re.search(r"<h2[^>]*>\s*<a[^>]*>(.*?)</a>", chunk, re.S)
+        if tm:
+            title = _text(tm.group(1))
         if not title:
             title = slug.replace("-", " ").title()
 
-        date = _parse_date(when, chunk)
+        image = ""
+        im = re.search(
+            r"(?:data-src|src)=\"(https://assets\.kupbilecik\.pl/img/(?:baza|imprezy)/[^\"]+)\"",
+            chunk,
+        )
+        if im:
+            image = unescape(im.group(1))
+
+        when = ""
+        iso_dt = ""
+        wm = re.search(r"<time[^>]*datetime=\"([^\"]*)\"[^>]*>(.*?)</time>", chunk, re.S)
+        if wm:
+            iso_dt = unescape(wm.group(1))
+            when = _text(wm.group(2))
+
+        city_name = ""
+        cm = re.search(r"href=\"/pl/city/\d+/[^\"]*\"[^>]*>\s*([^<]+?)\s*</a>", chunk)
+        if cm:
+            city_name = unescape(cm.group(1)).strip()
+
+        place = ""
+        pm = re.search(r"href=\"/pl/place/\d+/[^\"]*\"[^>]*>\s*([^<]+?)\s*</a>", chunk)
+        if pm:
+            place = unescape(pm.group(1)).strip()
+
+        date = iso_dt[:10] if re.match(r"20\d{2}-\d{2}-\d{2}", iso_dt) else _parse_date(when, "")
         path = _make_path(slug, city, date, event_id, used_paths)
 
         embed_qs = urllib.parse.urlencode(
@@ -140,12 +225,15 @@ def fetch_events() -> dict:
             {
                 "id": event_id,
                 "city": city,
+                "cityName": city_name,
+                "place": place,
                 "slug": slug,
                 "date": date,
                 "path": path,
                 "title": title,
                 "when": when,
                 "image": image,
+                "minPrice": fetch_min_price(event_id),
                 "embed": embed,
             }
         )

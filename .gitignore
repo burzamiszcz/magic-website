@@ -1,3 +1,6 @@
 sendmail.php
 ga.js
 cookies.js
+.DS_Store
+__pycache__/
+*.pyc
