@@ -9,7 +9,7 @@
   <!-- Google Consent Mode v2 + GA4 -->
   <script src="/ga.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-EDQBFMHYGY"></script>
-  <link rel="stylesheet" href="/style.css?v=20261122-minimal">
+  <link rel="stylesheet" href="/style.css?v=20261122-posters2">
   <script src="https://kit.fontawesome.com/6015f6d8cd.js" crossorigin="anonymous"></script>
   <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
   <link rel="canonical" href="https://iluzjonistahubertburzynski.pl/bilety">
@@ -106,6 +106,7 @@
 
     <main id="tickets">
         <div class="tickets-bg" aria-hidden="true"></div>
+        <div class="sparkle-layer" aria-hidden="true"></div>
         <div class="tickets container">
             <p class="tickets-eyebrow" id="tickets-eyebrow">Wydarzenia</p>
             <h1 id="tickets-title">Bilety na pokazy</h1>
@@ -254,25 +255,30 @@
                 var d = dateParts(ev);
                 var time = timeLabel(ev);
                 var fullWhen = ev.when || ev.date || '';
-                var dateCol = d
-                    ? '<div class="tickets-card-date" aria-hidden="true">' +
-                        '<span class="tickets-card-date-day">' + d.day + '</span>' +
-                        '<span class="tickets-card-date-mon">' + d.mon + '</span>' +
-                        '<span class="tickets-card-date-wd">' + d.wd + '</span>' +
-                      '</div>'
+                var media = ev.image
+                    ? '<div class="tickets-card-media"><img src="' + escapeHtml(ev.image) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add(\'is-empty\')"></div>'
+                    : '<div class="tickets-card-media is-empty" aria-hidden="true"></div>';
+                var whenLine = '';
+                if (d) {
+                    whenLine = escapeHtml(d.day + ' ' + d.mon + ' · ' + d.wd);
+                    if (time) whenLine += ' · ' + escapeHtml(time);
+                } else if (fullWhen) {
+                    whenLine = escapeHtml(fullWhen);
+                }
+                var price = (typeof ev.minPrice === 'number' && ev.minPrice > 0)
+                    ? ('od ' + String(ev.minPrice).replace('.', ',') + ' zł')
                     : '';
-                var metaBits = [];
-                if (time) metaBits.push(escapeHtml(time));
-                if (ev.place) metaBits.push(escapeHtml(ev.place));
                 return (
                     '<a class="tickets-card" href="' + eventUrl(ev.path) + '" aria-label="' +
                         escapeHtml(ev.title + ', ' + evCity(ev) + ', ' + fullWhen + ' — kup bilet') + '">' +
-                        dateCol +
+                        media +
                         '<div class="tickets-card-body">' +
+                            (whenLine ? '<p class="tickets-card-when">' + whenLine + '</p>' : '') +
                             '<h2>' + escapeHtml(evCity(ev) || ev.title) + '</h2>' +
-                            (metaBits.length ? '<p class="tickets-card-meta">' + metaBits.join(' · ') + '</p>' : '') +
+                            (ev.place ? '<p class="tickets-card-place">' + escapeHtml(ev.place) + '</p>' : '') +
+                            (price ? '<p class="tickets-card-price">' + escapeHtml(price) + '</p>' : '') +
                         '</div>' +
-                        '<span class="tickets-card-cta">Kup bilet</span>' +
+                        '<span class="tickets-card-cta">Kup bilet <span aria-hidden="true">→</span></span>' +
                     '</a>'
                 );
             }).join('');
