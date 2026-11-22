@@ -4424,3 +4424,250 @@ body.service-modal-open {
         -webkit-box-orient: vertical;
     }
 }
+
+/* ========== 404 PAGE ========== */
+#page-404 {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 96px 24px 88px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+#page-404 .page-404-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-image: url(./img/background-hero-mobile.jpg);
+    background-size: cover;
+    background-position: top center;
+    transform: scale(1.08);
+    filter: blur(16px) saturate(1.18);
+    pointer-events: none;
+    animation: page404BgBreath 18s ease-in-out infinite alternate;
+}
+
+#page-404 .page-404-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(8, 0, 16, 0.55) 0%, rgba(10, 0, 20, 0.72) 48%, rgba(5, 0, 12, 0.92) 100%),
+        radial-gradient(ellipse at 50% 18%, rgba(129, 42, 233, 0.28), transparent 55%);
+    filter: none;
+    transform: none;
+    animation: none;
+}
+
+#page-404 .page-404-orb {
+    position: fixed;
+    width: min(70vw, 520px);
+    height: min(70vw, 520px);
+    left: 50%;
+    top: 42%;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(129, 42, 233, 0.28) 0%, rgba(200, 157, 251, 0.08) 42%, transparent 70%);
+    filter: blur(8px);
+    pointer-events: none;
+    z-index: 0;
+    animation: page404Orb 14s ease-in-out infinite alternate;
+}
+
+#page-404 > .sparkle-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#page-404 .page-404-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 560px;
+    text-align: center;
+    animation: page404Rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+#page-404 .page-404-numeral {
+    margin: 0 0 -0.18em;
+    font-family: var(--font-secondary);
+    font-size: clamp(5.5rem, 22vw, 9.5rem);
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: transparent;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(200, 157, 251, 0.12) 55%, transparent 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    user-select: none;
+    pointer-events: none;
+}
+
+#page-404 .page-404-eyebrow {
+    font-family: var(--font-tertiary);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    color: var(--hover-purple);
+    margin: 0 0 14px;
+}
+
+#page-404 h1 {
+    font-family: var(--font-secondary);
+    font-size: clamp(2.15rem, 5.5vw, 3.1rem);
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 16px;
+    line-height: 1.12;
+    background: none;
+    -webkit-text-fill-color: #fff;
+    text-shadow:
+        0 0 18px rgba(200, 157, 251, 0.85),
+        0 0 42px rgba(129, 42, 233, 0.75),
+        0 0 80px rgba(129, 42, 233, 0.45),
+        0 12px 40px rgba(0, 0, 0, 0.4);
+    animation: page404TitleGlow 2.8s ease-in-out infinite alternate;
+}
+
+#page-404 .page-404-lead {
+    font-family: var(--font-tertiary);
+    font-size: clamp(1.05rem, 2.4vw, 1.2rem);
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.76);
+    margin: 0 auto 32px;
+    max-width: 28em;
+}
+
+#page-404 .page-404-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    align-items: center;
+    justify-content: center;
+}
+
+#page-404 .page-404-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 30px;
+    border-radius: 999px;
+    background: var(--primary-purple);
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--font-tertiary);
+    font-size: 1.05rem;
+    font-weight: 600;
+    box-shadow: 0 10px 28px rgba(129, 42, 233, 0.35);
+    transition: background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+#page-404 .page-404-cta:hover {
+    background: #fff;
+    color: var(--primary-purple);
+    box-shadow: 0 14px 34px rgba(129, 42, 233, 0.4);
+    transform: translateY(-2px);
+}
+
+#page-404 .page-404-link {
+    color: rgba(200, 157, 251, 0.95);
+    text-decoration: none;
+    font-family: var(--font-tertiary);
+    font-size: 1.05rem;
+    font-weight: 600;
+    transition: color 0.2s ease;
+    border-bottom: 1px solid transparent;
+}
+
+#page-404 .page-404-link:hover {
+    color: #fff;
+    border-bottom-color: rgba(255, 255, 255, 0.35);
+}
+
+#page-404 .page-404-rabbit {
+    position: fixed;
+    right: max(12px, 3vw);
+    bottom: max(10px, 2vh);
+    width: clamp(88px, 16vw, 140px);
+    height: auto;
+    z-index: 2;
+    opacity: 0.92;
+    pointer-events: none;
+    filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
+    animation: page404Rabbit 5.5s ease-in-out infinite;
+}
+
+@keyframes page404Rise {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes page404TitleGlow {
+    from {
+        text-shadow:
+            0 0 14px rgba(200, 157, 251, 0.7),
+            0 0 32px rgba(129, 42, 233, 0.55),
+            0 0 64px rgba(129, 42, 233, 0.3),
+            0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+    to {
+        text-shadow:
+            0 0 24px rgba(200, 157, 251, 1),
+            0 0 56px rgba(129, 42, 233, 0.9),
+            0 0 100px rgba(129, 42, 233, 0.55),
+            0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+}
+
+@keyframes page404BgBreath {
+    from { transform: scale(1.06); }
+    to { transform: scale(1.12); }
+}
+
+@keyframes page404Orb {
+    from { transform: translate(-2%, -3%) scale(1); opacity: 0.85; }
+    to { transform: translate(3%, 2%) scale(1.12); opacity: 1; }
+}
+
+@keyframes page404Rabbit {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+@media only screen and (min-width: 768px) {
+    #page-404 {
+        padding: 110px 32px 96px;
+    }
+
+    #page-404 .page-404-bg {
+        background-image: url(./img/hero-background.jpg);
+        filter: blur(18px) saturate(1.2);
+    }
+
+    #page-404 .page-404-rabbit {
+        right: max(28px, 4vw);
+        bottom: max(24px, 3vh);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #page-404 .page-404-bg,
+    #page-404 .page-404-orb,
+    #page-404 .page-404-inner,
+    #page-404 .page-404-rabbit,
+    #page-404 h1 {
+        animation: none;
+    }
+}

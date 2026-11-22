@@ -1,6 +1,9 @@
 Options -Indexes
 RewriteEngine On
 
+# Własna strona błędu 404
+ErrorDocument 404 /404.html
+
 # Ładne URL-e biletów:
 #   /bilety              → lista
 #   /bilety/nazwa-miasta → konkretne wydarzenie
